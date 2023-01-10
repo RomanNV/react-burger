@@ -3,6 +3,7 @@ import "./App.css";
 import AppHeader from "./components/AppHeader/AppHeader";
 import { BurgerConstructor } from "./components/BurgerConstructor/BurgerConstructor";
 import { BurgerIngredients } from "./components/BurgerIngredients/BurgerIngredients";
+import { data } from "./utils/data";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       ></AppHeader>
       <div className="app_grid_container">
         <BurgerIngredients></BurgerIngredients>
-        <BurgerConstructor></BurgerConstructor>
+        <BurgerConstructor dataProps={data}></BurgerConstructor>
       </div>
     </div>
   );

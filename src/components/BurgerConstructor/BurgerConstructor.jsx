@@ -4,121 +4,75 @@ import {
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import bun from "../../images/bun-02.svg";
-import sauce from "../../images/sauce-03.png";
-import meate from "../../images/meat-02.png";
-import sp from "../../images/sp 1.png";
-import mineralRing from "../../images/mineral rings.png";
 import styles from "./BurgerConstructor.module.css";
 
-// import { data } from "../../utils/data.js";
+export const BurgerConstructor = ({ dataProps }) => {
+  const data = dataProps;
+  let tempBun = [];
 
-export const BurgerConstructor = () => {
-  const data = [
-    {
-      type: "top",
-      isLocked: true,
-      text: "Краторная булка N-200i (верх)",
-      price: 20,
-      thumbnail: bun,
-    },
-    {
-      text: "Соус традиционный галактический",
-      price: 30,
-      thumbnail: sauce,
-    },
-    {
-      text: "Мясо бессмертных моллюсков Protostomia",
-      price: 300,
-      thumbnail: meate,
-    },
-    {
-      text: "Мясо бессмертных моллюсков Protostomia",
-      price: 300,
-      thumbnail: meate,
-    },
-    {
-      text: "Мясо бессмертных моллюсков Protostomia",
-      price: 300,
-      thumbnail: meate,
-    },
-    {
-      text: "Мясо бессмертных моллюсков Protostomia",
-      price: 300,
-      thumbnail: meate,
-    },
-    {
-      text: "Мясо бессмертных моллюсков Protostomia",
-      price: 300,
-      thumbnail: meate,
-    },
-    {
-      text: "Плоды Фалленианского дерева",
-      price: 80,
-      thumbnail: sp,
-    },
-    {
-      text: "Хрустящие минеральные кольца",
-      price: 80,
-      thumbnail: mineralRing,
-    },
-    {
-      text: "Хрустящие минеральные кольца",
-      price: 80,
-      thumbnail: mineralRing,
-    },
-    {
-      type: "bottom",
-      isLocked: true,
-      text: "Краторная булка N-200i (низ)",
-      price: 20,
-      thumbnail: bun,
-    },
-  ];
+  data.findIndex((element, index) => {
+    if (element.type === "bun") {
+      tempBun.push(index);
+    }
+  });
+  const getTopBun = ({ _id, image, name, price }) => {
+    return (
+      <ul className={styles.ul_box_fixed}>
+        <li key={_id}>
+          <div style={{ width: "24px", height: "24px" }}></div>
+          <ConstructorElement
+            text={name}
+            price={price}
+            isLocked={true}
+            type={"top"}
+            thumbnail={image}
+          ></ConstructorElement>
+        </li>
+      </ul>
+    );
+  };
+
+  const getBottomBun = ({ _id, image, name, price }) => {
+    return (
+      <ul className={styles.ul_box_fixed}>
+        <li key={_id}>
+          <div style={{ width: "24px", height: "24px" }}></div>
+          <ConstructorElement
+            text={name}
+            price={price}
+            isLocked={true}
+            type={"bottom"}
+            thumbnail={image}
+          ></ConstructorElement>
+        </li>
+      </ul>
+    );
+  };
+
   return (
     <section className={styles.content_box}>
       <div className={styles.burger_box}>
-        {data.map((element, index) => {
-          if (element.type === "top") {
-            return (
-              <ul className={styles.ul_box_fixed}>
-                <li key={index}>
-                  <div style={{ width: "24px", height: "24px" }}></div>
-                  <ConstructorElement {...element}></ConstructorElement>
-                </li>
-              </ul>
-            );
-          }
-        })}
+        {getTopBun(data[tempBun.shift()])}
 
         <ul className={`custom-scroll ${styles.ul_box_scroll}`}>
-          {data.map((element, index) => {
-            if (element.type === "bottom" || element.type === "top") {
+          {data.map(({ _id, image, name, price, type }) => {
+            if (type === "bun") {
               return;
             } else {
               return (
-                <li key={index}>
+                <li key={_id}>
                   <DragIcon type="primary" />
-                  <ConstructorElement {...element}></ConstructorElement>
+                  <ConstructorElement
+                    text={name}
+                    price={price}
+                    thumbnail={image}
+                  ></ConstructorElement>
                 </li>
               );
             }
           })}
         </ul>
-        <div>
-          {data.map((element, index) => {
-            if (element.type === "bottom") {
-              return (
-                <ul className={styles.ul_box_fixed}>
-                  <li key={index}>
-                    <div style={{ width: "24px", height: "24px" }}></div>
-                    <ConstructorElement {...element}></ConstructorElement>
-                  </li>
-                </ul>
-              );
-            }
-          })}
-        </div>
+        {getBottomBun(data[tempBun.shift()])}
       </div>
 
       <div className={styles.button_container}>
@@ -126,7 +80,6 @@ export const BurgerConstructor = () => {
           <p className="text text_type_main-large">610</p>
           <CurrencyIcon className={styles.icon} type="primary" />
         </span>
-
         <Button htmlType="button" type="primary" size="large">
           Нажми на меня
         </Button>

@@ -16,6 +16,9 @@ export const BurgerIngredients = () => {
         <Tab>Соусы</Tab>
         <Tab>Начинки</Tab>
       </div>
+      <ul>
+        <li></li>
+      </ul>
     </section>
   );
 };
