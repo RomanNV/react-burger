@@ -1,0 +1,38 @@
+.content_box {
+  box-sizing: border-box;
+  display: flex;
+  height: 88px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #1c1c21;
+}
+.nav_grid_box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.nav_link {
+  justify-self: end;
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  border-radius: 40px;
+  text-decoration: none;
+}
+.nav_link_a1 {
+  color: #f2f2f3;
+}
+.nav_link_a2 {
+  color: #8585ad;
+}
+
+.nav_link_icon {
+}
+
+.nav_link_box {
+  display: flex;
+  gap: 8px;
+}

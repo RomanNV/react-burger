@@ -1,0 +1,52 @@
+.content_box {
+  padding-top: 100px;
+  max-width: 600px;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  border: 1px white solid;
+  width: max-content;
+}
+.burger_box {
+  list-style: none;
+  margin: 0;
+}
+.ul_box_scroll {
+  height: 400px;
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 32px;
+  padding-bottom: 40px;
+  max-height: 656px;
+  overflow-y: scroll;
+}
+.ul_box_fixed {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 32px;
+  padding-bottom: 16px;
+  padding-right: 12px;
+}
+.button_container {
+  display: flex;
+  gap: 40px;
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+.price_box {
+  display: flex;
+  align-items: center;
+  gap: 9.5px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

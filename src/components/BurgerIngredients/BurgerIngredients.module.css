@@ -1,0 +1,16 @@
+.content_box {
+  padding-top: 40px;
+  width: 600px;
+  justify-self: end;
+  height: 912px;
+  border: 1px white solid;
+}
+.constructor_box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tab_box {
+  display: flex;
+  padding-top: 20px;
+}
