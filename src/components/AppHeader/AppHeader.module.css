@@ -1,5 +1,4 @@
 .content_box {
-  box-sizing: border-box;
   display: flex;
   height: 88px;
   justify-content: center;
@@ -8,6 +7,7 @@
   background-color: #1c1c21;
 }
 .nav_grid_box {
+  width: 1240px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;

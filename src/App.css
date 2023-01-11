@@ -5,5 +5,5 @@
 .app_grid_container {
   display: grid;
   gap: 40px;
-  grid-template-columns: [one] 1fr [two] 1fr;
+  grid-template-columns: 1fr 1fr;
 }

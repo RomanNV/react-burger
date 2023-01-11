@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   border: 1px white solid;
-  width: max-content;
+  width: 100%;
 }
 .burger_box {
   list-style: none;
@@ -13,25 +13,22 @@
 }
 .ul_box_scroll {
   height: 400px;
-  list-style: none;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding-left: 32px;
-  padding-bottom: 40px;
-  max-height: 656px;
+  max-height: 300px;
   overflow-y: scroll;
 }
 .ul_box_fixed {
-  list-style: none;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   padding-left: 32px;
   padding-bottom: 16px;
   padding-right: 12px;
+  padding-top: 16px;
 }
 .button_container {
   display: flex;

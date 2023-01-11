@@ -1,0 +1,11 @@
+.ul_tab {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 0;
+  margin: 0;
+}
+.tab_title {
+  padding-top: 40px;
+  padding-bottom: 24px;
+}

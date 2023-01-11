@@ -1,0 +1,23 @@
+.ingredient_box {
+  width: 272px;
+  height: 200px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  position: relative;
+}
+img {
+  width: 240px;
+  height: 120px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.price_box {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ingredient_name {
+  text-align: center;
+  align-self: flex-start;
+}
