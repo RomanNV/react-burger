@@ -1,27 +1,40 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
-import { data } from "../../utils/data.js";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import PropTypes from "prop-types";
+import { useMemo } from "react";
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients = ({ dataProps }) => {
   const isCounter = true;
-  const tabDataBun = data.filter((element) => {
-    if (element.type === "bun") {
-      return element;
-    }
-  });
+  const tabDataBun = useMemo(
+    () =>
+      dataProps.filter((element) => {
+        if (element.type === "bun") {
+          return element;
+        }
+      }),
+    [dataProps]
+  );
 
-  const tabDataMain = data.filter((element) => {
-    if (element.type === "main") {
-      return element;
-    }
-  });
-  const tabDataSauce = data.filter((element) => {
-    if (element.type === "sauce") {
-      return element;
-    }
-  });
+  const tabDataMain = useMemo(
+    () =>
+      dataProps.filter((element) => {
+        if (element.type === "main") {
+          return element;
+        }
+      }),
+    [dataProps]
+  );
+
+  const tabDataSauce = useMemo(
+    () =>
+      dataProps.filter((element) => {
+        if (element.type === "sauce") {
+          return element;
+        }
+      }),
+    [dataProps]
+  );
 
   return (
     <section className={styles.content_box}>

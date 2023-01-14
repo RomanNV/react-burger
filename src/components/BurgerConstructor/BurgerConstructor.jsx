@@ -8,7 +8,7 @@ import styles from "./BurgerConstructor.module.css";
 import { BurgerBunBottom } from "../BurgerBun/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
 
-export const BurgerConstructor = ({ dataProps }) => {
+export const BurgerConstructor = ({ dataProps, openModal }) => {
   const data = dataProps;
   let tempBun = [];
 
@@ -58,8 +58,13 @@ export const BurgerConstructor = ({ dataProps }) => {
           <p className="text text_type_main-large">610</p>
           <CurrencyIcon className={styles.icon} type="primary" />
         </span>
-        <Button htmlType="button" type="primary" size="large">
-          Нажми на меня
+        <Button
+          onClick={openModal}
+          htmlType="button"
+          type="primary"
+          size="large"
+        >
+          Оформить заказ
         </Button>
       </div>
     </section>
