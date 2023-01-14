@@ -4,7 +4,7 @@ import { data } from "../../utils/data.js";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import PropTypes from "prop-types";
 
-export const BurgerIngredients = ({ dataIngredients }) => {
+export const BurgerIngredients = () => {
   const isCounter = true;
   const tabDataBun = data.filter((element) => {
     if (element.type === "bun") {
