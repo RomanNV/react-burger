@@ -2,16 +2,22 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import PropTypes from "prop-types";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { propTypeData } from "../../utils/propTypeData.js";
 
 export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
   const [ingredientData, setIngredientData] = useState();
-
   const getDataIngredient = (ingredient) => {
     setIngredientData(ingredient);
+  };
+  const bunTab = useRef(null);
+  const sauceTab = useRef(null);
+  const mainTab = useRef(null);
+
+  const onScroll = (element) => {
+    element.scrollIntoView({ behavior: "smooth" });
   };
 
   const isCounter = true;
@@ -59,13 +65,13 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
       <section className={styles.content_box}>
         <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
         <div className={styles.tab_box}>
-          <Tab>Булки</Tab>
-          <Tab>Соусы</Tab>
-          <Tab>Начинки</Tab>
+          <Tab onClick={() => onScroll(bunTab.current)}>Булки</Tab>
+          <Tab onClick={() => onScroll(sauceTab.current)}>Соусы</Tab>
+          <Tab onClick={() => onScroll(mainTab.current)}>Начинки</Tab>
         </div>
 
         <ul className={`custom-scroll ${styles.ul_box}`}>
-          <li>
+          <li ref={bunTab}>
             <BurgerGroup
               getDataIngredient={getDataIngredient}
               tabData={tabDataBun}
@@ -74,7 +80,7 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
               toggleModal={toggleModal}
             ></BurgerGroup>
           </li>
-          <li>
+          <li ref={sauceTab}>
             <BurgerGroup
               getDataIngredient={getDataIngredient}
               tabData={tabDataSauce}
@@ -83,7 +89,7 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
               toggleModal={toggleModal}
             ></BurgerGroup>
           </li>
-          <li>
+          <li ref={mainTab}>
             <BurgerGroup
               getDataIngredient={getDataIngredient}
               tabData={tabDataMain}
