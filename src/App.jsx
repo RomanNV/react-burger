@@ -3,10 +3,6 @@ import "./App.css";
 import AppHeader from "./components/AppHeader/AppHeader";
 import { BurgerConstructor } from "./components/BurgerConstructor/BurgerConstructor";
 import { BurgerIngredients } from "./components/BurgerIngredients/BurgerIngredients";
-import { Modal } from "./components/Modal/Modal";
-import { OrderDetails } from "./components/OrderDetails/OrderDetails";
-import { ModalOverlay } from "./components/ModalOverlay/ModalOverlay";
-import { IngredientDetails } from "./components/IngredientDetails/IngredientDetails";
 
 const DATA_URL = "https://norma.nomoreparties.space/api/ingredients ";
 
@@ -15,28 +11,21 @@ function App() {
   const [error, setError] = useState();
   const [isOpenIngredientModal, setIsOpenIngredientModal] = useState(false);
   const [isOpenOrderModal, setIsOpenOrderModal] = useState(false);
-  const [ingredientData, setIngredientData] = useState();
 
-  const closeIngredientModal = () => {
+  const toggleIngredientModal = () => {
     setIsOpenIngredientModal(!isOpenIngredientModal);
   };
-  const closeOrderModal = () => {
+  const toggleOrderModal = () => {
     setIsOpenOrderModal(!isOpenOrderModal);
-  };
-  const openOrderModal = () => {
-    setIsOpenOrderModal(!isOpenOrderModal);
-  };
-  const openIngredientModal = (ingredient) => {
-    setIsOpenIngredientModal(!isOpenIngredientModal);
-  };
-  const getDataIngredient = (ingredient) => {
-    setIngredientData(ingredient);
   };
 
   useEffect(() => {
     async function getData() {
       try {
         const responce = await fetch(DATA_URL);
+        if (!responce.ok) {
+          throw new Error();
+        }
         const data = await responce.json();
         setData(data.data);
       } catch (err) {
@@ -53,33 +42,6 @@ function App() {
       </div>
     );
   }
-  if (isOpenOrderModal) {
-    return (
-      <>
-        <Modal>
-          <OrderDetails
-            orderNum="034536"
-            closeModal={closeOrderModal}
-          ></OrderDetails>
-        </Modal>
-        <ModalOverlay closeModal={closeOrderModal}></ModalOverlay>
-      </>
-    );
-  }
-  if (isOpenIngredientModal) {
-    return (
-      <>
-        <Modal>
-          <IngredientDetails
-            {...ingredientData}
-            close={closeIngredientModal}
-          ></IngredientDetails>
-        </Modal>
-        <ModalOverlay closeModal={closeIngredientModal}></ModalOverlay>
-      </>
-    );
-  }
-
   return (
     <div className="App">
       <AppHeader
@@ -90,12 +52,13 @@ function App() {
       <div className="app_grid_container">
         <BurgerIngredients
           dataProps={data}
-          getDataIngredient={getDataIngredient}
-          openModal={openIngredientModal}
+          toggleModal={toggleIngredientModal}
+          isOpenModal={isOpenIngredientModal}
         ></BurgerIngredients>
         <BurgerConstructor
-          openModal={openOrderModal}
+          toggleModal={toggleOrderModal}
           dataProps={data}
+          isOpenModal={isOpenOrderModal}
         ></BurgerConstructor>
       </div>
     </div>

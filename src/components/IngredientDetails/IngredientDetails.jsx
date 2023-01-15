@@ -1,6 +1,6 @@
 import styles from "./IngredientDetails.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import PropTypes from "prop-types";
 export const IngredientDetails = ({
   image_large,
   name,
@@ -8,13 +8,13 @@ export const IngredientDetails = ({
   proteins,
   fat,
   carbohydrates,
-  close,
+  toggleModal,
 }) => {
   return (
     <div className={styles.modal_content}>
       <header className={styles.header_box}>
         <p className="text text_type_main-large">Детали ингредиента</p>
-        <CloseIcon type="primary" onClick={() => close()} />
+        <CloseIcon type="primary" onClick={() => toggleModal()} />
       </header>
       <div className={styles.ingredient_card}>
         <img src={image_large} alt="Фото ингредиента" />
@@ -57,4 +57,13 @@ export const IngredientDetails = ({
       </div>
     </div>
   );
+};
+IngredientDetails.propTypes = {
+  calories: PropTypes.number,
+  carbohydrates: PropTypes.number,
+  fat: PropTypes.number,
+  image_large: PropTypes.string,
+  name: PropTypes.string,
+  proteins: PropTypes.number,
+  toggleModal: PropTypes.func,
 };

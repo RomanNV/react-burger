@@ -2,7 +2,6 @@ import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 
 export function BurgerIngredientsItem({
   name,
@@ -10,14 +9,13 @@ export function BurgerIngredientsItem({
   image,
   isCounter,
   getDataIngredient,
-  openModal,
+  toggleModal,
 }) {
-  useEffect(() => {});
   return (
     <div
       className={styles.ingredient_box}
       onClick={() => {
-        openModal();
+        toggleModal();
         getDataIngredient();
       }}
     >
@@ -34,7 +32,9 @@ export function BurgerIngredientsItem({
   );
 }
 BurgerIngredientsItem.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  isCounter: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  isCounter: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getDataIngredient: PropTypes.func.isRequired,
 };

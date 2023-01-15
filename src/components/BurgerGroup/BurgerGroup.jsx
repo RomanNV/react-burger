@@ -1,11 +1,12 @@
 import { BurgerIngredientsItem } from "../BurgerIngredientsItem/BurgerIngredientsItem";
 import styles from "./BurgerGroup.module.css";
 import PropTypes from "prop-types";
+import { propTypeData } from "../../utils/propTypeData.js";
 export function BurgerGroup({
   tabData,
   title,
   isCounter,
-  open,
+  toggleModal,
   getDataIngredient,
 }) {
   return (
@@ -17,7 +18,7 @@ export function BurgerGroup({
         {tabData.map((ingredient) => {
           return (
             <BurgerIngredientsItem
-              openModal={open}
+              toggleModal={toggleModal}
               getDataIngredient={() => getDataIngredient(ingredient)}
               isCounter={isCounter}
               key={ingredient._id}
@@ -33,7 +34,9 @@ export function BurgerGroup({
 }
 
 BurgerGroup.propTypes = {
-  tabData: PropTypes.array,
-  title: PropTypes.string,
-  isCounter: PropTypes.bool,
+  tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
+  title: PropTypes.string.isRequired,
+  isCounter: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getDataIngredient: PropTypes.func.isRequired,
 };
