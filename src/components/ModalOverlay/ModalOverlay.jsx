@@ -5,7 +5,6 @@ export const ModalOverlay = ({ closeModal }) => {
   const keyResponce = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("his");
     if (e.key === "Escape") {
       closeModal();
     }

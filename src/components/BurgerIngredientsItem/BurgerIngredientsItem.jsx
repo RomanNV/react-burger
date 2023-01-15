@@ -2,10 +2,25 @@ import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
-export function BurgerIngredientsItem({ name, price, image, isCounter }) {
+export function BurgerIngredientsItem({
+  name,
+  price,
+  image,
+  isCounter,
+  getDataIngredient,
+  openModal,
+}) {
+  useEffect(() => {});
   return (
-    <div className={styles.ingredient_box}>
+    <div
+      className={styles.ingredient_box}
+      onClick={() => {
+        openModal();
+        getDataIngredient();
+      }}
+    >
       <img src={image} alt="фото ингредиента" />
       {isCounter && <Counter count={1} size="default" extraClass="m-1" />}
       <div className={`p-1 ${styles.price_box}`}>

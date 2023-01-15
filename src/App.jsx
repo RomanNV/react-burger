@@ -6,6 +6,7 @@ import { BurgerIngredients } from "./components/BurgerIngredients/BurgerIngredie
 import { Modal } from "./components/Modal/Modal";
 import { OrderDetails } from "./components/OrderDetails/OrderDetails";
 import { ModalOverlay } from "./components/ModalOverlay/ModalOverlay";
+import { IngredientDetails } from "./components/IngredientDetails/IngredientDetails";
 
 const DATA_URL = "https://norma.nomoreparties.space/api/ingredients ";
 
@@ -14,6 +15,7 @@ function App() {
   const [error, setError] = useState();
   const [isOpenIngredientModal, setIsOpenIngredientModal] = useState(false);
   const [isOpenOrderModal, setIsOpenOrderModal] = useState(false);
+  const [ingredientData, setIngredientData] = useState();
 
   const closeIngredientModal = () => {
     setIsOpenIngredientModal(!isOpenIngredientModal);
@@ -24,8 +26,11 @@ function App() {
   const openOrderModal = () => {
     setIsOpenOrderModal(!isOpenOrderModal);
   };
-  const openIngredientModal = () => {
+  const openIngredientModal = (ingredient) => {
     setIsOpenIngredientModal(!isOpenIngredientModal);
+  };
+  const getDataIngredient = (ingredient) => {
+    setIngredientData(ingredient);
   };
 
   useEffect(() => {
@@ -61,6 +66,20 @@ function App() {
       </>
     );
   }
+  if (isOpenIngredientModal) {
+    return (
+      <>
+        <Modal>
+          <IngredientDetails
+            {...ingredientData}
+            close={closeIngredientModal}
+          ></IngredientDetails>
+        </Modal>
+        <ModalOverlay closeModal={closeIngredientModal}></ModalOverlay>
+      </>
+    );
+  }
+
   return (
     <div className="App">
       <AppHeader
@@ -70,8 +89,9 @@ function App() {
       ></AppHeader>
       <div className="app_grid_container">
         <BurgerIngredients
-          openModal={openIngredientModal}
           dataProps={data}
+          getDataIngredient={getDataIngredient}
+          openModal={openIngredientModal}
         ></BurgerIngredients>
         <BurgerConstructor
           openModal={openOrderModal}

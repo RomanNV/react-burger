@@ -5,7 +5,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import { BurgerBunBottom } from "../BurgerBun/BurgerBunBottom";
+import { BurgerBunBottom } from "../BurgerBunBottom/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
 
 export const BurgerConstructor = ({ dataProps, openModal }) => {

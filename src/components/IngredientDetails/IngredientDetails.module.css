@@ -1,0 +1,51 @@
+.modal_content {
+  position: relative;
+  width: 720px;
+  height: 540px;
+  border-radius: 40px;
+  background-color: #1c1c21;
+  border: 1px white solid;
+}
+.header_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  padding-bottom: 0;
+  height: 64px;
+}
+.header_box p {
+  display: inline-block;
+}
+.ingredient_card {
+  padding: 0 100px 60px 100px;
+  height: 374px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 520px;
+}
+img {
+  padding: 0 20px;
+  height: max-content;
+  width: max-content;
+}
+.info_box {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 32px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+}
