@@ -1,0 +1,35 @@
+.modal_content {
+  position: relative;
+  width: 720px;
+  height: 720px;
+  border-radius: 40px;
+  background-color: #1c1c21;
+}
+.content_box {
+  display: flex;
+  padding: 120px 100px;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+}
+.order_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.close_icon {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}
+
+.info_box {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

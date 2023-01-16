@@ -1,7 +1,14 @@
 import { BurgerIngredientsItem } from "../BurgerIngredientsItem/BurgerIngredientsItem";
 import styles from "./BurgerGroup.module.css";
 import PropTypes from "prop-types";
-export function BurgerGroup({ tabData, title, isCounter }) {
+import { propTypeData } from "../../utils/propTypeData.js";
+export function BurgerGroup({
+  tabData,
+  title,
+  isCounter,
+  toggleModal,
+  getDataIngredient,
+}) {
   return (
     <div className={styles.group_box}>
       <p className={`${styles.tab_title} text text_type_main-medium`}>
@@ -11,9 +18,13 @@ export function BurgerGroup({ tabData, title, isCounter }) {
         {tabData.map((ingredient) => {
           return (
             <BurgerIngredientsItem
+              toggleModal={toggleModal}
+              getDataIngredient={() => getDataIngredient(ingredient)}
               isCounter={isCounter}
               key={ingredient._id}
-              {...ingredient}
+              name={ingredient.name}
+              price={ingredient.price}
+              image={ingredient.image}
             ></BurgerIngredientsItem>
           );
         })}
@@ -23,7 +34,9 @@ export function BurgerGroup({ tabData, title, isCounter }) {
 }
 
 BurgerGroup.propTypes = {
-  tabData: PropTypes.array,
-  title: PropTypes.string,
-  isCounter: PropTypes.bool,
+  tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
+  title: PropTypes.string.isRequired,
+  isCounter: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getDataIngredient: PropTypes.func.isRequired,
 };

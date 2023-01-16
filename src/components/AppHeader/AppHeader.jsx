@@ -47,4 +47,6 @@ export default function AppHeader({ constructor, listItems, profile }) {
 }
 AppHeader.propTypes = {
   constructor: PropTypes.string,
+  listItems: PropTypes.string,
+  profile: PropTypes.string,
 };

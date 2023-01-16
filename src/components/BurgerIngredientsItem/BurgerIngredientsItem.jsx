@@ -3,9 +3,22 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
-export function BurgerIngredientsItem({ name, price, image, isCounter }) {
+export function BurgerIngredientsItem({
+  name,
+  price,
+  image,
+  isCounter,
+  getDataIngredient,
+  toggleModal,
+}) {
   return (
-    <div className={styles.ingredient_box}>
+    <div
+      className={styles.ingredient_box}
+      onClick={() => {
+        toggleModal();
+        getDataIngredient();
+      }}
+    >
       <img src={image} alt="фото ингредиента" />
       {isCounter && <Counter count={1} size="default" extraClass="m-1" />}
       <div className={`p-1 ${styles.price_box}`}>
@@ -19,7 +32,9 @@ export function BurgerIngredientsItem({ name, price, image, isCounter }) {
   );
 }
 BurgerIngredientsItem.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  isCounter: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  isCounter: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getDataIngredient: PropTypes.func.isRequired,
 };
