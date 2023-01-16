@@ -1,0 +1,49 @@
+.content_box {
+  padding-top: 100px;
+  max-width: 600px;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: max-content;
+}
+.burger_box {
+  list-style: none;
+  margin: 0;
+}
+.ul_box_scroll {
+  height: max-content;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 32px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.div_box_fixed {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding-left: 56px;
+  padding-bottom: 16px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+.button_container {
+  display: flex;
+  gap: 40px;
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+.price_box {
+  display: flex;
+  align-items: center;
+  gap: 9.5px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
