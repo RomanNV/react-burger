@@ -6,7 +6,7 @@ export const BurgerBunTop = ({ name, price, isLocked, image }) => {
   return (
     <>
       <ConstructorElement
-        text={name}
+        text={`${name} (верх)`}
         price={price}
         isLocked={isLocked}
         type={"top"}

@@ -14,7 +14,6 @@ export const IngredientDetails = ({
     <div className={styles.modal_content}>
       <header className={styles.header_box}>
         <p className="text text_type_main-large">Детали ингредиента</p>
-        <CloseIcon type="primary" onClick={() => toggleModal()} />
       </header>
       <div className={styles.ingredient_card}>
         <img src={image_large} alt="Фото ингредиента" />

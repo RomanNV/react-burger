@@ -4,12 +4,12 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ConstructorContext } from "../../utils/ConstructorContext";
+import { AppContext } from "../../utils/AppContext";
 import PropTypes from "prop-types";
 
-export const TotalPrice = ({ priceData }) => {
+export const TotalPrice = ({ priceData, getOrderNum }) => {
   const [accPrice, setAccPrice] = useState(0);
-  const { toggleOrderModal } = useContext(ConstructorContext);
+  const { toggleOrderModal } = useContext(AppContext);
 
   useEffect(() => {
     if (priceData.length === 0) {
@@ -30,7 +30,10 @@ export const TotalPrice = ({ priceData }) => {
         <CurrencyIcon className={styles.icon} type="primary" />
       </span>
       <Button
-        onClick={() => toggleOrderModal()}
+        onClick={() => {
+          toggleOrderModal();
+          getOrderNum();
+        }}
         htmlType="button"
         type="primary"
         size="large"

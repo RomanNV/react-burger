@@ -7,9 +7,7 @@ import { BurgerBunBottom } from "../BurgerBunBottom/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { propTypeData } from "../../utils/propTypeData.js";
-import PropTypes from "prop-types";
-import { ConstructorContext } from "../../utils/ConstructorContext";
+import { AppContext } from "../../utils/AppContext";
 import React, { useContext, useEffect, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
 import { getIngredients, getBun, getOrder } from "../../utils/funcs";
@@ -18,41 +16,49 @@ let initialState = {
   ingredientData: [],
   bunData: [],
   filtredData: [],
+  listIdOrder: [],
   orderNum: 0,
 };
 
 export const BurgerConstructor = () => {
   const { data, toggleOrderModal, isOpenOrderModal, setError } =
-    useContext(ConstructorContext);
+    useContext(AppContext);
 
   const [burgerConstructorData, setBurgerConstructorData] =
     useState(initialState);
 
-  useEffect(() => {});
-
   useEffect(() => {
-    async function setData() {
-      if (data.length === 0) {
-        return;
-      }
-      const ingredientData = getIngredients(data);
-      const bunData = getBun(data);
-      const filtredData = [...ingredientData, bunData];
-      const listIdOrder = filtredData.map((item) => {
-        return item._id;
-      });
-
-      const orderNum = await getOrder(listIdOrder, setError);
-      setBurgerConstructorData({
-        ...burgerConstructorData,
-        ingredientData,
-        bunData,
-        filtredData,
-        orderNum,
-      });
+    if (data.length === 0) {
+      return;
     }
-    setData();
+    const ingredientData = getIngredients(data);
+    const bunData = getBun(data);
+    const filtredData = [...ingredientData, bunData];
+    const listIdOrder = filtredData.map((item) => {
+      return item._id;
+    });
+
+    setBurgerConstructorData({
+      ...burgerConstructorData,
+      ingredientData,
+      bunData,
+      filtredData,
+      listIdOrder,
+    });
   }, [data, setBurgerConstructorData, getBun, getIngredients, getOrder]);
+
+  const getOrderNum = (arr) => {
+    return getOrder(arr)
+      .then((data) => {
+        setBurgerConstructorData({
+          ...burgerConstructorData,
+          orderNum: data.order.number,
+        });
+      })
+      .catch((e) => {
+        setError(e);
+      });
+  };
 
   return (
     <>
@@ -93,6 +99,7 @@ export const BurgerConstructor = () => {
           </div>
           <TotalPrice
             priceData={burgerConstructorData.filtredData}
+            getOrderNum={() => getOrderNum(burgerConstructorData.listIdOrder)}
           ></TotalPrice>
         </div>
       </section>
