@@ -3,8 +3,9 @@ import "./App.css";
 import AppHeader from "./components/AppHeader/AppHeader";
 import { BurgerConstructor } from "./components/BurgerConstructor/BurgerConstructor";
 import { BurgerIngredients } from "./components/BurgerIngredients/BurgerIngredients";
-
-const DATA_URL = "https://norma.nomoreparties.space/api/ingredients ";
+import { getData } from "./utils/funcs";
+import { ConstructorContext } from "./utils/ConstructorContext.js";
+import { ErrorMessage } from "./components/ErrorMessage/ErrorMessage";
 
 function App() {
   const [data, setData] = useState([]);
@@ -20,27 +21,11 @@ function App() {
   };
 
   useEffect(() => {
-    async function getData() {
-      try {
-        const responce = await fetch(DATA_URL);
-        if (!responce.ok) {
-          throw new Error();
-        }
-        const data = await responce.json();
-        setData(data.data);
-      } catch (err) {
-        setError(err);
-      }
-    }
-    getData();
+    getData(setData, setError);
   }, []);
 
   if (error) {
-    return (
-      <div className="error_message">
-        <p>Произошла ошибка, попробуйте зайти еще раз</p>
-      </div>
-    );
+    return <ErrorMessage></ErrorMessage>;
   }
   return (
     <div className="App">
@@ -55,11 +40,11 @@ function App() {
           toggleModal={toggleIngredientModal}
           isOpenModal={isOpenIngredientModal}
         ></BurgerIngredients>
-        <BurgerConstructor
-          toggleModal={toggleOrderModal}
-          dataProps={data}
-          isOpenModal={isOpenOrderModal}
-        ></BurgerConstructor>
+        <ConstructorContext.Provider
+          value={{ setError, data, toggleOrderModal, isOpenOrderModal }}
+        >
+          <BurgerConstructor></BurgerConstructor>
+        </ConstructorContext.Provider>
       </div>
     </div>
   );

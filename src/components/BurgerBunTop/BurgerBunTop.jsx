@@ -1,5 +1,5 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./BurgerBunTop.module.css";
+
 import PropTypes from "prop-types";
 
 export const BurgerBunTop = ({ name, price, isLocked, image }) => {

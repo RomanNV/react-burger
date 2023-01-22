@@ -2,12 +2,14 @@ import styles from "./OrderDetails.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import doneImage from "../../images/done.svg";
 import PropTypes from "prop-types";
-
-export const OrderDetails = ({ orderNum, toggleModal }) => {
+import { ConstructorContext } from "../../utils/ConstructorContext";
+import React, { useContext } from "react";
+export const OrderDetails = ({ orderNum }) => {
+  const { toggleOrderModal } = useContext(ConstructorContext);
   return (
     <>
       <div className={styles.modal_content}>
-        <div onClick={() => toggleModal()} className={styles.close_icon}>
+        <div onClick={() => toggleOrderModal()} className={styles.close_icon}>
           <CloseIcon type="primary" />
         </div>
 
@@ -34,5 +36,5 @@ export const OrderDetails = ({ orderNum, toggleModal }) => {
 };
 OrderDetails.propTypes = {
   toggleModal: PropTypes.func,
-  orderNum: PropTypes.string,
+  orderNum: PropTypes.number,
 };

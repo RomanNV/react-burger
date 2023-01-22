@@ -1,0 +1,11 @@
+.button_container {
+  display: flex;
+  gap: 40px;
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+.price_box {
+  display: flex;
+  align-items: center;
+  gap: 9.5px;
+}
