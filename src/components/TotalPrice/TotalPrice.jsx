@@ -46,4 +46,5 @@ export const TotalPrice = ({ priceData, getOrderNum }) => {
 
 TotalPrice.propTypes = {
   priceData: PropTypes.array,
+  getOrderNum: PropTypes.func,
 };
