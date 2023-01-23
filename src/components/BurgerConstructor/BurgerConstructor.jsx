@@ -37,7 +37,6 @@ export const BurgerConstructor = () => {
     const listIdOrder = filtredData.map((item) => {
       return item._id;
     });
-
     setBurgerConstructorData({
       ...burgerConstructorData,
       ingredientData,
