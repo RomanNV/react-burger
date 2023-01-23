@@ -1,12 +1,12 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./BurgerBunTop.module.css";
+
 import PropTypes from "prop-types";
 
 export const BurgerBunTop = ({ name, price, isLocked, image }) => {
   return (
     <>
       <ConstructorElement
-        text={name}
+        text={`${name} (верх)`}
         price={price}
         isLocked={isLocked}
         type={"top"}

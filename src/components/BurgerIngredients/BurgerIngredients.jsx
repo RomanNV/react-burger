@@ -1,17 +1,22 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
-import PropTypes from "prop-types";
 import { useMemo, useState, useRef } from "react";
 import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import { propTypeData } from "../../utils/propTypeData.js";
+import { AppContext } from "../../utils/AppContext";
+import React, { useContext } from "react";
 
-export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
+export const BurgerIngredients = () => {
+  const { data, toggleIngredientModal, isOpenIngredientModal } =
+    useContext(AppContext);
+
   const [ingredientData, setIngredientData] = useState();
+
   const getDataIngredient = (ingredient) => {
     setIngredientData(ingredient);
   };
+
   const bunTab = useRef(null);
   const sauceTab = useRef(null);
   const mainTab = useRef(null);
@@ -24,40 +29,43 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
 
   const tabDataBun = useMemo(
     () =>
-      dataProps.filter((element) => {
+      data.filter((element) => {
         if (element.type === "bun") {
           return element;
         }
       }),
-    [dataProps]
+    [data]
   );
 
   const tabDataMain = useMemo(
     () =>
-      dataProps.filter((element) => {
+      data.filter((element) => {
         if (element.type === "main") {
           return element;
         }
       }),
-    [dataProps]
+    [data]
   );
 
   const tabDataSauce = useMemo(
     () =>
-      dataProps.filter((element) => {
+      data.filter((element) => {
         if (element.type === "sauce") {
           return element;
         }
       }),
-    [dataProps]
+    [data]
   );
 
   return (
     <>
       {
-        <Modal toggleModal={toggleModal} isOpenModal={isOpenModal}>
+        <Modal
+          toggleModal={toggleIngredientModal}
+          isOpenModal={isOpenIngredientModal}
+        >
           <IngredientDetails
-            toggleModal={toggleModal}
+            toggleModal={toggleIngredientModal}
             {...ingredientData}
           ></IngredientDetails>
         </Modal>
@@ -77,7 +85,7 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
               tabData={tabDataBun}
               title={"Булки"}
               isCounter={isCounter}
-              toggleModal={toggleModal}
+              toggleModal={toggleIngredientModal}
             ></BurgerGroup>
           </li>
           <li ref={sauceTab}>
@@ -86,7 +94,7 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
               tabData={tabDataSauce}
               title={"Соусы"}
               isCounter={isCounter}
-              toggleModal={toggleModal}
+              toggleModal={toggleIngredientModal}
             ></BurgerGroup>
           </li>
           <li ref={mainTab}>
@@ -95,16 +103,11 @@ export const BurgerIngredients = ({ dataProps, toggleModal, isOpenModal }) => {
               tabData={tabDataMain}
               title={"Начинки"}
               isCounter={isCounter}
-              toggleModal={toggleModal}
+              toggleModal={toggleIngredientModal}
             ></BurgerGroup>
           </li>
         </ul>
       </section>
     </>
   );
-};
-BurgerIngredients.propTypes = {
-  dataProps: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  isOpenModal: PropTypes.bool.isRequired,
 };
