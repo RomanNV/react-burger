@@ -2,21 +2,28 @@ import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
+import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 
-export function BurgerIngredientsItem({
-  name,
-  price,
-  image,
-  isCounter,
-  getDataIngredient,
-  toggleModal,
-}) {
+export function BurgerIngredientsItem(props) {
+  const { name, price, image, isCounter } = props.ingredient;
+  const { isOpenIngredientModal } = useSelector(
+    (state) => state.ingredientModal
+  );
+  const dispatch = useDispatch();
+  const openModal = () => {
+    dispatch({ type: OPEN_INGREDIENT_MODAL });
+  };
+  const getViewItem = () => {
+    dispatch({ type: GET_VIEW_ITEM, viewItem: props.ingredient });
+  };
   return (
     <div
       className={styles.ingredient_box}
       onClick={() => {
-        toggleModal();
-        getDataIngredient();
+        openModal();
+        getViewItem();
       }}
     >
       <img src={image} alt="фото ингредиента" />

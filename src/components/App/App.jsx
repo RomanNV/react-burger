@@ -6,41 +6,47 @@ import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { getData } from "../../utils/funcs";
 import { AppContext } from "../../utils/AppContext.js";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredientsData } from "../../services/actions/burgerIngredients";
 function App() {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState();
-  const [isOpenIngredientModal, setIsOpenIngredientModal] = useState(false);
-  const [isOpenOrderModal, setIsOpenOrderModal] = useState(false);
+  // const [data, setData] = useState([]);
 
-  const toggleIngredientModal = () => {
-    setIsOpenIngredientModal(!isOpenIngredientModal);
-  };
-  const toggleOrderModal = () => {
-    setIsOpenOrderModal(!isOpenOrderModal);
-  };
+  // const [isOpenIngredientModal, setIsOpenIngredientModal] = useState(false);
+  // const [isOpenOrderModal, setIsOpenOrderModal] = useState(false);
+
+  // const toggleIngredientModal = () => {
+  //   setIsOpenIngredientModal(!isOpenIngredientModal);
+  // };
+  // const toggleOrderModal = () => {
+  //   setIsOpenOrderModal(!isOpenOrderModal);
+  // };
+  const { error } = useSelector((state) => state.ingredientsData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getData()
-      .then((data) => setData(data.data))
-      .catch((e) => {
-        setError(e);
-      });
-  }, []);
+    dispatch(getIngredientsData());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   getData()
+  //     .then((data) => setData(data.data))
+  //     .catch((e) => {});
+  // }, []);
 
   if (error) {
     return <ErrorMessage />;
   }
   return (
     <AppContext.Provider
-      value={{
-        data,
-        toggleOrderModal,
-        isOpenOrderModal,
-        toggleIngredientModal,
-        isOpenIngredientModal,
-        setError,
-      }}
+      value={
+        {
+          // data,
+          // toggleOrderModal,
+          // isOpenOrderModal,
+          // toggleIngredientModal,
+          // isOpenIngredientModal,
+        }
+      }
     >
       <div className={styles.App}>
         <AppHeader

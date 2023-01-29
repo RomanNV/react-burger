@@ -29,5 +29,21 @@ const getOrder = (arr) => {
 const getData = () => {
   return requestData(`${DATA_URL}ingredients`);
 };
+const getDataIng = () => {
+  return fetch(`${DATA_URL}ingredients`);
+};
 
-export { getData, getBun, getOrder, getIngredients };
+const getDataOrder = (arr) => {
+  const fetchBody = JSON.stringify({
+    ingredients: arr,
+  });
+
+  return fetch(`${DATA_URL}orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
+};
+export { getData, getBun, getOrder, getIngredients, getDataIng, getDataOrder };

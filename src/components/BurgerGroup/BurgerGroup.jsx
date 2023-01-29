@@ -2,13 +2,7 @@ import { BurgerIngredientsItem } from "../BurgerIngredientsItem/BurgerIngredient
 import styles from "./BurgerGroup.module.css";
 import PropTypes from "prop-types";
 import { propTypeData } from "../../utils/propTypeData.js";
-export function BurgerGroup({
-  tabData,
-  title,
-  isCounter,
-  toggleModal,
-  getDataIngredient,
-}) {
+export function BurgerGroup({ tabData, title, isCounter }) {
   return (
     <div className={styles.group_box}>
       <p className={`${styles.tab_title} text text_type_main-medium`}>
@@ -18,13 +12,9 @@ export function BurgerGroup({
         {tabData.map((ingredient) => {
           return (
             <BurgerIngredientsItem
-              toggleModal={toggleModal}
-              getDataIngredient={() => getDataIngredient(ingredient)}
               isCounter={isCounter}
               key={ingredient._id}
-              name={ingredient.name}
-              price={ingredient.price}
-              image={ingredient.image}
+              ingredient={ingredient}
             ></BurgerIngredientsItem>
           );
         })}

@@ -11,6 +11,8 @@ import { AppContext } from "../../utils/AppContext";
 import React, { useContext, useEffect, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
 import { getIngredients, getBun, getOrder } from "../../utils/funcs";
+import { useDispatch, useSelector } from "react-redux";
+import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 
 let initialState = {
   ingredientData: [],
@@ -21,18 +23,26 @@ let initialState = {
 };
 
 export const BurgerConstructor = () => {
-  const { data, toggleOrderModal, isOpenOrderModal, setError } =
-    useContext(AppContext);
+  const { isOpenConstructorModal } = useSelector(
+    (state) => state.constructorModal
+  );
+  console.log(isOpenConstructorModal);
+  const { dataIngredients } = useSelector((state) => state.ingredientsData);
 
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
+  };
   const [burgerConstructorData, setBurgerConstructorData] =
     useState(initialState);
 
   useEffect(() => {
-    if (data.length === 0) {
+    if (dataIngredients.length === 0) {
       return;
     }
-    const ingredientData = getIngredients(data);
-    const bunData = getBun(data);
+    const ingredientData = getIngredients(dataIngredients);
+    const bunData = getBun(dataIngredients);
     const filtredData = [...ingredientData, bunData];
     const listIdOrder = filtredData.map((item) => {
       return item._id;
@@ -44,7 +54,13 @@ export const BurgerConstructor = () => {
       filtredData,
       listIdOrder,
     });
-  }, [data, setBurgerConstructorData, getBun, getIngredients, getOrder]);
+  }, [
+    dataIngredients,
+    setBurgerConstructorData,
+    getBun,
+    getIngredients,
+    getOrder,
+  ]);
 
   const getOrderNum = (arr) => {
     return getOrder(arr)
@@ -54,14 +70,12 @@ export const BurgerConstructor = () => {
           orderNum: data.order.number,
         });
       })
-      .catch((e) => {
-        setError(e);
-      });
+      .catch((e) => {});
   };
 
   return (
     <>
-      <Modal isOpenModal={isOpenOrderModal} toggleModal={toggleOrderModal}>
+      <Modal isOpenModal={isOpenConstructorModal} closeModal={closeModal}>
         <OrderDetails orderNum={burgerConstructorData.orderNum}></OrderDetails>
       </Modal>
 
@@ -75,20 +89,18 @@ export const BurgerConstructor = () => {
           </div>
 
           <ul className={`custom-scroll ${styles.ul_box_scroll}`}>
-            {burgerConstructorData.ingredientData.map(
-              ({ _id, image, name, price }) => {
-                return (
-                  <li key={_id}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={name}
-                      price={price}
-                      thumbnail={image}
-                    ></ConstructorElement>
-                  </li>
-                );
-              }
-            )}
+            {dataIngredients.map(({ _id, image, name, price }) => {
+              return (
+                <li key={_id}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={name}
+                    price={price}
+                    thumbnail={image}
+                  ></ConstructorElement>
+                </li>
+              );
+            })}
           </ul>
           <div className={styles.div_box_fixed}>
             <BurgerBunBottom

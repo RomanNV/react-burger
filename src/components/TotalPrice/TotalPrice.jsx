@@ -6,10 +6,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AppContext } from "../../utils/AppContext";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 
 export const TotalPrice = ({ priceData, getOrderNum }) => {
+  const { isOpenConstructorModal } = useSelector(
+    (state) => state.constructorModal
+  );
+
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch({ type: OPEN_CONSTRUCTOR_MODAL });
+  };
   const [accPrice, setAccPrice] = useState(0);
-  const { toggleOrderModal } = useContext(AppContext);
 
   useEffect(() => {
     if (priceData.length === 0) {
@@ -31,7 +41,7 @@ export const TotalPrice = ({ priceData, getOrderNum }) => {
       </span>
       <Button
         onClick={() => {
-          toggleOrderModal();
+          openModal();
           getOrderNum();
         }}
         htmlType="button"

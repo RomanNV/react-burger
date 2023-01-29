@@ -8,7 +8,6 @@ export const IngredientDetails = ({
   proteins,
   fat,
   carbohydrates,
-  toggleModal,
 }) => {
   return (
     <div className={styles.modal_content}>
