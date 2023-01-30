@@ -27,7 +27,7 @@ export const OrderDetails = ({ orderNum }) => {
     </>
   );
 };
-OrderDetails.propTypes = {
-  toggleModal: PropTypes.func,
-  orderNum: PropTypes.number,
-};
+// OrderDetails.propTypes = {
+//   toggleModal: PropTypes.func,
+//   orderNum: PropTypes.number,
+// };

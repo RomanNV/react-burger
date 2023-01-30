@@ -12,6 +12,7 @@ export function BurgerGroup({ tabData, title, isCounter }) {
         {tabData.map((ingredient) => {
           return (
             <BurgerIngredientsItem
+              idItem={Math.random()}
               isCounter={isCounter}
               key={ingredient._id}
               ingredient={ingredient}
@@ -23,10 +24,10 @@ export function BurgerGroup({ tabData, title, isCounter }) {
   );
 }
 
-BurgerGroup.propTypes = {
-  tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
-  title: PropTypes.string.isRequired,
-  isCounter: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  getDataIngredient: PropTypes.func.isRequired,
-};
+// BurgerGroup.propTypes = {
+//   tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
+//   title: PropTypes.string.isRequired,
+//   isCounter: PropTypes.bool.isRequired,
+//   toggleModal: PropTypes.func.isRequired,
+//   getDataIngredient: PropTypes.func.isRequired,
+// };
