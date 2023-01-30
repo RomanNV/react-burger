@@ -26,7 +26,7 @@ export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
     (state) => state.constructorModal
   );
-  console.log(isOpenConstructorModal);
+
   const { dataIngredients } = useSelector((state) => state.ingredientsData);
 
   const dispatch = useDispatch();
