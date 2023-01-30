@@ -2,18 +2,14 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
-  GET_DATA_INGREDIENTS,
-  GET_BUN_DATA,
-  GET_ORDER_ID_LIST,
+  GET_CONSTRUCTOR_DATA,
 } from "../actions/burgerConstructor";
 
 const initialState = {
-  dataFilteredIngredients: [],
-  bunData: {},
+  constructorData: { ingredients: [], bun: {} },
   orderData: "",
   isOrderDataRequest: false,
   error: "",
-  listIdOrder: [],
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -31,24 +27,17 @@ export const constructorReducer = (state = initialState, action) => {
         orderData: action.orderData,
       };
     }
-    case GET_DATA_INGREDIENTS: {
+    case GET_CONSTRUCTOR_DATA: {
       return {
         ...state,
-        dataFilteredIngredients: action.dataFilteredIngredients,
+        constructorData: {
+          ...state.constructorData,
+          ingredients: action.ingredients,
+          bun: action.bun,
+        },
       };
     }
-    case GET_BUN_DATA: {
-      return {
-        ...state,
-        bunData: action.bunData,
-      };
-    }
-    case GET_ORDER_ID_LIST: {
-      return {
-        ...state,
-        listIdOrder: action.listIdOrder,
-      };
-    }
+
     default:
       return state;
   }

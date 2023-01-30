@@ -4,34 +4,41 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AppContext } from "../../utils/AppContext";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import { getOrderNum } from "../../services/actions/burgerConstructor";
 
-export const TotalPrice = ({ priceData, getOrderNum }) => {
-  const { isOpenConstructorModal } = useSelector(
-    (state) => state.constructorModal
+export const TotalPrice = ({ listIdOrder }) => {
+  const { ingredients, bun } = useSelector(
+    (state) => state.constructorData.constructorData
   );
-
+  const [totalIngredients, setTotalIngredients] = useState([]);
+  const [accPrice, setAccPrice] = useState(0);
   const dispatch = useDispatch();
 
   const openModal = () => {
     dispatch({ type: OPEN_CONSTRUCTOR_MODAL });
   };
-  const [accPrice, setAccPrice] = useState(0);
+
+  const getOrder = () => {
+    dispatch(getOrderNum(listIdOrder));
+  };
 
   useEffect(() => {
-    if (priceData.length === 0) {
+    setTotalIngredients([...ingredients, bun]);
+    console.log(totalIngredients);
+    if (totalIngredients.length === 0) {
       return;
     } else {
       let acc = 0;
-      priceData.forEach((item) => {
+      totalIngredients.forEach((item) => {
         acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
       });
+
       setAccPrice(acc);
     }
-  }, [priceData]);
+  }, [bun, ingredients]);
 
   return (
     <div className={styles.button_container}>
@@ -42,7 +49,7 @@ export const TotalPrice = ({ priceData, getOrderNum }) => {
       <Button
         onClick={() => {
           openModal();
-          getOrderNum();
+          getOrder();
         }}
         htmlType="button"
         type="primary"
