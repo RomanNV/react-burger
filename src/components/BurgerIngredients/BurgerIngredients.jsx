@@ -1,11 +1,9 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import { AppContext } from "../../utils/AppContext";
-import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
 
@@ -16,7 +14,6 @@ export const BurgerIngredients = () => {
   const { isOpenIngredientModal } = useSelector(
     (state) => state.ingredientModal
   );
-
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -25,11 +22,9 @@ export const BurgerIngredients = () => {
   const bunTab = useRef(null);
   const sauceTab = useRef(null);
   const mainTab = useRef(null);
-
   const onScroll = (element) => {
     element.scrollIntoView({ behavior: "smooth" });
   };
-
   const isCounter = true;
 
   const tabDataBun = useMemo(

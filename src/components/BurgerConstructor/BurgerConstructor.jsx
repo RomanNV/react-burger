@@ -5,6 +5,11 @@ import {
 import styles from "./BurgerConstructor.module.css";
 import { BurgerBunBottom } from "../BurgerBunBottom/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
+import {
+  ConstructorStartViewBunTop,
+  ConstructorStartViewBunBottom,
+  ConstructorStartViewBunIngredient,
+} from "../ConstructorStartViewBun/ConstructorStartView";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { useEffect, useState } from "react";
@@ -14,19 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import { GET_CONSTRUCTOR_DATA } from "../../services/actions/burgerConstructor";
 
-let initialState = {
-  ingredientData: [],
-  bunData: [],
-  filtredData: [],
-  listIdOrder: [],
-  orderNum: 0,
-};
-
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
     (state) => state.constructorModal
   );
   const { dataIngredients } = useSelector((state) => state.ingredientsData);
+  // const dataIngredients = [];
   const { ingredients, bun } = useSelector(
     (state) => state.constructorData.constructorData
   );
@@ -37,9 +35,6 @@ export const BurgerConstructor = () => {
   const closeModal = () => {
     dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
   };
-
-  const [burgerConstructorData, setBurgerConstructorData] =
-    useState(initialState);
 
   useEffect(() => {
     if (dataIngredients.length === 0) {
@@ -68,25 +63,40 @@ export const BurgerConstructor = () => {
       <section className={styles.content_box}>
         <div className={styles.burger_box}>
           <div className={styles.div_box_fixed}>
-            <BurgerBunTop isLocked={true} {...bun}></BurgerBunTop>
+            {!bun._id ? (
+              <ConstructorStartViewBunTop />
+            ) : (
+              <BurgerBunTop isLocked={true} {...bun}></BurgerBunTop>
+            )}
           </div>
 
           <ul className={`custom-scroll ${styles.ul_box_scroll}`}>
-            {ingredients.map(({ _id, image, name, price }) => {
-              return (
-                <li key={_id}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                  ></ConstructorElement>
-                </li>
-              );
-            })}
+            {ingredients.length === 0 ? (
+              <li>
+                <DragIcon type="primary" />
+                <ConstructorStartViewBunIngredient />
+              </li>
+            ) : (
+              ingredients.map(({ _id, image, name, price }) => {
+                return (
+                  <li key={_id}>
+                    <DragIcon type="primary" />
+                    <ConstructorElement
+                      text={name}
+                      price={price}
+                      thumbnail={image}
+                    ></ConstructorElement>
+                  </li>
+                );
+              })
+            )}
           </ul>
           <div className={styles.div_box_fixed}>
-            <BurgerBunBottom isLocked={true} {...bun}></BurgerBunBottom>
+            {!bun._id ? (
+              <ConstructorStartViewBunBottom />
+            ) : (
+              <BurgerBunBottom isLocked={true} {...bun}></BurgerBunBottom>
+            )}
           </div>
           <TotalPrice listIdOrder={listIdOrder}></TotalPrice>
         </div>

@@ -35,7 +35,7 @@ export const TotalPrice = ({ listIdOrder }) => {
       totalIngredients.forEach((item) => {
         acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
       });
-
+      console.log(acc);
       setAccPrice(acc);
     }
   }, [bun, ingredients]);
