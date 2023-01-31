@@ -9,6 +9,7 @@ import { useDrag } from "react-dnd";
 
 export function BurgerIngredientsItem(props) {
   const { name, price, image, isCounter } = props.ingredient;
+
   const dispatch = useDispatch();
   const openModal = () => {
     dispatch({ type: OPEN_INGREDIENT_MODAL });
@@ -19,7 +20,7 @@ export function BurgerIngredientsItem(props) {
 
   const [{ isDrag }, drag] = useDrag({
     type: "ingredient",
-    item: props.idItem,
+    item: { ...props },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),

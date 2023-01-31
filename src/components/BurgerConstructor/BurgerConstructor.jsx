@@ -14,15 +14,16 @@ import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { useEffect, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
-import { getIngredients, getBun, getPrice } from "../../utils/funcs";
+import { getPrice } from "../../utils/funcs";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
-  GET_CONSTRUCTOR_DATA,
   GET_TOTAL_PRICE,
+  ADD_BUN,
+  ADD_INGREDIENT,
 } from "../../services/actions/burgerConstructor";
-import { datas } from "../../utils/data";
+import { useDrop } from "react-dnd";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
@@ -31,10 +32,9 @@ export const BurgerConstructor = () => {
   const { orderData, totalPrice } = useSelector(
     (state) => state.constructorData
   );
-  const { ingredients, bun } = useSelector(
-    (state) => state.constructorData.constructorData
-  );
-  const [dataIngredients, setDataIngredients] = useState([]);
+
+  const { ingredients, bun } = useSelector((state) => state.constructorData);
+
   const [listIdOrder, setListIdOrder] = useState([]);
   const dispatch = useDispatch();
 
@@ -51,33 +51,28 @@ export const BurgerConstructor = () => {
   };
 
   useEffect(() => {
-    if (dataIngredients.length === 0) {
-      return;
-    }
     dispatch({
-      type: GET_CONSTRUCTOR_DATA,
-      bun: [getBun(dataIngredients)],
-      ingredients: getIngredients(dataIngredients),
+      type: GET_TOTAL_PRICE,
+      totalPrice: getPrice([...ingredients, ...bun]),
     });
-  }, [dataIngredients, dispatch]);
 
-  useEffect(() => {
     setListIdOrder(
       [...ingredients, ...bun].map((item) => {
         return item._id;
       })
     );
-    dispatch({
-      type: GET_TOTAL_PRICE,
-      totalPrice: getPrice([...ingredients, ...bun]),
-    });
   }, [bun, ingredients]);
 
-  useEffect(() => {
-    setDataIngredients(datas());
-  }, []);
-
-  console.log(ingredients.length);
+  const [, drop] = useDrop({
+    accept: "ingredient",
+    drop({ ingredient }) {
+      if (ingredient.type === "bun") {
+        dispatch({ type: ADD_BUN, bun: [ingredient] });
+      } else {
+        dispatch({ type: ADD_INGREDIENT, ingredients: ingredient });
+      }
+    },
+  });
 
   return (
     <>
@@ -85,7 +80,7 @@ export const BurgerConstructor = () => {
         <OrderDetails orderNum={orderData}></OrderDetails>
       </Modal>
 
-      <section className={styles.content_box}>
+      <section className={styles.content_box} ref={drop}>
         <div className={styles.burger_box}>
           <div className={styles.div_box_fixed}>
             {bun.length === 0 ? (
@@ -127,7 +122,7 @@ export const BurgerConstructor = () => {
             )}
           </div>
           <TotalPrice
-            listIdOrder={listIdOrder}
+            listIdOrder={bun.length === 0 ? [] : listIdOrder}
             totalPrice={totalPrice}
           ></TotalPrice>
         </div>
