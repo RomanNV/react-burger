@@ -9,12 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import { getOrderNum } from "../../services/actions/burgerConstructor";
 
-export const TotalPrice = ({ listIdOrder }) => {
-  const { ingredients, bun } = useSelector(
-    (state) => state.constructorData.constructorData
-  );
-  const [totalIngredients, setTotalIngredients] = useState([]);
-  const [accPrice, setAccPrice] = useState(0);
+export const TotalPrice = ({ listIdOrder, totalPrice }) => {
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -25,24 +20,10 @@ export const TotalPrice = ({ listIdOrder }) => {
     dispatch(getOrderNum(listIdOrder));
   };
 
-  useEffect(() => {
-    setTotalIngredients([...ingredients, ...bun]);
-    if (totalIngredients.length === 0) {
-      return;
-    } else {
-      let acc = 0;
-      totalIngredients.forEach((item) => {
-        acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
-      });
-      console.log(acc);
-      setAccPrice(acc);
-    }
-  }, [bun, ingredients]);
-
   return (
     <div className={styles.button_container}>
       <span className={styles.price_box}>
-        <p className="text text_type_main-large">{accPrice}</p>
+        <p className="text text_type_main-large">{totalPrice}</p>
         <CurrencyIcon className={styles.icon} type="primary" />
       </span>
       <Button

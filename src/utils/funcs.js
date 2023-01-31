@@ -46,4 +46,26 @@ const getDataOrder = (arr) => {
     body: fetchBody,
   });
 };
-export { getData, getBun, getOrder, getIngredients, getDataIng, getDataOrder };
+
+const getPrice = (arr) => {
+  if (arr.length === 0) {
+    return 0;
+  } else {
+    let acc = 0;
+    arr.forEach((item) => {
+      console.log(item);
+      acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
+    });
+
+    return acc;
+  }
+};
+export {
+  getData,
+  getBun,
+  getOrder,
+  getIngredients,
+  getDataIng,
+  getDataOrder,
+  getPrice,
+};

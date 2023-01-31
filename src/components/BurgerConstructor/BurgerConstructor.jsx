@@ -14,26 +14,40 @@ import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { useEffect, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
-import { getIngredients, getBun, getOrder } from "../../utils/funcs";
+import { getIngredients, getBun, getPrice } from "../../utils/funcs";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
-import { GET_CONSTRUCTOR_DATA } from "../../services/actions/burgerConstructor";
+import {
+  DELETE_CONSTRUCTOR_INGREDIENT,
+  GET_CONSTRUCTOR_DATA,
+  GET_TOTAL_PRICE,
+} from "../../services/actions/burgerConstructor";
+import { datas } from "../../utils/data";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
     (state) => state.constructorModal
   );
-  const { dataIngredients } = useSelector((state) => state.ingredientsData);
-  // const dataIngredients = [];
+  const { orderData, totalPrice } = useSelector(
+    (state) => state.constructorData
+  );
   const { ingredients, bun } = useSelector(
     (state) => state.constructorData.constructorData
   );
-  const { orderData } = useSelector((state) => state.constructorData);
+  const [dataIngredients, setDataIngredients] = useState([]);
   const [listIdOrder, setListIdOrder] = useState([]);
   const dispatch = useDispatch();
 
   const closeModal = () => {
     dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
+  };
+
+  const deleteConstructorItem = (id) => {
+    const filteredIngredients = ingredients.filter((item) => item._id !== id);
+    dispatch({
+      type: DELETE_CONSTRUCTOR_INGREDIENT,
+      ingredients: filteredIngredients,
+    });
   };
 
   useEffect(() => {
@@ -45,12 +59,25 @@ export const BurgerConstructor = () => {
       bun: [getBun(dataIngredients)],
       ingredients: getIngredients(dataIngredients),
     });
+  }, [dataIngredients, dispatch]);
+
+  useEffect(() => {
     setListIdOrder(
-      [...ingredients, bun].map((item) => {
+      [...ingredients, ...bun].map((item) => {
         return item._id;
       })
     );
-  }, [dataIngredients]);
+    dispatch({
+      type: GET_TOTAL_PRICE,
+      totalPrice: getPrice([...ingredients, ...bun]),
+    });
+  }, [bun, ingredients]);
+
+  useEffect(() => {
+    setDataIngredients(datas());
+  }, []);
+
+  console.log(ingredients.length);
 
   return (
     <>
@@ -83,6 +110,9 @@ export const BurgerConstructor = () => {
                       text={name}
                       price={price}
                       thumbnail={image}
+                      handleClose={() => {
+                        deleteConstructorItem(_id);
+                      }}
                     ></ConstructorElement>
                   </li>
                 );
@@ -96,7 +126,10 @@ export const BurgerConstructor = () => {
               <BurgerBunBottom isLocked={true} {...bun[0]}></BurgerBunBottom>
             )}
           </div>
-          <TotalPrice listIdOrder={listIdOrder}></TotalPrice>
+          <TotalPrice
+            listIdOrder={listIdOrder}
+            totalPrice={totalPrice}
+          ></TotalPrice>
         </div>
       </section>
     </>

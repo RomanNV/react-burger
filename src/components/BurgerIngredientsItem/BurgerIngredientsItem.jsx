@@ -8,7 +8,6 @@ import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 
 export function BurgerIngredientsItem(props) {
-  console.log(props.idItem);
   const { name, price, image, isCounter } = props.ingredient;
   const dispatch = useDispatch();
   const openModal = () => {

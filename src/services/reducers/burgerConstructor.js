@@ -3,7 +3,9 @@ import {
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
   GET_ORDER_ID_LIST,
+  DELETE_CONSTRUCTOR_INGREDIENT,
   GET_CONSTRUCTOR_DATA,
+  GET_TOTAL_PRICE,
 } from "../actions/burgerConstructor";
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
   orderData: "",
   isOrderDataRequest: false,
   error: "",
+  totalPrice: 0,
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -36,6 +39,21 @@ export const constructorReducer = (state = initialState, action) => {
           ingredients: action.ingredients,
           bun: action.bun,
         },
+      };
+    }
+    case DELETE_CONSTRUCTOR_INGREDIENT: {
+      return {
+        ...state,
+        constructorData: {
+          ...state.constructorData,
+          ingredients: action.ingredients,
+        },
+      };
+    }
+    case GET_TOTAL_PRICE: {
+      return {
+        ...state,
+        totalPrice: action.totalPrice,
       };
     }
 
