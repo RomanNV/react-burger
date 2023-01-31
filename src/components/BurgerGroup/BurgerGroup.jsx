@@ -12,7 +12,6 @@ export function BurgerGroup({ tabData, title, isCounter }) {
         {tabData.map((ingredient) => {
           return (
             <BurgerIngredientsItem
-              idItem={Math.random()}
               isCounter={isCounter}
               key={ingredient._id}
               ingredient={ingredient}

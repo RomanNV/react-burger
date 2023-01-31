@@ -2,7 +2,12 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import PropTypes from "prop-types";
 
-export const BurgerBunTop = ({ name, price, isLocked, image }) => {
+export const BurgerBunTop = ({ item, isLocked }) => {
+  const [
+    {
+      ingredient: { name, price, image },
+    },
+  ] = item;
   return (
     <>
       <ConstructorElement

@@ -32,3 +32,7 @@ export const getOrderNum = (arr) => {
       });
   };
 };
+
+export const getIngredientWithId = (ingredient) => {
+  return { ingredient, itemId: Math.random() };
+};

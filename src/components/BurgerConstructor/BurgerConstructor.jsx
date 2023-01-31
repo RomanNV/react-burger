@@ -22,6 +22,7 @@ import {
   GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
+  getIngredientWithId,
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 
@@ -43,7 +44,9 @@ export const BurgerConstructor = () => {
   };
 
   const deleteConstructorItem = (id) => {
-    const filteredIngredients = ingredients.filter((item) => item._id !== id);
+    const filteredIngredients = ingredients.filter(
+      (item) => item.itemId !== id
+    );
     dispatch({
       type: DELETE_CONSTRUCTOR_INGREDIENT,
       ingredients: filteredIngredients,
@@ -58,7 +61,7 @@ export const BurgerConstructor = () => {
 
     setListIdOrder(
       [...ingredients, ...bun].map((item) => {
-        return item._id;
+        return item.ingredient._id;
       })
     );
   }, [bun, ingredients]);
@@ -67,9 +70,12 @@ export const BurgerConstructor = () => {
     accept: "ingredient",
     drop({ ingredient }) {
       if (ingredient.type === "bun") {
-        dispatch({ type: ADD_BUN, bun: [ingredient] });
+        dispatch({ type: ADD_BUN, bun: [getIngredientWithId(ingredient)] });
       } else {
-        dispatch({ type: ADD_INGREDIENT, ingredients: ingredient });
+        dispatch({
+          type: ADD_INGREDIENT,
+          ingredients: getIngredientWithId(ingredient),
+        });
       }
     },
   });
@@ -86,7 +92,7 @@ export const BurgerConstructor = () => {
             {bun.length === 0 ? (
               <ConstructorStartViewBunTop />
             ) : (
-              <BurgerBunTop isLocked={true} {...bun[0]}></BurgerBunTop>
+              <BurgerBunTop item={bun} isLocked={true}></BurgerBunTop>
             )}
           </div>
 
@@ -97,16 +103,21 @@ export const BurgerConstructor = () => {
                 <ConstructorStartViewBunIngredient />
               </li>
             ) : (
-              ingredients.map(({ _id, image, name, price }) => {
+              ingredients.map((item) => {
+                const {
+                  itemId,
+                  ingredient: { _id, image, name, price },
+                } = item;
+
                 return (
-                  <li key={_id}>
+                  <li key={itemId}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={name}
                       price={price}
                       thumbnail={image}
                       handleClose={() => {
-                        deleteConstructorItem(_id);
+                        deleteConstructorItem(itemId);
                       }}
                     ></ConstructorElement>
                   </li>
@@ -118,7 +129,7 @@ export const BurgerConstructor = () => {
             {bun.length === 0 ? (
               <ConstructorStartViewBunBottom />
             ) : (
-              <BurgerBunBottom isLocked={true} {...bun[0]}></BurgerBunBottom>
+              <BurgerBunBottom item={bun} isLocked={true}></BurgerBunBottom>
             )}
           </div>
           <TotalPrice

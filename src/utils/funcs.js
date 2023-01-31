@@ -53,8 +53,12 @@ const getPrice = (arr) => {
   } else {
     let acc = 0;
     arr.forEach((item) => {
-      console.log(item);
-      acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
+      const ingredient = item.ingredient;
+
+      acc =
+        ingredient.type === "bun"
+          ? ingredient.price * 2 + acc
+          : acc + ingredient.price;
     });
 
     return acc;
