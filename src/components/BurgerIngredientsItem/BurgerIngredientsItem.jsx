@@ -6,21 +6,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
 import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
+import { useEffect, useState } from "react";
 
-export function BurgerIngredientsItem(props) {
-  const { name, price, image, isCounter } = props.ingredient;
+export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
+  const { name, price, image, _id, type } = ingredient;
+  const { ingredients, bun } = useSelector((state) => state.constructorData);
+  const [counter, setCounter] = useState({ bun: 0, ingredient: 0 });
 
   const dispatch = useDispatch();
   const openModal = () => {
     dispatch({ type: OPEN_INGREDIENT_MODAL });
   };
   const getViewItem = () => {
-    dispatch({ type: GET_VIEW_ITEM, viewItem: props.ingredient });
+    dispatch({ type: GET_VIEW_ITEM, viewItem: ingredient });
   };
+
+  useEffect(() => {
+    if (bun.length !== 0 && bunId === _id) {
+      setCounter({ ...counter, bun: 2 });
+    } else {
+      setCounter({ ...counter, bun: 0 });
+    }
+  }, [bunId]);
+
+  useEffect(() => {
+    const filtredList = [...ingredients].filter((item) => {
+      return item.ingredient._id === _id;
+    });
+    setCounter({ ...counter, ingredient: filtredList.length });
+
+    if (bun.length !== 0) {
+      setBunId(bun[0]["ingredient"]._id);
+    }
+  }, [ingredients, bun]);
 
   const [{ isDrag }, drag] = useDrag({
     type: "ingredient",
-    item: { ...props },
+    item: { ingredient },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -37,7 +59,13 @@ export function BurgerIngredientsItem(props) {
         }}
       >
         <img src={image} alt="фото ингредиента" />
-        {!isCounter && <Counter count={1} size="default" extraClass="m-1" />}
+        {counter.bun !== 0 && type === "bun" ? (
+          <Counter count={counter.bun} size="default" extraClass="m-1" />
+        ) : counter.ingredient !== 0 && type !== "bun" ? (
+          <Counter count={counter.ingredient} size="default" extraClass="m-1" />
+        ) : (
+          <></>
+        )}
         <div className={`p-1 ${styles.price_box}`}>
           <CurrencyIcon type="primary" />
           <span className="text text_type_digits-default">{price}</span>

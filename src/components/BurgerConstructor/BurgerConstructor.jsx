@@ -30,11 +30,9 @@ export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
     (state) => state.constructorModal
   );
-  const { orderData, totalPrice } = useSelector(
+  const { totalPrice, ingredients, bun } = useSelector(
     (state) => state.constructorData
   );
-
-  const { ingredients, bun } = useSelector((state) => state.constructorData);
 
   const [listIdOrder, setListIdOrder] = useState([]);
   const dispatch = useDispatch();
@@ -70,7 +68,7 @@ export const BurgerConstructor = () => {
     accept: "ingredient",
     drop({ ingredient }) {
       if (ingredient.type === "bun") {
-        dispatch({ type: ADD_BUN, bun: [getIngredientWithId(ingredient)] });
+        dispatch({ type: ADD_BUN, bun: { ingredient } });
       } else {
         dispatch({
           type: ADD_INGREDIENT,
@@ -83,7 +81,7 @@ export const BurgerConstructor = () => {
   return (
     <>
       <Modal isOpenModal={isOpenConstructorModal} closeModal={closeModal}>
-        <OrderDetails orderNum={orderData}></OrderDetails>
+        <OrderDetails></OrderDetails>
       </Modal>
 
       <section className={styles.content_box} ref={drop}>
@@ -92,7 +90,7 @@ export const BurgerConstructor = () => {
             {bun.length === 0 ? (
               <ConstructorStartViewBunTop />
             ) : (
-              <BurgerBunTop item={bun} isLocked={true}></BurgerBunTop>
+              <BurgerBunTop {...bun[0]["ingredient"]}></BurgerBunTop>
             )}
           </div>
 
@@ -129,7 +127,7 @@ export const BurgerConstructor = () => {
             {bun.length === 0 ? (
               <ConstructorStartViewBunBottom />
             ) : (
-              <BurgerBunBottom item={bun} isLocked={true}></BurgerBunBottom>
+              <BurgerBunBottom {...bun[0]["ingredient"]}></BurgerBunBottom>
             )}
           </div>
           <TotalPrice

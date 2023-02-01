@@ -25,7 +25,6 @@ export const BurgerIngredients = () => {
   const onScroll = (element) => {
     element.scrollIntoView({ behavior: "smooth" });
   };
-  const isCounter = true;
 
   const tabDataBun = useMemo(
     () =>
@@ -74,25 +73,13 @@ export const BurgerIngredients = () => {
 
         <ul className={`custom-scroll ${styles.ul_box}`}>
           <li ref={bunTab}>
-            <BurgerGroup
-              tabData={tabDataBun}
-              title={"Булки"}
-              isCounter={isCounter}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataBun} title={"Булки"}></BurgerGroup>
           </li>
           <li ref={sauceTab}>
-            <BurgerGroup
-              tabData={tabDataSauce}
-              title={"Соусы"}
-              isCounter={isCounter}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataSauce} title={"Соусы"}></BurgerGroup>
           </li>
           <li ref={mainTab}>
-            <BurgerGroup
-              tabData={tabDataMain}
-              title={"Начинки"}
-              isCounter={isCounter}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataMain} title={"Начинки"}></BurgerGroup>
           </li>
         </ul>
       </section>

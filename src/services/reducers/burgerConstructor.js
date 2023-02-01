@@ -2,9 +2,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
-  GET_ORDER_ID_LIST,
   DELETE_CONSTRUCTOR_INGREDIENT,
-  GET_CONSTRUCTOR_DATA,
   GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
@@ -37,7 +35,7 @@ export const constructorReducer = (state = initialState, action) => {
     case ADD_BUN: {
       return {
         ...state,
-        bun: action.bun,
+        bun: [action.bun],
       };
     }
     case ADD_INGREDIENT: {
