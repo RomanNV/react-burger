@@ -12,7 +12,7 @@ import {
 } from "../ConstructorStartViewBun/ConstructorStartView";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
 import { getPrice } from "../../utils/funcs";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +25,8 @@ import {
   getIngredientWithId,
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
+import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
+import { data } from "../../utils/data";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
@@ -41,15 +43,15 @@ export const BurgerConstructor = () => {
     dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
   };
 
-  const deleteConstructorItem = (id) => {
-    const filteredIngredients = ingredients.filter(
-      (item) => item.itemId !== id
-    );
-    dispatch({
-      type: DELETE_CONSTRUCTOR_INGREDIENT,
-      ingredients: filteredIngredients,
-    });
-  };
+  // const deleteConstructorItem = (id) => {
+  //   const filteredIngredients = ingredients.filter(
+  //     (item) => item.itemId !== id
+  //   );
+  //   dispatch({
+  //     type: DELETE_CONSTRUCTOR_INGREDIENT,
+  //     ingredients: filteredIngredients,
+  //   });
+  // };
 
   useEffect(() => {
     dispatch({
@@ -77,6 +79,20 @@ export const BurgerConstructor = () => {
       }
     },
   });
+  //обравотка сортировки
+  // const findCard = useCallback(
+  //   (id) => {
+  //     const card = ingredients.filter((c) => `${c.id}` === id)[0];
+  //     console.log(card);
+  //     return {
+  //       card,
+  //       index: ingredients.indexOf(card),
+  //     };
+  //   },
+  //   [ingredients]
+  // );
+
+  //конец обработки сортировки
 
   return (
     <>
@@ -101,24 +117,14 @@ export const BurgerConstructor = () => {
                 <ConstructorStartViewBunIngredient />
               </li>
             ) : (
-              ingredients.map((item) => {
-                const {
-                  itemId,
-                  ingredient: { _id, image, name, price },
-                } = item;
-
+              ingredients.map((item, index) => {
+                const { itemId } = item;
                 return (
-                  <li key={itemId}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={name}
-                      price={price}
-                      thumbnail={image}
-                      handleClose={() => {
-                        deleteConstructorItem(itemId);
-                      }}
-                    ></ConstructorElement>
-                  </li>
+                  <ConstructorItem
+                    key={itemId}
+                    item={item}
+                    index={index}
+                  ></ConstructorItem>
                 );
               })
             )}

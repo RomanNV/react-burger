@@ -1,4 +1,8 @@
-const data = [
+const getIngredientWithId = (ingredient) => {
+  return { ingredient, itemId: Math.random() };
+};
+
+const datas = [
   {
     _id: "60d3b41abdacab0026a733c6",
     name: "Краторная булка N-200i",
@@ -212,6 +216,7 @@ const data = [
     __v: 0,
   },
 ];
-export const datas = () => {
-  return data;
+const datar = (datas) => {
+  return datas.map((item) => getIngredientWithId(item));
 };
+export const data = datar(datas);

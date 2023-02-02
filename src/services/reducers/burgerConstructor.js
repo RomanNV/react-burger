@@ -3,12 +3,12 @@ import {
   GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
+  REORDER_INGREDIENT_LIST,
 } from "../actions/burgerConstructor";
 
 const initialState = {
   ingredients: [],
   bun: [],
-
   totalPrice: 0,
 };
 
@@ -39,6 +39,9 @@ export const constructorReducer = (state = initialState, action) => {
         ...state,
         totalPrice: action.totalPrice,
       };
+    }
+    case REORDER_INGREDIENT_LIST: {
+      return { ...state, ingredients: action.splisedList };
     }
 
     default:
