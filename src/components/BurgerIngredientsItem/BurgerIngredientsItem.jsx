@@ -47,34 +47,35 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
       isDrag: monitor.isDragging(),
     }),
   });
+  const opacityNum = isDrag ? 0.3 : 1;
 
   return (
-    !isDrag && (
-      <div
-        ref={drag}
-        className={styles.ingredient_box}
-        onClick={() => {
-          openModal();
-          getViewItem();
-        }}
-      >
-        <img src={image} alt="фото ингредиента" />
-        {counter.bun !== 0 && type === "bun" ? (
-          <Counter count={counter.bun} size="default" extraClass="m-1" />
-        ) : counter.ingredient !== 0 && type !== "bun" ? (
-          <Counter count={counter.ingredient} size="default" extraClass="m-1" />
-        ) : (
-          <></>
-        )}
-        <div className={`p-1 ${styles.price_box}`}>
-          <CurrencyIcon type="primary" />
-          <span className="text text_type_digits-default">{price}</span>
-        </div>
-        <p className={`text text_type_main-default ${styles.ingredient_name}`}>
-          {name}
-        </p>
+    <div
+      opacity
+      ref={drag}
+      className={`${styles.ingredient_box} `}
+      style={{ opacity: `${opacityNum}` }}
+      onClick={() => {
+        openModal();
+        getViewItem();
+      }}
+    >
+      <img src={image} alt="фото ингредиента" />
+      {counter.bun !== 0 && type === "bun" ? (
+        <Counter count={counter.bun} size="default" extraClass="m-1" />
+      ) : counter.ingredient !== 0 && type !== "bun" ? (
+        <Counter count={counter.ingredient} size="default" extraClass="m-1" />
+      ) : (
+        <></>
+      )}
+      <div className={`p-1 ${styles.price_box}`}>
+        <CurrencyIcon type="primary" />
+        <span className="text text_type_digits-default">{price}</span>
       </div>
-    )
+      <p className={`text text_type_main-default ${styles.ingredient_name}`}>
+        {name}
+      </p>
+    </div>
   );
 }
 // BurgerIngredientsItem.propTypes = {
