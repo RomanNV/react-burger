@@ -7,7 +7,7 @@ import {
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
-import { getOrderNum } from "../../services/actions/burgerConstructor";
+import { getOrderNum, NOT_BUN } from "../../services/actions/totalPrice";
 
 export const TotalPrice = ({ listIdOrder, totalPrice }) => {
   const dispatch = useDispatch();
@@ -17,7 +17,13 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
   };
 
   const getOrder = () => {
-    dispatch(getOrderNum(listIdOrder));
+    console.log(listIdOrder);
+    if (!listIdOrder.length) {
+      console.log("h");
+      dispatch({ type: NOT_BUN });
+    } else {
+      dispatch(getOrderNum(listIdOrder));
+    }
   };
 
   return (
@@ -28,8 +34,8 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
       </span>
       <Button
         onClick={() => {
-          openModal();
           getOrder();
+          openModal();
         }}
         htmlType="button"
         type="primary"

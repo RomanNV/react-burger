@@ -1,0 +1,5 @@
+.box_message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
