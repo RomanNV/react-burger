@@ -1,7 +1,4 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import { BurgerBunBottom } from "../BurgerBunBottom/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
@@ -12,13 +9,12 @@ import {
 } from "../ConstructorStartViewBun/ConstructorStartView";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
 import { getPrice } from "../../utils/funcs";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {
-  DELETE_CONSTRUCTOR_INGREDIENT,
   GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
@@ -26,7 +22,6 @@ import {
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
-import { data } from "../../utils/data";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(
@@ -37,22 +32,13 @@ export const BurgerConstructor = () => {
   );
 
   const [listIdOrder, setListIdOrder] = useState([]);
+
   const dispatch = useDispatch();
 
   const closeModal = () => {
     dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
   };
-
-  // const deleteConstructorItem = (id) => {
-  //   const filteredIngredients = ingredients.filter(
-  //     (item) => item.itemId !== id
-  //   );
-  //   dispatch({
-  //     type: DELETE_CONSTRUCTOR_INGREDIENT,
-  //     ingredients: filteredIngredients,
-  //   });
-  // };
-
+  //рассчитываем стоимость и обнавляем состояние массива id ингредиентов для заказа
   useEffect(() => {
     dispatch({
       type: GET_TOTAL_PRICE,
@@ -65,7 +51,7 @@ export const BurgerConstructor = () => {
       })
     );
   }, [bun, ingredients]);
-
+  //подключаем drop для поля конструктора
   const [, drop] = useDrop({
     accept: "ingredient",
     drop({ ingredient }) {
@@ -79,20 +65,6 @@ export const BurgerConstructor = () => {
       }
     },
   });
-  //обравотка сортировки
-  // const findCard = useCallback(
-  //   (id) => {
-  //     const card = ingredients.filter((c) => `${c.id}` === id)[0];
-  //     console.log(card);
-  //     return {
-  //       card,
-  //       index: ingredients.indexOf(card),
-  //     };
-  //   },
-  //   [ingredients]
-  // );
-
-  //конец обработки сортировки
 
   return (
     <>

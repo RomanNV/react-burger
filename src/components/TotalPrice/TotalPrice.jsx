@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "./TotalPrice.module.css";
 import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import { getOrderNum, NOT_BUN } from "../../services/actions/totalPrice";
 
@@ -17,9 +16,7 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
   };
 
   const getOrder = () => {
-    console.log(listIdOrder);
     if (!listIdOrder.length) {
-      console.log("h");
       dispatch({ type: NOT_BUN });
     } else {
       dispatch(getOrderNum(listIdOrder));
@@ -48,6 +45,6 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
 };
 
 TotalPrice.propTypes = {
-  priceData: PropTypes.array,
-  getOrderNum: PropTypes.func,
+  listIdOrder: PropTypes.array,
+  totalPrice: PropTypes.number,
 };

@@ -20,7 +20,7 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
   const getViewItem = () => {
     dispatch({ type: GET_VIEW_ITEM, viewItem: ingredient });
   };
-
+  //отслеживаем id булки и меняем состояние
   useEffect(() => {
     if (bun.length !== 0 && bunId === _id) {
       setCounter({ ...counter, bun: 2 });
@@ -28,7 +28,7 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
       setCounter({ ...counter, bun: 0 });
     }
   }, [bunId]);
-
+  //определяем количество ингредиентов, а также запоминаем id булки
   useEffect(() => {
     const filtredList = [...ingredients].filter((item) => {
       return item.ingredient._id === _id;
@@ -78,10 +78,8 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
     </div>
   );
 }
-// BurgerIngredientsItem.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
-//   isCounter: PropTypes.bool.isRequired,
-//   toggleModal: PropTypes.func.isRequired,
-//   getDataIngredient: PropTypes.func.isRequired,
-// };
+BurgerIngredientsItem.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  bunId: PropTypes.string.isRequired,
+  setBunId: PropTypes.func.isRequired,
+};

@@ -1,6 +1,5 @@
 import styles from "./OrderDetails.module.css";
 import doneImage from "../../images/done.svg";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
@@ -45,7 +44,3 @@ export const OrderDetails = () => {
     </>
   );
 };
-// OrderDetails.propTypes = {
-//   toggleModal: PropTypes.func,
-//   orderNum: PropTypes.number,
-// };

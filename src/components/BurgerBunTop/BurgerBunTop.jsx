@@ -15,9 +15,9 @@ export const BurgerBunTop = ({ name, price, image }) => {
     </>
   );
 };
-// BurgerBunTop.propTypes = {
-//   image: PropTypes.string,
-//   name: PropTypes.string,
-//   price: PropTypes.number,
-//   isLocked: PropTypes.bool,
-// };
+BurgerBunTop.propTypes = {
+  image: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  isLocked: PropTypes.bool,
+};

@@ -6,10 +6,13 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 export function BurgerGroup({ tabData, title }) {
+  //состояние для сохранения id булки
   const [bunId, setBunId] = useState("");
+
   const { isDataIngredientsRequest } = useSelector(
     (state) => state.ingredientsData
   );
+
   return (
     <div className={styles.group_box}>
       <p className={`${styles.tab_title} text text_type_main-medium`}>
@@ -34,10 +37,7 @@ export function BurgerGroup({ tabData, title }) {
   );
 }
 
-// BurgerGroup.propTypes = {
-//   tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
-//   title: PropTypes.string.isRequired,
-//   isCounter: PropTypes.bool.isRequired,
-//   toggleModal: PropTypes.func.isRequired,
-//   getDataIngredient: PropTypes.func.isRequired,
-// };
+BurgerGroup.propTypes = {
+  tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
+  title: PropTypes.string.isRequired,
+};

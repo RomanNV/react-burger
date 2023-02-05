@@ -10,6 +10,7 @@ import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   REORDER_INGREDIENT_LIST,
 } from "../../services/actions/burgerConstructor";
+import PropTypes from "prop-types";
 import styles from "./ConstructorItem.module.css";
 
 export const ConstructorItem = ({ item, index }) => {
@@ -23,11 +24,10 @@ export const ConstructorItem = ({ item, index }) => {
   const ref = useRef(null);
 
   const reorderItem = (dragIndex, hoverIndex) => {
-    const copyIngredients = [...ingredients];
-    const splicedList = update(copyIngredients, {
+    const splicedList = update([...ingredients], {
       $splice: [
         [dragIndex, 1],
-        [hoverIndex, 0, copyIngredients[dragIndex]],
+        [hoverIndex, 0, [...ingredients][dragIndex]],
       ],
     });
     dispatch({
@@ -36,20 +36,28 @@ export const ConstructorItem = ({ item, index }) => {
     });
   };
 
-  const [{ handlerId }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "constructorElement",
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    hover(item) {
+
+    hover(item, monitor) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
+        return;
+      }
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
       reorderItem(dragIndex, hoverIndex);
@@ -76,16 +84,12 @@ export const ConstructorItem = ({ item, index }) => {
       ingredients: filteredIngredients,
     });
   };
+
   drag(drop(ref));
   const opacity = isDragging ? 0.5 : 1;
 
   return (
-    <li
-      className={styles.li}
-      ref={ref}
-      data-handler-id={handlerId}
-      style={{ opacity: `${opacity}` }}
-    >
+    <li className={styles.li} ref={ref} style={{ opacity: `${opacity}` }}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={name}
@@ -97,4 +101,9 @@ export const ConstructorItem = ({ item, index }) => {
       ></ConstructorElement>
     </li>
   );
+};
+
+ConstructorItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
 };
