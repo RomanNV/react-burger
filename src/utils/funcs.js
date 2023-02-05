@@ -64,6 +64,11 @@ const getPrice = (arr) => {
     return acc;
   }
 };
+const getIngredientsFromState = (state) => state.ingredientsData;
+const getConstructorData = (state) => state.constructorData;
+const getConstructorModal = (state) => state.constructorModal;
+const getIngredientsDataFromState = (state) => state.ingredientsData;
+const getIngredientsModal = (state) => state.ingredientModal;
 export {
   getData,
   getBun,
@@ -72,4 +77,9 @@ export {
   getDataIng,
   getDataOrder,
   getPrice,
+  getIngredientsFromState,
+  getConstructorData,
+  getConstructorModal,
+  getIngredientsDataFromState,
+  getIngredientsModal,
 };

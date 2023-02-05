@@ -6,14 +6,16 @@ import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
+import {
+  getIngredientsDataFromState,
+  getIngredientsModal,
+} from "../../utils/funcs";
 
 export const BurgerIngredients = () => {
   const { dataIngredients, viewItem } = useSelector(
-    (state) => state.ingredientsData
+    getIngredientsDataFromState
   );
-  const { isOpenIngredientModal } = useSelector(
-    (state) => state.ingredientModal
-  );
+  const { isOpenIngredientModal } = useSelector(getIngredientsModal);
 
   const [position, setPosition] = useState("one");
 
@@ -31,12 +33,9 @@ export const BurgerIngredients = () => {
     element.scrollIntoView({ behavior: "smooth" });
   };
 
-  // можно ли было активировать Tab через IntersectionObserver, однако я не смог разобраться как сделать
-  // сделать это в случае когда у нас видно сразу 2 таба в самом начале? или здесь он не смог бы использоваться?
-
   const ulScroll = (e) => {
     const ulTop = e.target.scrollTop;
-    if (ulTop > bunTab.current.scrollHeight) {
+    if (ulTop > bunTab.current.scrollHeight - 10) {
       setPosition("two");
     }
     if (ulTop > sauceTab.current.scrollHeight + bunTab.current.scrollHeight) {

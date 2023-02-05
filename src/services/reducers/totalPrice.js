@@ -21,6 +21,7 @@ export const totalPriceReducer = (state = initialState, action) => {
     case GET_ORDER_FAILED: {
       return {
         ...state,
+        orderData: "",
         isOrderDataRequest: false,
         error: action.error,
         isEmptyOrder: false,

@@ -25,7 +25,12 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       };
     }
     case GET_INGREDIENTS_FAILED: {
-      return { ...state, isDataIngredientsRequest: false, error: action.error };
+      return {
+        ...state,
+        dataIngredients: [],
+        isDataIngredientsRequest: false,
+        error: action.error,
+      };
     }
     case GET_VIEW_ITEM: {
       return { ...state, viewItem: action.viewItem };

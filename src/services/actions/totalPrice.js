@@ -10,7 +10,6 @@ export const getOrderNum = (arr) => {
     getDataOrder(arr)
       .then((res) => {
         if (!res.ok) {
-          console.log(res);
           dispatch({ type: GET_ORDER_FAILED, error: "Ошибка сервера!" });
         }
         return res.json();

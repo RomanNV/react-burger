@@ -12,9 +12,10 @@ import {
 } from "../../services/actions/burgerConstructor";
 import PropTypes from "prop-types";
 import styles from "./ConstructorItem.module.css";
+import { getConstructorData } from "../../utils/funcs";
 
 export const ConstructorItem = ({ item, index }) => {
-  const { ingredients } = useSelector((state) => state.constructorData);
+  const { ingredients } = useSelector(getConstructorData);
   const dispatch = useDispatch();
   const {
     itemId,

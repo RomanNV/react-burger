@@ -1,6 +1,5 @@
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
-  GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
   REORDER_INGREDIENT_LIST,
@@ -9,7 +8,6 @@ import {
 const initialState = {
   ingredients: [],
   bun: [],
-  totalPrice: 0,
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -34,12 +32,7 @@ export const constructorReducer = (state = initialState, action) => {
         ingredients: action.ingredients,
       };
     }
-    case GET_TOTAL_PRICE: {
-      return {
-        ...state,
-        totalPrice: action.totalPrice,
-      };
-    }
+
     case REORDER_INGREDIENT_LIST: {
       return { ...state, ingredients: action.splisedList };
     }

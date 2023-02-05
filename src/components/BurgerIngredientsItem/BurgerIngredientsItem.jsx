@@ -7,10 +7,11 @@ import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
 import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
+import { getConstructorData } from "../../utils/funcs";
 
 export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
   const { name, price, image, _id, type } = ingredient;
-  const { ingredients, bun } = useSelector((state) => state.constructorData);
+  const { ingredients, bun } = useSelector(getConstructorData);
   const [counter, setCounter] = useState({ bun: 0, ingredient: 0 });
 
   const dispatch = useDispatch();

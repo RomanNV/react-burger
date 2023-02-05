@@ -9,9 +9,13 @@ import {
 } from "../ConstructorStartViewBun/ConstructorStartView";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
-import { getPrice } from "../../utils/funcs";
+import {
+  getPrice,
+  getConstructorData,
+  getConstructorModal,
+} from "../../utils/funcs";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {
@@ -24,12 +28,8 @@ import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 
 export const BurgerConstructor = () => {
-  const { isOpenConstructorModal } = useSelector(
-    (state) => state.constructorModal
-  );
-  const { totalPrice, ingredients, bun } = useSelector(
-    (state) => state.constructorData
-  );
+  const { isOpenConstructorModal } = useSelector(getConstructorModal);
+  const { ingredients, bun } = useSelector(getConstructorData);
 
   const [listIdOrder, setListIdOrder] = useState([]);
 
@@ -39,12 +39,12 @@ export const BurgerConstructor = () => {
     dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
   };
   //рассчитываем стоимость и обнавляем состояние массива id ингредиентов для заказа
-  useEffect(() => {
-    dispatch({
-      type: GET_TOTAL_PRICE,
-      totalPrice: getPrice([...ingredients, ...bun]),
-    });
 
+  const totalPrice = useMemo(() => {
+    return getPrice([...ingredients, ...bun]);
+  }, [bun, ingredients]);
+
+  useEffect(() => {
     setListIdOrder(
       [...ingredients, ...bun].map((item) => {
         return item.ingredient._id;
