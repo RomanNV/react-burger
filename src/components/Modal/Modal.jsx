@@ -6,17 +6,17 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ children, isOpenModal, toggleModal }) => {
+export const Modal = ({ children, isOpenModal, closeModal }) => {
   if (isOpenModal) {
     return createPortal(
       <>
         <div className={styles.modal_position}>
           <div className={styles.close_icon}>
-            <CloseIcon type="primary" onClick={() => toggleModal()} />
+            <CloseIcon type="primary" onClick={() => closeModal()} />
           </div>
           {children}
         </div>
-        <ModalOverlay toggleModal={toggleModal}></ModalOverlay>
+        <ModalOverlay closeModal={closeModal}></ModalOverlay>
       </>,
       modalRoot
     );

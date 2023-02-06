@@ -2,12 +2,12 @@ import styles from "./ModalOverlay.module.css";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 
-export const ModalOverlay = ({ toggleModal }) => {
+export const ModalOverlay = ({ closeModal }) => {
   const keyResponce = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.key === "Escape") {
-      toggleModal();
+      closeModal();
     }
   };
   useEffect(() => {
@@ -19,7 +19,7 @@ export const ModalOverlay = ({ toggleModal }) => {
   }, []);
 
   return (
-    <div className={styles.modal_overlay} onClick={() => toggleModal()}></div>
+    <div className={styles.modal_overlay} onClick={() => closeModal()}></div>
   );
 };
 

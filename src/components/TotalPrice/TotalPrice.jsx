@@ -1,38 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "./TotalPrice.module.css";
 import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AppContext } from "../../utils/AppContext";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import { getOrderNum, NOT_BUN } from "../../services/actions/totalPrice";
 
-export const TotalPrice = ({ priceData, getOrderNum }) => {
-  const [accPrice, setAccPrice] = useState(0);
-  const { toggleOrderModal } = useContext(AppContext);
+export const TotalPrice = ({ listIdOrder, totalPrice }) => {
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (priceData.length === 0) {
-      return;
+  const openModal = () => {
+    dispatch({ type: OPEN_CONSTRUCTOR_MODAL });
+  };
+
+  const getOrder = () => {
+    if (!listIdOrder.length) {
+      dispatch({ type: NOT_BUN });
     } else {
-      let acc = 0;
-      priceData.forEach((item) => {
-        acc = item.type === "bun" ? item.price * 2 + acc : acc + item.price;
-      });
-      setAccPrice(acc);
+      dispatch(getOrderNum(listIdOrder));
     }
-  }, [priceData]);
+  };
 
   return (
     <div className={styles.button_container}>
       <span className={styles.price_box}>
-        <p className="text text_type_main-large">{accPrice}</p>
+        <p className="text text_type_main-large">{totalPrice}</p>
         <CurrencyIcon className={styles.icon} type="primary" />
       </span>
       <Button
         onClick={() => {
-          toggleOrderModal();
-          getOrderNum();
+          getOrder();
+          openModal();
         }}
         htmlType="button"
         type="primary"
@@ -45,6 +45,6 @@ export const TotalPrice = ({ priceData, getOrderNum }) => {
 };
 
 TotalPrice.propTypes = {
-  priceData: PropTypes.array,
-  getOrderNum: PropTypes.func,
+  listIdOrder: PropTypes.array,
+  totalPrice: PropTypes.number,
 };

@@ -1,105 +1,116 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import { BurgerBunBottom } from "../BurgerBunBottom/BurgerBunBottom";
 import { BurgerBunTop } from "../BurgerBunTop/BurgerBunTop";
+import {
+  ConstructorStartViewBunTop,
+  ConstructorStartViewBunBottom,
+  ConstructorStartViewBunIngredient,
+} from "../ConstructorStartViewBun/ConstructorStartView";
 import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { AppContext } from "../../utils/AppContext";
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
-import { getIngredients, getBun, getOrder } from "../../utils/funcs";
-
-let initialState = {
-  ingredientData: [],
-  bunData: [],
-  filtredData: [],
-  listIdOrder: [],
-  orderNum: 0,
-};
+import {
+  getPrice,
+  getConstructorData,
+  getConstructorModal,
+} from "../../utils/funcs";
+import { useDispatch, useSelector } from "react-redux";
+import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import {
+  GET_TOTAL_PRICE,
+  ADD_BUN,
+  ADD_INGREDIENT,
+  getIngredientWithId,
+} from "../../services/actions/burgerConstructor";
+import { useDrop } from "react-dnd";
+import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 
 export const BurgerConstructor = () => {
-  const { data, toggleOrderModal, isOpenOrderModal, setError } =
-    useContext(AppContext);
+  const { isOpenConstructorModal } = useSelector(getConstructorModal);
+  const { ingredients, bun } = useSelector(getConstructorData);
 
-  const [burgerConstructorData, setBurgerConstructorData] =
-    useState(initialState);
+  const [listIdOrder, setListIdOrder] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
+  };
+  //рассчитываем стоимость и обнавляем состояние массива id ингредиентов для заказа
+
+  const totalPrice = useMemo(() => {
+    return getPrice([...ingredients, ...bun]);
+  }, [bun, ingredients]);
 
   useEffect(() => {
-    if (data.length === 0) {
-      return;
-    }
-    const ingredientData = getIngredients(data);
-    const bunData = getBun(data);
-    const filtredData = [...ingredientData, bunData];
-    const listIdOrder = filtredData.map((item) => {
-      return item._id;
-    });
-
-    setBurgerConstructorData({
-      ...burgerConstructorData,
-      ingredientData,
-      bunData,
-      filtredData,
-      listIdOrder,
-    });
-  }, [data, setBurgerConstructorData, getBun, getIngredients, getOrder]);
-
-  const getOrderNum = (arr) => {
-    return getOrder(arr)
-      .then((data) => {
-        setBurgerConstructorData({
-          ...burgerConstructorData,
-          orderNum: data.order.number,
-        });
+    setListIdOrder(
+      [...ingredients, ...bun].map((item) => {
+        return item.ingredient._id;
       })
-      .catch((e) => {
-        setError(e);
-      });
-  };
+    );
+  }, [bun, ingredients]);
+  //подключаем drop для поля конструктора
+  const [, drop] = useDrop({
+    accept: "ingredient",
+    drop({ ingredient }) {
+      if (ingredient.type === "bun") {
+        dispatch({ type: ADD_BUN, bun: { ingredient } });
+      } else {
+        dispatch({
+          type: ADD_INGREDIENT,
+          ingredients: getIngredientWithId(ingredient),
+        });
+      }
+    },
+  });
 
   return (
     <>
-      <Modal isOpenModal={isOpenOrderModal} toggleModal={toggleOrderModal}>
-        <OrderDetails orderNum={burgerConstructorData.orderNum}></OrderDetails>
+      <Modal isOpenModal={isOpenConstructorModal} closeModal={closeModal}>
+        <OrderDetails></OrderDetails>
       </Modal>
 
-      <section className={styles.content_box}>
+      <section className={styles.content_box} ref={drop}>
         <div className={styles.burger_box}>
           <div className={styles.div_box_fixed}>
-            <BurgerBunTop
-              isLocked={true}
-              {...burgerConstructorData.bunData}
-            ></BurgerBunTop>
+            {bun.length === 0 ? (
+              <ConstructorStartViewBunTop />
+            ) : (
+              <BurgerBunTop {...bun[0]["ingredient"]}></BurgerBunTop>
+            )}
           </div>
 
           <ul className={`custom-scroll ${styles.ul_box_scroll}`}>
-            {burgerConstructorData.ingredientData.map(
-              ({ _id, image, name, price }) => {
+            {ingredients.length === 0 ? (
+              <li>
+                <DragIcon type="primary" />
+                <ConstructorStartViewBunIngredient />
+              </li>
+            ) : (
+              ingredients.map((item, index) => {
+                const { itemId } = item;
                 return (
-                  <li key={_id}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={name}
-                      price={price}
-                      thumbnail={image}
-                    ></ConstructorElement>
-                  </li>
+                  <ConstructorItem
+                    key={itemId}
+                    item={item}
+                    index={index}
+                  ></ConstructorItem>
                 );
-              }
+              })
             )}
           </ul>
           <div className={styles.div_box_fixed}>
-            <BurgerBunBottom
-              isLocked={true}
-              {...burgerConstructorData.bunData}
-            ></BurgerBunBottom>
+            {bun.length === 0 ? (
+              <ConstructorStartViewBunBottom />
+            ) : (
+              <BurgerBunBottom {...bun[0]["ingredient"]}></BurgerBunBottom>
+            )}
           </div>
           <TotalPrice
-            priceData={burgerConstructorData.filtredData}
-            getOrderNum={() => getOrderNum(burgerConstructorData.listIdOrder)}
+            listIdOrder={bun.length === 0 ? [] : listIdOrder}
+            totalPrice={totalPrice}
           ></TotalPrice>
         </div>
       </section>

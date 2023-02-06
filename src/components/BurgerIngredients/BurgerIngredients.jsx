@@ -1,110 +1,123 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import { AppContext } from "../../utils/AppContext";
-import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
+import {
+  getIngredientsDataFromState,
+  getIngredientsModal,
+} from "../../utils/funcs";
 
 export const BurgerIngredients = () => {
-  const { data, toggleIngredientModal, isOpenIngredientModal } =
-    useContext(AppContext);
+  const { dataIngredients, viewItem } = useSelector(
+    getIngredientsDataFromState
+  );
+  const { isOpenIngredientModal } = useSelector(getIngredientsModal);
 
-  const [ingredientData, setIngredientData] = useState();
+  const [position, setPosition] = useState("one");
 
-  const getDataIngredient = (ingredient) => {
-    setIngredientData(ingredient);
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_INGREDIENT_MODAL });
   };
 
   const bunTab = useRef(null);
   const sauceTab = useRef(null);
   const mainTab = useRef(null);
 
-  const onScroll = (element) => {
+  const tabScroll = (element) => {
     element.scrollIntoView({ behavior: "smooth" });
   };
 
-  const isCounter = true;
+  const ulScroll = (e) => {
+    const ulTop = e.target.scrollTop;
+    if (ulTop > bunTab.current.scrollHeight - 10) {
+      setPosition("two");
+    }
+    if (ulTop > sauceTab.current.scrollHeight + bunTab.current.scrollHeight) {
+      setPosition("three");
+    }
+    if (ulTop === 0) {
+      setPosition("one");
+    }
+  };
 
   const tabDataBun = useMemo(
     () =>
-      data.filter((element) => {
+      dataIngredients.filter((element) => {
         if (element.type === "bun") {
           return element;
         }
       }),
-    [data]
+    [dataIngredients]
   );
 
   const tabDataMain = useMemo(
     () =>
-      data.filter((element) => {
+      dataIngredients.filter((element) => {
         if (element.type === "main") {
           return element;
         }
       }),
-    [data]
+    [dataIngredients]
   );
 
   const tabDataSauce = useMemo(
     () =>
-      data.filter((element) => {
+      dataIngredients.filter((element) => {
         if (element.type === "sauce") {
           return element;
         }
       }),
-    [data]
+    [dataIngredients]
   );
 
   return (
     <>
       {
-        <Modal
-          toggleModal={toggleIngredientModal}
-          isOpenModal={isOpenIngredientModal}
-        >
-          <IngredientDetails
-            toggleModal={toggleIngredientModal}
-            {...ingredientData}
-          ></IngredientDetails>
+        <Modal closeModal={closeModal} isOpenModal={isOpenIngredientModal}>
+          <IngredientDetails {...viewItem}></IngredientDetails>
         </Modal>
       }
       <section className={styles.content_box}>
         <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
         <div className={styles.tab_box}>
-          <Tab onClick={() => onScroll(bunTab.current)}>Булки</Tab>
-          <Tab onClick={() => onScroll(sauceTab.current)}>Соусы</Tab>
-          <Tab onClick={() => onScroll(mainTab.current)}>Начинки</Tab>
+          <Tab
+            onClick={() => tabScroll(bunTab.current)}
+            active={position === "one"}
+          >
+            Булки
+          </Tab>
+          <Tab
+            onClick={() => tabScroll(sauceTab.current)}
+            active={position === "two"}
+          >
+            Соусы
+          </Tab>
+          <Tab
+            onClick={() => tabScroll(mainTab.current)}
+            active={position === "three"}
+          >
+            Начинки
+          </Tab>
         </div>
 
-        <ul className={`custom-scroll ${styles.ul_box}`}>
+        <ul
+          className={`custom-scroll ${styles.ul_box}`}
+          onScroll={(e) => ulScroll(e)}
+        >
           <li ref={bunTab}>
-            <BurgerGroup
-              getDataIngredient={getDataIngredient}
-              tabData={tabDataBun}
-              title={"Булки"}
-              isCounter={isCounter}
-              toggleModal={toggleIngredientModal}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataBun} title={"Булки"}></BurgerGroup>
           </li>
           <li ref={sauceTab}>
-            <BurgerGroup
-              getDataIngredient={getDataIngredient}
-              tabData={tabDataSauce}
-              title={"Соусы"}
-              isCounter={isCounter}
-              toggleModal={toggleIngredientModal}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataSauce} title={"Соусы"}></BurgerGroup>
           </li>
           <li ref={mainTab}>
-            <BurgerGroup
-              getDataIngredient={getDataIngredient}
-              tabData={tabDataMain}
-              title={"Начинки"}
-              isCounter={isCounter}
-              toggleModal={toggleIngredientModal}
-            ></BurgerGroup>
+            <BurgerGroup tabData={tabDataMain} title={"Начинки"}></BurgerGroup>
           </li>
         </ul>
       </section>

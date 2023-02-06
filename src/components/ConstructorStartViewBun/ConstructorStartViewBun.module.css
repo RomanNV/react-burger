@@ -1,0 +1,32 @@
+.bun_body_top {
+  width: 536px;
+  height: 80px;
+  border: 1px white solid;
+  border-radius: 88px 88px 40px 40px;
+  background-color: #2f2f37;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bun_body_bottom {
+  display: flex;
+  width: 536px;
+  height: 80px;
+  border: 1px white solid;
+  border-radius: 40px 40px 88px 88px;
+  background-color: #2f2f37;
+  justify-content: center;
+  align-items: center;
+}
+.bun_body_ingredient {
+  display: flex;
+  width: 536px;
+  height: 80px;
+  border: 1px white solid;
+  border-radius: 40px;
+  background-color: #2f2f37;
+  justify-content: center;
+  align-items: center;
+}
+.p_position {
+}

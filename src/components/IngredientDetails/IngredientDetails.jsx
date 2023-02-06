@@ -1,5 +1,4 @@
 import styles from "./IngredientDetails.module.css";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 export const IngredientDetails = ({
   image_large,
@@ -8,7 +7,6 @@ export const IngredientDetails = ({
   proteins,
   fat,
   carbohydrates,
-  toggleModal,
 }) => {
   return (
     <div className={styles.modal_content}>
