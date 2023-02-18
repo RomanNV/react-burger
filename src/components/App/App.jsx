@@ -1,39 +1,17 @@
-import { useEffect } from "react";
-import { getIngredientsFromState } from "../../utils/funcs";
-import styles from "./App.module.css";
-import AppHeader from "../AppHeader/AppHeader";
-import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
-import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { useDispatch, useSelector } from "react-redux";
-import { getIngredientsData } from "../../services/actions/burgerIngredients";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Error404 } from "../../pages/Error404/Error404";
+import { Home } from "../../pages/home/Home";
+import { Login } from "../../pages/login/Login";
+
 function App() {
-  const { error } = useSelector(getIngredientsFromState);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredientsData());
-  }, [dispatch]);
-
-  if (error) {
-    return <ErrorMessage />;
-  }
   return (
-    <div className={styles.App}>
-      <AppHeader
-        constructor={"Конструктор"}
-        listItems={"Лента заказов"}
-        profile={"Личный кабинет"}
-      ></AppHeader>
-      <div className={styles.app_grid_container}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="*" element={<Error404 />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

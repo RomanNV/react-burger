@@ -1,5 +1,4 @@
 import style from "./AppHeader.module.css";
-import PropTypes from "prop-types";
 import {
   BurgerIcon,
   ListIcon,
@@ -7,7 +6,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function AppHeader({ constructor, listItems, profile }) {
+export default function AppHeader() {
   return (
     <header className={style.content_box}>
       <nav className={style.nav_grid_box}>
@@ -18,7 +17,7 @@ export default function AppHeader({ constructor, listItems, profile }) {
               href=""
               className={`${style.nav_link_a1} text text_type_main-default`}
             >
-              {constructor}
+              Конструктор
             </a>
           </div>
           <div className={style.nav_link}>
@@ -27,7 +26,7 @@ export default function AppHeader({ constructor, listItems, profile }) {
               href=""
               className={`${style.nav_link_a2} text text_type_main-default`}
             >
-              {listItems}
+              Лента заказов
             </a>
           </div>
         </div>
@@ -38,15 +37,10 @@ export default function AppHeader({ constructor, listItems, profile }) {
             href=""
             className={`${style.nav_link_a2} text text_type_main-default`}
           >
-            {profile}
+            Профиль
           </a>
         </div>
       </nav>
     </header>
   );
 }
-AppHeader.propTypes = {
-  constructor: PropTypes.string,
-  listItems: PropTypes.string,
-  profile: PropTypes.string,
-};
