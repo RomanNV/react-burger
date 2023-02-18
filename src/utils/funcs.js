@@ -1,18 +1,6 @@
 import { DATA_URL } from "./const.js";
 import { requestData } from "./requestData.js";
 
-const getIngredients = (data) => {
-  return data.filter((item) => {
-    return item.type !== "bun";
-  });
-};
-
-const getBun = (data) => {
-  return data.filter((item) => {
-    return item.type === "bun";
-  })[0];
-};
-
 const getOrder = (arr) => {
   const fetchBody = JSON.stringify({
     ingredients: arr,
@@ -26,9 +14,6 @@ const getOrder = (arr) => {
   });
 };
 
-const getData = () => {
-  return requestData(`${DATA_URL}ingredients`);
-};
 const getDataIng = () => {
   return fetch(`${DATA_URL}ingredients`);
 };
@@ -70,10 +55,7 @@ const getConstructorModal = (state) => state.constructorModal;
 const getIngredientsDataFromState = (state) => state.ingredientsData;
 const getIngredientsModal = (state) => state.ingredientModal;
 export {
-  getData,
-  getBun,
   getOrder,
-  getIngredients,
   getDataIng,
   getDataOrder,
   getPrice,
