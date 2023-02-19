@@ -5,9 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
-import styles from "./Login.module.css";
+import styles from "./ResetPassword.module.css";
 
-export const Login = () => {
+export const ResetPassword = () => {
   const [password, setPassword] = useState();
   const onChange = (e) => {
     setPassword(e.target.value);
@@ -15,17 +15,18 @@ export const Login = () => {
   return (
     <>
       <AppHeader />
-      <div className={styles.login_form}>
+      <div className={styles.reset_password_form}>
         <div className={styles.wrap_content_form}>
-          <h1 className="text text_type_main-medium">Вход</h1>
-          <form className={styles.form_login}>
-            <Input placeholder="E-mail"></Input>
+          <h1 className="text text_type_main-medium">Восстановление пароля</h1>
+          <form>
             <PasswordInput
               onChange={onChange}
               value={password}
               name={"password"}
               extraClass="mb-2"
-            />
+            ></PasswordInput>
+
+            <Input placeholder="Введите код из письма"></Input>
           </form>
           <Button
             htmlType="button"
@@ -33,20 +34,14 @@ export const Login = () => {
             size="large"
             extraClass={styles.enter_button}
           >
-            Войти
+            Сохранить
           </Button>
         </div>
         <div className={styles.wrap_link}>
-          <p className={` text text_type_main-default text_color_inactive`}>
-            Вы новый пользователь?{" "}
+          <p className={`${styles.p} text text_type_main-default`}>
+            Вспомнили пароль?{" "}
             <a className={styles.a_link} href="">
-              Зарегистрироваться
-            </a>
-          </p>
-          <p className={` text text_type_main-default text_color_inactive`}>
-            Забыли пароль?{" "}
-            <a className={styles.a_link} href="">
-              Восстановиnь пароль
+              Войти
             </a>
           </p>
         </div>

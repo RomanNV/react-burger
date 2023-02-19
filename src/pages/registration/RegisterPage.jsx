@@ -2,26 +2,39 @@ import {
   Input,
   Button,
   PasswordInput,
+  EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
-import styles from "./Login.module.css";
+import styles from "./RegisterPage.module.css";
 
-export const Login = () => {
+export const RegisterPage = () => {
   const [password, setPassword] = useState();
-  const onChange = (e) => {
+  const onChangePassword = (e) => {
     setPassword(e.target.value);
+  };
+
+  const [email, setEmail] = useState("");
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
   return (
     <>
       <AppHeader />
-      <div className={styles.login_form}>
+      <div className={styles.register_form}>
         <div className={styles.wrap_content_form}>
-          <h1 className="text text_type_main-medium">Вход</h1>
-          <form className={styles.form_login}>
-            <Input placeholder="E-mail"></Input>
+          <h1 className="text text_type_main-medium">Регистрация</h1>
+          <form>
+            <Input placeholder="Имя"></Input>
+            <EmailInput
+              onChange={onChangeEmail}
+              value={email}
+              name={"email"}
+              isIcon={false}
+            ></EmailInput>
+
             <PasswordInput
-              onChange={onChange}
+              onChange={onChangePassword}
               value={password}
               name={"password"}
               extraClass="mb-2"
@@ -33,20 +46,14 @@ export const Login = () => {
             size="large"
             extraClass={styles.enter_button}
           >
-            Войти
+            Зарегистрироваться
           </Button>
         </div>
         <div className={styles.wrap_link}>
           <p className={` text text_type_main-default text_color_inactive`}>
-            Вы новый пользователь?{" "}
+            Уже зарегистрированы?{" "}
             <a className={styles.a_link} href="">
-              Зарегистрироваться
-            </a>
-          </p>
-          <p className={` text text_type_main-default text_color_inactive`}>
-            Забыли пароль?{" "}
-            <a className={styles.a_link} href="">
-              Восстановиnь пароль
+              Войти
             </a>
           </p>
         </div>

@@ -1,7 +1,7 @@
 * {
   margin: 0;
 }
-.login_form {
+.register_form {
   width: 480px;
   height: 430px;
   position: fixed;
@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
 }
-.form_login {
+form {
   display: flex;
   flex-direction: column;
   gap: 24px;
