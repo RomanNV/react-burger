@@ -6,14 +6,18 @@ import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
 import { useLocation } from "react-router-dom";
-
+const INITIALINPUT = { login: "", password: "", name: "" };
 export const Profile = () => {
   const location = useLocation();
-  const [password, setPassword] = useState("password");
+  const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
-    setPassword(e.target.value);
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-
+  const onSubmit = (e) => {
+    e.preventDefault();
+    ///надо доделать
+  };
+  console.log(inputData);
   return (
     <>
       <AppHeader />
@@ -23,7 +27,9 @@ export const Profile = () => {
             <div className={styles.wrap_link}>
               <a
                 href=""
-                className={`${styles.a_link} text text_type_main-medium`}
+                className={`${styles.a_link} text text_type_main-medium ${
+                  location.pathname === "/profile" ? styles.a_link_active : null
+                }`}
               >
                 Профиль
               </a>
@@ -41,7 +47,7 @@ export const Profile = () => {
               </a>
             </div>
             <p
-              className={`${styles.footer_link_box} text text_type_main_small text_color_inactive`}
+              className={`${styles.footer_link_box} text text_type_main_small text_color_inactive `}
             >
               В этом разделе вы можете изменить свои персональные данные
             </p>
@@ -49,12 +55,24 @@ export const Profile = () => {
 
           <div className={styles.wrap_content_form}>
             <form className={styles.profile_form}>
-              <Input placeholder="Имя" icon="EditIcon"></Input>
-              <Input placeholder="Логин" icon="EditIcon"></Input>
+              <Input
+                onChange={onChange}
+                placeholder="Имя"
+                icon="EditIcon"
+                name="name"
+                value={inputData.name}
+              ></Input>
+              <Input
+                onChange={onChange}
+                placeholder="Логин"
+                name="login"
+                icon="EditIcon"
+                value={inputData.login}
+              ></Input>
 
               <PasswordInput
                 onChange={onChange}
-                value={password}
+                value={inputData.password}
                 name={"password"}
                 icon="EditIcon"
               ></PasswordInput>

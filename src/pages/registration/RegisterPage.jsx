@@ -7,35 +7,40 @@ import {
 import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./RegisterPage.module.css";
-
+const INITIALINPUT = { email: "", password: "", name: "" };
 export const RegisterPage = () => {
-  const [password, setPassword] = useState();
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
+  const [inputData, setInputData] = useState(INITIALINPUT);
+  const onChange = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setInputData(INITIALINPUT);
   };
 
-  const [email, setEmail] = useState("");
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
   return (
     <>
       <AppHeader />
       <div className={styles.register_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Регистрация</h1>
-          <form>
-            <Input placeholder="Имя"></Input>
+          <form className={styles.register_forms}>
+            <Input
+              placeholder="Имя"
+              name="name"
+              value={inputData.name}
+              onChange={onChange}
+            ></Input>
             <EmailInput
-              onChange={onChangeEmail}
-              value={email}
+              onChange={onChange}
+              value={inputData.email}
               name={"email"}
               isIcon={false}
             ></EmailInput>
 
             <PasswordInput
-              onChange={onChangePassword}
-              value={password}
+              onChange={onChange}
+              value={inputData.password}
               name={"password"}
               extraClass="mb-2"
             />
@@ -44,7 +49,7 @@ export const RegisterPage = () => {
             htmlType="button"
             type="primary"
             size="large"
-            extraClass={styles.enter_button}
+            onClick={onSubmit}
           >
             Зарегистрироваться
           </Button>

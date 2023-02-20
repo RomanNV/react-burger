@@ -1,16 +1,20 @@
 import {
-  Input,
+  EmailInput,
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Login.module.css";
-
+const INITIALINPUT = { email: "", password: "" };
 export const Login = () => {
-  const [password, setPassword] = useState();
+  const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
-    setPassword(e.target.value);
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    ///надо доделать
   };
   return (
     <>
@@ -19,10 +23,15 @@ export const Login = () => {
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Вход</h1>
           <form className={styles.form_login}>
-            <Input placeholder="E-mail"></Input>
+            <EmailInput
+              onChange={onChange}
+              value={inputData.email}
+              name={"email"}
+              isIcon={false}
+            />
             <PasswordInput
               onChange={onChange}
-              value={password}
+              value={inputData.password}
               name={"password"}
               extraClass="mb-2"
             />
@@ -32,6 +41,7 @@ export const Login = () => {
             type="primary"
             size="large"
             extraClass={styles.enter_button}
+            onClick={onSubmit}
           >
             Войти
           </Button>

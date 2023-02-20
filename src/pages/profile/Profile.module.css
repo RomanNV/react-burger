@@ -19,18 +19,19 @@
 }
 .wrap_content_form {
   align-self: flex-start;
-
+}
+.profile_form {
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.profile_form {
-  padding: 0;
+  gap: 24px;
 }
 
 .a_link {
   text-decoration: none;
+
   display: block;
   padding: 15px 0px;
 }
@@ -38,12 +39,14 @@
   display: flex;
   flex-direction: column;
 }
-.link_content {
-}
+
 .link_box {
   width: 320px;
   height: max-content;
 }
 .footer_link_box {
   padding-top: 80px;
+}
+.a_link_active {
+  color: #f2f2f3;
 }
