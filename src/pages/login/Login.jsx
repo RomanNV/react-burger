@@ -6,6 +6,8 @@ import {
 import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Login.module.css";
+import { Link } from "react-router-dom";
+
 const INITIALINPUT = { email: "", password: "" };
 export const Login = () => {
   const [inputData, setInputData] = useState(INITIALINPUT);
@@ -16,6 +18,7 @@ export const Login = () => {
     e.preventDefault();
     ///надо доделать
   };
+
   return (
     <>
       <AppHeader />
@@ -48,16 +51,20 @@ export const Login = () => {
         </div>
         <div className={styles.wrap_link}>
           <p className={` text text_type_main-default text_color_inactive`}>
-            Вы новый пользователь?{" "}
-            <a className={styles.a_link} href="">
-              Зарегистрироваться
-            </a>
+            Вы новый пользователь?
+            <Link to="/register">
+              <a className={styles.a_link} href="">
+                Зарегистрироваться
+              </a>
+            </Link>
           </p>
           <p className={` text text_type_main-default text_color_inactive`}>
-            Забыли пароль?{" "}
-            <a className={styles.a_link} href="">
-              Восстановиnь пароль
-            </a>
+            Забыли пароль?
+            <Link to="/forgot-password">
+              <a className={styles.a_link} href="">
+                Восстановиnь пароль
+              </a>
+            </Link>
           </p>
         </div>
       </div>

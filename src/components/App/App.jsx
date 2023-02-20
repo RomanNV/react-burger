@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Error404 } from "../../pages/Error404/Error404";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
 import { Home } from "../../pages/home/Home";
+import { Ingredient } from "../../pages/ingredient/Ingredient";
 import { Login } from "../../pages/login/Login";
 import { Profile } from "../../pages/profile/Profile";
 import { RegisterPage } from "../../pages/registration/RegisterPage";
@@ -18,6 +19,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/ingredients/:id" element={<Ingredient />}></Route>
       </Routes>
     </BrowserRouter>
   );

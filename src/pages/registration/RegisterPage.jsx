@@ -5,10 +5,16 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./RegisterPage.module.css";
+import { getIngredientsDataFromState } from "../../utils/funcs";
+import { Link } from "react-router-dom";
 const INITIALINPUT = { email: "", password: "", name: "" };
 export const RegisterPage = () => {
+  const { dataIngredients } = useSelector(getIngredientsDataFromState);
+  console.log(dataIngredients);
+
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -21,10 +27,10 @@ export const RegisterPage = () => {
   return (
     <>
       <AppHeader />
-      <div className={styles.register_form}>
+      <div className={styles.register_box}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Регистрация</h1>
-          <form className={styles.register_forms}>
+          <form className={styles.register_form}>
             <Input
               placeholder="Имя"
               name="name"
@@ -57,9 +63,11 @@ export const RegisterPage = () => {
         <div className={styles.wrap_link}>
           <p className={` text text_type_main-default text_color_inactive`}>
             Уже зарегистрированы?{" "}
-            <a className={styles.a_link} href="">
-              Войти
-            </a>
+            <Link to="/login">
+              <a className={styles.a_link} href="">
+                Войти
+              </a>
+            </Link>
           </p>
         </div>
       </div>

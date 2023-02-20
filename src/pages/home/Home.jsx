@@ -11,6 +11,8 @@ import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerCons
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
 export const Home = () => {
+  const { dataIngredients } = useSelector(getIngredientsDataFromState);
+  console.log(dataIngredients);
   const { error } = useSelector(getIngredientsDataFromState);
   const dispatch = useDispatch();
 

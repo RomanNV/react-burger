@@ -1,7 +1,8 @@
 * {
   margin: 0;
+  padding: 0;
 }
-.register_form {
+.register_box {
   width: 480px;
   height: 430px;
   position: fixed;
@@ -12,6 +13,9 @@
 .wrap_content_form {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+  padding-top: 24px;
   justify-content: center;
   align-items: center;
 }
@@ -19,11 +23,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding-bottom: 24px;
-  padding-top: 24px;
-}
-.enter_botton {
-  display: inline-block;
 }
 
 .wrap_link {

@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
 import { useLocation } from "react-router-dom";
+
 const INITIALINPUT = { login: "", password: "", name: "" };
 export const Profile = () => {
   const location = useLocation();
+
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
