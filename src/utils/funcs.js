@@ -1,4 +1,4 @@
-import { DATA_URL } from "./const.js";
+import { DATA_URL, END_POINT } from "./const.js";
 import { requestData } from "./requestData.js";
 
 const getOrder = (arr) => {
@@ -49,11 +49,28 @@ const getPrice = (arr) => {
     return acc;
   }
 };
+
+const checkReponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
+
+const postEmailToGetCode = (email) => {
+  const fetchBody = JSON.stringify({ email });
+  return fetch(`${END_POINT}password-rset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  }).then(checkReponse);
+};
+
 const getIngredientsFromState = (state) => state.ingredientsData;
 const getConstructorData = (state) => state.constructorData;
 const getConstructorModal = (state) => state.constructorModal;
 const getIngredientsDataFromState = (state) => state.ingredientsData;
 const getIngredientsModal = (state) => state.ingredientModal;
+const getForgotPassword = (state) => state.forgotPassword;
 export {
   getOrder,
   getDataIng,
@@ -64,4 +81,6 @@ export {
   getConstructorModal,
   getIngredientsDataFromState,
   getIngredientsModal,
+  postEmailToGetCode,
+  getForgotPassword,
 };

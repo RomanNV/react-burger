@@ -2,9 +2,15 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./ForgotPassword.module.css";
+import { getCodeToResetPassword } from "../../services/actions/forgotPassword";
+import { useDispatch, useSelector } from "react-redux";
+import { getForgotPassword } from "../../utils/funcs";
+import { useNavigate } from "react-router-dom";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+
 const INITIALINPUT = { email: "" };
 
 export const ForgotPassword = () => {
@@ -12,10 +18,28 @@ export const ForgotPassword = () => {
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
+  const { error, isGetCodeToResetPassword } = useSelector(getForgotPassword);
+  const dispatch = useDispatch();
+
   const onSubmit = (e) => {
+    if (!inputData.email) {
+      return;
+    }
     e.preventDefault();
-    ///надо доделать
+    dispatch(getCodeToResetPassword(inputData.email));
   };
+
+  useEffect(() => {
+    if (isGetCodeToResetPassword) {
+      navigate("/reset-password");
+    }
+  }, [isGetCodeToResetPassword]);
+
+  if (error) {
+    return <ErrorMessage error={error}></ErrorMessage>;
+  }
+
   return (
     <>
       <AppHeader />

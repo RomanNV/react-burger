@@ -4,6 +4,7 @@ import { ingredientModal } from "./ingredientsModal";
 import { constructorModal } from "./constructorModal";
 import { constructorReducer } from "./burgerConstructor";
 import { totalPriceReducer } from "./totalPrice";
+import { forgotPasswordReducer } from "./forgotPassword";
 
 export const rootReducer = combineReducers({
   ingredientsData: burgerIngredientsReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   constructorData: constructorReducer,
   constructorModal: constructorModal,
   totalPrice: totalPriceReducer,
+  forgotPassword: forgotPasswordReducer,
 });
