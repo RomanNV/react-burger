@@ -9,10 +9,10 @@ import { getIngredientsDataFromState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { getCookie, setCookie } from "../../cookie/cookie";
 
 export const Home = () => {
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
-  console.log(dataIngredients);
   const { error } = useSelector(getIngredientsDataFromState);
   const dispatch = useDispatch();
 

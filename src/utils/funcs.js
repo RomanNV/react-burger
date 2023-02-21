@@ -51,17 +51,23 @@ const getPrice = (arr) => {
 };
 
 const checkReponse = (res) => {
-  if (!res.ok) {
-    return Promise.reject(`Ошибка ${res.status}`);
-  }
-  return res.json();
-
-  // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 const postEmailToGetCode = (email) => {
   const fetchBody = JSON.stringify({ email });
-  return fetch(`${END_POINT}password-rset`, {
+  return fetch(`${END_POINT}password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  }).then(checkReponse);
+};
+//надо добавить токен
+const postToResetPassword = (inputDada) => {
+  const fetchBody = JSON.stringify(inputDada);
+  return fetch(`${END_POINT}password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -76,6 +82,7 @@ const getConstructorModal = (state) => state.constructorModal;
 const getIngredientsDataFromState = (state) => state.ingredientsData;
 const getIngredientsModal = (state) => state.ingredientModal;
 const getForgotPassword = (state) => state.forgotPassword;
+const getResetPassword = (state) => state.resetPassword;
 export {
   getOrder,
   getDataIng,
@@ -88,4 +95,6 @@ export {
   getIngredientsModal,
   postEmailToGetCode,
   getForgotPassword,
+  postToResetPassword,
+  getResetPassword,
 };

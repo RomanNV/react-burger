@@ -4,20 +4,30 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { getRequestToResetPassword } from "../../services/actions/resetPassword";
+import { getResetPassword } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
 
-const INITIALINPUT = { password: "", code: "" };
+const INITIALINPUT = { password: "", token: "" };
+//пока вставил токин для отладки, затем надо будет его получать из cookie
 
 export const ResetPassword = () => {
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  const { error, isGetCodeToResetPassword } = useSelector(getResetPassword);
+  const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
-    ///доделать
+    dispatch(getRequestToResetPassword(inputData));
   };
+  if (error) {
+    return <ErrorMessage error={error.message}></ErrorMessage>;
+  }
   return (
     <>
       <AppHeader />
@@ -34,8 +44,8 @@ export const ResetPassword = () => {
 
             <Input
               placeholder="Введите код из письма"
-              value={inputData.code}
-              name={"code"}
+              value={inputData.token}
+              name={"token"}
               onChange={onChange}
             ></Input>
           </form>
