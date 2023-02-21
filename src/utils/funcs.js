@@ -51,7 +51,12 @@ const getPrice = (arr) => {
 };
 
 const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  if (!res.ok) {
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+  return res.json();
+
+  // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 const postEmailToGetCode = (email) => {

@@ -13,10 +13,9 @@ export const getCodeToResetPassword = (email) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: GET_CODE_TO_RESET_FAILURE,
-          payload: err.status,
+          payload: err,
         });
       });
   };
