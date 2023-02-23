@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { getRequestToResetPassword } from "../../services/actions/resetPassword";
+import { getRequestToResetPassword } from "../../services/actions/auth";
 import { getResetPassword } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
 
-const INITIALINPUT = { password: "", token: "" };
+const INITIALINPUT = { password: "" };
 //пока вставил токин для отладки, затем надо будет его получать из cookie
 
 export const ResetPassword = () => {
@@ -19,7 +19,7 @@ export const ResetPassword = () => {
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const { error, isGetCodeToResetPassword } = useSelector(getResetPassword);
+  const { error } = useSelector(getResetPassword);
   const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ export const ResetPassword = () => {
   }
   return (
     <>
-      <AppHeader />
+      <AppHeader title={"Личный кабинет"} />
       <div className={styles.reset_password_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>

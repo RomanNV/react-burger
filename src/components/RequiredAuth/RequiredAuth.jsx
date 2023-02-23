@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
+import { refreshToken } from "../../utils/funcs";
 
 export default function RequiredAuth({ redirectTo, children }) {
   const dispatch = useDispatch();
@@ -8,9 +9,7 @@ export default function RequiredAuth({ redirectTo, children }) {
   const user = useSelector((state) => state.user.data);
   const location = useLocation();
 
-  useEffect(() => {
-    // dispatch(checkUserAuth());
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   if (!isAuthChecked) {
     return "Loaded...";

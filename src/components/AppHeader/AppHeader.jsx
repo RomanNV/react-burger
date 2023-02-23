@@ -7,44 +7,38 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-export default function AppHeader() {
+export default function AppHeader({ title }) {
   return (
     <header className={style.content_box}>
       <nav className={style.nav_grid_box}>
         <div className={style.nav_link_box}>
           <div className={style.nav_link}>
             <BurgerIcon type="primary" />
-            <Link to="/">
-              <a
-                href=""
-                className={`${style.nav_link_a1} text text_type_main-default`}
-              >
-                Конструктор
-              </a>
+            <Link
+              to="/"
+              className={`${style.nav_link_a1} text text_type_main-default`}
+            >
+              Конструктор
             </Link>
           </div>
           <div className={style.nav_link}>
             <ListIcon type="secondary" />
-            <Link to="/login">
-              <a
-                href=""
-                className={`${style.nav_link_a2} text text_type_main-default`}
-              >
-                Лента заказов
-              </a>
+            <Link
+              to="/login"
+              className={`${style.nav_link_a2} text text_type_main-default`}
+            >
+              Лента заказов
             </Link>
           </div>
         </div>
         <Logo />
         <div className={style.nav_link}>
           <ProfileIcon type="secondary" />
-          <Link to="/profile">
-            <a
-              href=""
-              className={`${style.nav_link_a2} text text_type_main-default`}
-            >
-              Профиль
-            </a>
+          <Link
+            to="/profile"
+            className={`${style.nav_link_a2} text text_type_main-default`}
+          >
+            {title}
           </Link>
         </div>
       </nav>

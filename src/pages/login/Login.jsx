@@ -7,6 +7,8 @@ import { useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "../../services/actions/auth";
 
 const INITIALINPUT = { email: "", password: "" };
 export const Login = () => {
@@ -14,14 +16,17 @@ export const Login = () => {
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.login);
+  console.log(user);
   const onSubmit = (e) => {
     e.preventDefault();
-    ///надо доделать
+    dispatch(loginAction(inputData));
   };
 
   return (
     <>
-      <AppHeader />
+      <AppHeader title={"Личный кабинет"} />
       <div className={styles.login_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Вход</h1>

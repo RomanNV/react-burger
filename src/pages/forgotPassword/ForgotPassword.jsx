@@ -5,7 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./ForgotPassword.module.css";
-import { getCodeToResetPassword } from "../../services/actions/forgotPassword";
+import { getCodeToResetPassword } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getForgotPassword } from "../../utils/funcs";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +19,10 @@ export const ForgotPassword = () => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
   const navigate = useNavigate();
-  const { error, isGetCodeToResetPassword } = useSelector(getForgotPassword);
+  const { error, isGetCodeToResetPassword, data } =
+    useSelector(getForgotPassword);
   const dispatch = useDispatch();
-
+  console.log(data);
   const onSubmit = (e) => {
     if (!inputData.email) {
       return;

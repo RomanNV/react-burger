@@ -5,28 +5,35 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./RegisterPage.module.css";
 import { getIngredientsDataFromState } from "../../utils/funcs";
 import { Link } from "react-router-dom";
+import { registerUser } from "../../utils/funcs";
+import { registerNewUserAction } from "../../services/actions/auth";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 const INITIALINPUT = { email: "", password: "", name: "" };
 export const RegisterPage = () => {
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
-  console.log(dataIngredients);
-
+  const { error, user } = useSelector(registerUser);
+  const dispatch = useDispatch();
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  console.log(user);
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(registerNewUserAction(inputData));
     setInputData(INITIALINPUT);
   };
-
+  if (error) {
+    return <ErrorMessage error={error.message}></ErrorMessage>;
+  }
   return (
     <>
-      <AppHeader />
+      <AppHeader title={"Личный кабинет"} />
       <div className={styles.register_box}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Регистрация</h1>

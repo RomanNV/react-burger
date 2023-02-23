@@ -4,8 +4,12 @@ import { ingredientModal } from "./ingredientsModal";
 import { constructorModal } from "./constructorModal";
 import { constructorReducer } from "./burgerConstructor";
 import { totalPriceReducer } from "./totalPrice";
-import { forgotPasswordReducer } from "./forgotPassword";
-import { resetPasswordReducer } from "./resetPassword";
+import {
+  resetPasswordReducer,
+  registrationNewUserReducer,
+  forgotPasswordReducer,
+  loginReducer,
+} from "./auth";
 
 export const rootReducer = combineReducers({
   ingredientsData: burgerIngredientsReducer,
@@ -15,4 +19,6 @@ export const rootReducer = combineReducers({
   totalPrice: totalPriceReducer,
   forgotPassword: forgotPasswordReducer,
   resetPassword: resetPasswordReducer,
+  registerUser: registrationNewUserReducer,
+  login: loginReducer,
 });

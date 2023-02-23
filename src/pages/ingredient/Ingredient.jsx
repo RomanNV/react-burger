@@ -12,7 +12,7 @@ export const Ingredient = () => {
   useEffect(() => {}, []);
   return (
     <>
-      <AppHeader />
+      <AppHeader title={"Личный кабинет"} />
       {/* <div className={styles.modal_content}>
         <header className={styles.header_box}>
           <p className="text text_type_main-large">Детали ингредиента</p>

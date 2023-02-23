@@ -6,7 +6,6 @@ export function setCookie(name, value, props) {
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  console.log(exp);
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }

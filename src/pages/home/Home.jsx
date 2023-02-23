@@ -25,7 +25,7 @@ export const Home = () => {
   }
   return (
     <div className={styles.AppHome}>
-      <AppHeader></AppHeader>
+      <AppHeader title={"Личный кабинет"}></AppHeader>
       <div className={styles.apphome_grid_container}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />

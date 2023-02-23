@@ -5,7 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const INITIALINPUT = { login: "", password: "", name: "" };
 export const Profile = () => {
@@ -19,34 +19,33 @@ export const Profile = () => {
     e.preventDefault();
     ///надо доделать
   };
-  console.log(inputData);
   return (
     <>
-      <AppHeader />
+      <AppHeader title={"Профиль"} />
       <div className={styles.box_container}>
         <div className={styles.flex_container}>
           <div className={styles.link_box}>
             <div className={styles.wrap_link}>
-              <a
-                href=""
+              <Link
                 className={`${styles.a_link} text text_type_main-medium ${
                   location.pathname === "/profile" ? styles.a_link_active : null
                 }`}
               >
                 Профиль
-              </a>
-              <a
-                href=""
+              </Link>
+              <Link
+                to={"/profile/orders "}
                 className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
               >
                 История заказов
-              </a>
-              <a
-                href=""
+              </Link>
+
+              <Link
+                to={"/profile/orders/:id"}
                 className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
               >
                 Выход
-              </a>
+              </Link>
             </div>
             <p
               className={`${styles.footer_link_box} text text_type_main_small text_color_inactive `}
