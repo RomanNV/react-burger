@@ -19,6 +19,9 @@
 }
 .wrap_content_form {
   align-self: flex-start;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
 }
 .profile_form {
   padding: 0;

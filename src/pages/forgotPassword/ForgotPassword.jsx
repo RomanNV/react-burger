@@ -7,39 +7,40 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./ForgotPassword.module.css";
 import { getCodeToResetPassword } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { getForgotPassword } from "../../utils/funcs";
-import { useNavigate } from "react-router-dom";
+import { authState, getForgotPassword } from "../../utils/funcs";
+import { useNavigate, Link } from "react-router-dom";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
-const INITIALINPUT = { email: "" };
-
 export const ForgotPassword = () => {
+  const INITIALINPUT = { email: "" };
+
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
   const navigate = useNavigate();
-  const { error, isGetCodeToResetPassword, data } =
-    useSelector(getForgotPassword);
+  const { error } = useSelector(authState);
+  // const { error, isGetCodeToResetPassword, data } =
+  //   useSelector(getForgotPassword);
   const dispatch = useDispatch();
-  console.log(data);
   const onSubmit = (e) => {
     if (!inputData.email) {
       return;
     }
     e.preventDefault();
     dispatch(getCodeToResetPassword(inputData.email));
+    navigate("/reset-password", { state: { isCheckForgotPage: true } });
   };
 
-  useEffect(() => {
-    if (isGetCodeToResetPassword) {
-      navigate("/reset-password");
-    }
-  }, [isGetCodeToResetPassword]);
+  // useEffect(() => {
+  //   if (isGetCodeToResetPassword) {
+  //     navigate("/reset-password");
+  //   }
+  // }, [isGetCodeToResetPassword]);
 
-  if (error) {
-    return <ErrorMessage error={error}></ErrorMessage>;
-  }
+  // if (error) {
+  //   return <ErrorMessage error={error}></ErrorMessage>;
+  // }
 
   return (
     <>
@@ -71,9 +72,9 @@ export const ForgotPassword = () => {
             className={`${styles.p} text text_type_main-default text_color_inactive`}
           >
             Вспомнили пароль?
-            <a className={styles.a_link} href="">
+            <Link className={styles.a_link} to={"/login"}>
               Войти
-            </a>
+            </Link>
           </p>
         </div>
       </div>

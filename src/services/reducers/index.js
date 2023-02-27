@@ -4,12 +4,7 @@ import { ingredientModal } from "./ingredientsModal";
 import { constructorModal } from "./constructorModal";
 import { constructorReducer } from "./burgerConstructor";
 import { totalPriceReducer } from "./totalPrice";
-import {
-  resetPasswordReducer,
-  registrationNewUserReducer,
-  forgotPasswordReducer,
-  loginReducer,
-} from "./auth";
+import { authReducer } from "./auth";
 
 export const rootReducer = combineReducers({
   ingredientsData: burgerIngredientsReducer,
@@ -17,8 +12,5 @@ export const rootReducer = combineReducers({
   constructorData: constructorReducer,
   constructorModal: constructorModal,
   totalPrice: totalPriceReducer,
-  forgotPassword: forgotPasswordReducer,
-  resetPassword: resetPasswordReducer,
-  registerUser: registrationNewUserReducer,
-  login: loginReducer,
+  auth: authReducer,
 });

@@ -1,27 +1,65 @@
 import {
   Input,
   PasswordInput,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authState } from "../../utils/funcs";
+import {
+  changeUserDataAction,
+  checkUserAuth,
+  logOutAction,
+} from "../../services/actions/auth";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
-const INITIALINPUT = { login: "", password: "", name: "" };
 export const Profile = () => {
   const location = useLocation();
-
+  const { user, error } = useSelector(authState);
+  const dispatch = useDispatch();
+  console.log(user);
+  const INITIALINPUT = { login: user?.email, password: "", name: user?.name };
+  const [prevInput, setPrevInput] = useState(INITIALINPUT);
   const [inputData, setInputData] = useState(INITIALINPUT);
+
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    setPrevInput({
+      ...INITIALINPUT,
+      login: user?.email,
+      password: "",
+      name: user?.name,
+    });
+  }, [user]);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    ///надо доделать
+    dispatch(changeUserDataAction(inputData));
   };
+  const onCancel = (e) => {
+    e.preventDefault();
+    setInputData(prevInput);
+  };
+  const logOut = (e) => {
+    e.preventDefault();
+    dispatch(logOutAction());
+  };
+
+  // useEffect(() => {
+  //   dispatch(checkUserAuth());
+  // }, [dispatch, user]);
+
+  if (error) {
+    return <ErrorMessage error={error}></ErrorMessage>;
+  }
   return (
     <>
-      <AppHeader title={"Профиль"} />
+      <AppHeader title={"Личный кабинет"} />
       <div className={styles.box_container}>
         <div className={styles.flex_container}>
           <div className={styles.link_box}>
@@ -31,7 +69,7 @@ export const Profile = () => {
                   location.pathname === "/profile" ? styles.a_link_active : null
                 }`}
               >
-                Профиль
+                Профиль{" "}
               </Link>
               <Link
                 to={"/profile/orders "}
@@ -41,7 +79,8 @@ export const Profile = () => {
               </Link>
 
               <Link
-                to={"/profile/orders/:id"}
+                to={"/"}
+                onClick={logOut}
                 className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
               >
                 Выход
@@ -78,6 +117,8 @@ export const Profile = () => {
                 icon="EditIcon"
               ></PasswordInput>
             </form>
+            <Button onClick={onSubmit}> Сохранить</Button>
+            <Button onClick={onCancel}> Отмена</Button>
           </div>
         </div>
       </div>

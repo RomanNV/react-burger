@@ -8,21 +8,18 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./RegisterPage.module.css";
-import { getIngredientsDataFromState } from "../../utils/funcs";
+import { authState } from "../../utils/funcs";
 import { Link } from "react-router-dom";
-import { registerUser } from "../../utils/funcs";
 import { registerNewUserAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-const INITIALINPUT = { email: "", password: "", name: "" };
 export const RegisterPage = () => {
-  const { dataIngredients } = useSelector(getIngredientsDataFromState);
-  const { error, user } = useSelector(registerUser);
+  const INITIALINPUT = { email: "", password: "", name: "" };
+  const { error, user } = useSelector(authState);
   const dispatch = useDispatch();
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  console.log(user);
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(registerNewUserAction(inputData));

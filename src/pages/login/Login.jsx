@@ -3,26 +3,46 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
+import { authState } from "../../utils/funcs";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
-const INITIALINPUT = { email: "", password: "" };
 export const Login = () => {
+  const INITIALINPUT = { email: "", password: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
+  const navigate = useNavigate();
+  const location = useLocation();
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.login);
-  console.log(user);
+  const { user, error } = useSelector(authState);
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginAction(inputData));
   };
+
+  useEffect(() => {
+    if (user && location.state) {
+      const from = location.state?.from;
+      navigate(from);
+      return;
+    } else {
+      if (user) {
+        navigate("/");
+      }
+    }
+  }, [user]);
+
+  if (error) {
+    return <ErrorMessage error={error}></ErrorMessage>;
+  }
 
   return (
     <>

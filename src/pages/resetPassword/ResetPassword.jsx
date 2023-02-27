@@ -3,28 +3,42 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { getRequestToResetPassword } from "../../services/actions/auth";
-import { getResetPassword } from "../../utils/funcs";
+import { authState } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
-
-const INITIALINPUT = { password: "" };
-//пока вставил токин для отладки, затем надо будет его получать из cookie
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const ResetPassword = () => {
+  const INITIALINPUT = { password: "", token: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const { error } = useSelector(getResetPassword);
+  const { error, isResetPassword } = useSelector(authState);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const isCheckForgotPage = location?.state?.isCheckForgotPage;
+
+  useEffect(() => {
+    if (!isCheckForgotPage) {
+      navigate("/forgot-password");
+    }
+    if (isResetPassword) {
+      navigate("/login");
+    }
+  }, [isCheckForgotPage, isResetPassword]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(getRequestToResetPassword(inputData));
   };
+
   if (error) {
     return <ErrorMessage error={error.message}></ErrorMessage>;
   }
@@ -62,9 +76,9 @@ export const ResetPassword = () => {
         <div className={styles.wrap_link}>
           <p className={`${styles.p} text text_type_main-default`}>
             Вспомнили пароль?{" "}
-            <a className={styles.a_link} href="">
+            <Link className={styles.a_link} to={"/login"}>
               Войти
-            </a>
+            </Link>
           </p>
         </div>
       </div>

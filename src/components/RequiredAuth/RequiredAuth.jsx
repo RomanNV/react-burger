@@ -1,23 +1,29 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, Navigate } from "react-router-dom";
-import { refreshToken } from "../../utils/funcs";
+import { useLocation, useNavigate } from "react-router-dom";
+import { checkUserAuth } from "../../services/actions/auth";
+import { authState } from "../../utils/funcs";
 
 export default function RequiredAuth({ redirectTo, children }) {
   const dispatch = useDispatch();
-  const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
-  const user = useSelector((state) => state.user.data);
+  const { isAuthChecked, user } = useSelector(authState);
   const location = useLocation();
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   console.log("in use effect");
+  //   dispatch(checkUserAuth());
+  // }, []);
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    if (!user) {
+      navigate(redirectTo, { state: { from: location.pathname } });
+    }
+  }, [user, navigate]);
 
-  if (!isAuthChecked) {
-    return "Loaded...";
-  }
+  // if (!isAuthChecked) {
+  //   return "Loaded...";
+  // }
 
-  if (!user) {
-    return <Navigate to={redirectTo} state={{ from: location }} />;
-  }
-
+  //state added need
   return <>{children}</>;
 }

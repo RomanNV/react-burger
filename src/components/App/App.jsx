@@ -7,6 +7,7 @@ import { Login } from "../../pages/login/Login";
 import { Profile } from "../../pages/profile/Profile";
 import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
+import RequiredAuth from "../RequiredAuth/RequiredAuth";
 
 function App() {
   return (
@@ -16,9 +17,23 @@ function App() {
         <Route path="*" element={<Error404 />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route
+          path="/forgot-password"
+          element={
+            <RequiredAuth>
+              <ForgotPassword />
+            </RequiredAuth>
+          }
+        ></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
+        <Route
+          path="/profile"
+          element={
+            <RequiredAuth redirectTo={"/login"}>
+              <Profile />
+            </RequiredAuth>
+          }
+        ></Route>
         <Route path="/ingredients/:id" element={<Ingredient />}></Route>
       </Routes>
     </BrowserRouter>
