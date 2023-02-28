@@ -88,17 +88,18 @@ const registerNewUser = (data) => {
 };
 
 const refreshToken = () => {
-  console.log(JSON.stringify(localStorage.getItem("refreshToken")));
-  return (
-    fetch(`${END_POINT}auth/token`),
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(localStorage.getItem("refreshToken")),
-    }.then(checkReponse)
-  );
+  console.log("in refresh token");
+  const fetchBody = JSON.stringify({
+    token: localStorage.getItem("refreshToken"),
+  });
+
+  return fetch(`${END_POINT}auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
 };
 
 export const fetchWithRefresh = async (url, options) => {
@@ -107,11 +108,10 @@ export const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkReponse(res);
   } catch (err) {
-    console.log(err);
     if (err.message === "jwt expired") {
-      console.log("reftoken");
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
+        console.log("in refresh error");
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
@@ -148,14 +148,14 @@ const login = (data) => {
 const logOut = () => {
   const refreshToken = { token: localStorage.getItem("refreshToken") };
   const fetchBody = JSON.stringify(refreshToken);
-  return fetchWithRefresh(`${END_POINT}auth/logout`, {
+  return fetch(`${END_POINT}auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer" + " " + getCookie("accessToken").trim(),
     },
     body: fetchBody,
-  });
+  }).then(checkReponse);
 };
 
 const changeUserData = (data) => {

@@ -31,7 +31,7 @@ export const checkUserAuth = () => {
       getUser()
         .then((res) => {
           if (res.success) {
-            dispatch({ type: GET_USER_SUCCESS });
+            dispatch({ type: GET_USER_SUCCESS, payload: res.user });
           }
         })
         .catch((err) => {

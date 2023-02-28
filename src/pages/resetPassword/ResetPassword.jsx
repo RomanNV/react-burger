@@ -35,9 +35,9 @@ export const ResetPassword = () => {
     dispatch(getRequestToResetPassword(inputData));
   };
 
-  if (error) {
-    return <ErrorMessage error={error.message}></ErrorMessage>;
-  }
+  // if (error) {
+  //   return <ErrorMessage error={error.message}></ErrorMessage>;
+  // }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

@@ -40,9 +40,9 @@ export const Login = () => {
     }
   }, [user]);
 
-  if (error) {
-    return <ErrorMessage error={error}></ErrorMessage>;
-  }
+  // if (error) {
+  //   return <ErrorMessage error={error.message}></ErrorMessage>;
+  // }
 
   return (
     <>

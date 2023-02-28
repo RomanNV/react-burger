@@ -19,8 +19,9 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 export const Profile = () => {
   const location = useLocation();
   const { user, error } = useSelector(authState);
+  console.log(error);
   const dispatch = useDispatch();
-  console.log(user);
+
   const INITIALINPUT = { login: user?.email, password: "", name: user?.name };
   const [prevInput, setPrevInput] = useState(INITIALINPUT);
   const [inputData, setInputData] = useState(INITIALINPUT);
@@ -54,9 +55,9 @@ export const Profile = () => {
   //   dispatch(checkUserAuth());
   // }, [dispatch, user]);
 
-  if (error) {
-    return <ErrorMessage error={error}></ErrorMessage>;
-  }
+  // if (error) {
+  //   return <ErrorMessage error={error}></ErrorMessage>;
+  // }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

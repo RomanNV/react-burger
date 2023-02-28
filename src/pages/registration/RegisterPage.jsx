@@ -25,9 +25,9 @@ export const RegisterPage = () => {
     dispatch(registerNewUserAction(inputData));
     setInputData(INITIALINPUT);
   };
-  if (error) {
-    return <ErrorMessage error={error.message}></ErrorMessage>;
-  }
+  // if (error) {
+  //   return <ErrorMessage error={error.message}></ErrorMessage>;
+  // }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

@@ -9,6 +9,7 @@ import { Login } from "../../pages/login/Login";
 import { Profile } from "../../pages/profile/Profile";
 import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
+import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
 import RequiredAuth from "../RequiredAuth/RequiredAuth";
 
@@ -17,6 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredientsData());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   return (

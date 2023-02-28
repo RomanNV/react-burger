@@ -27,8 +27,10 @@ export const authReducer = (state = initialState, action) => {
         isAuthRequest: true,
       };
     }
+    case AUTH_CHECK: {
+      return { ...state, isAuthRequest: false, isAuthChecked: true };
+    }
     case REGISTRATION_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         isAuthRequest: false,
@@ -68,7 +70,7 @@ export const authReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_SUCCESS: {
-      console.log(action.payload);
+      console.log("LOGOUT_SUCCESS");
       return {
         ...state,
         isAuthRequest: false,

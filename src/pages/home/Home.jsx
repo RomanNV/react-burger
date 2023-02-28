@@ -5,17 +5,23 @@ import { getIngredientsData } from "../../services/actions/burgerIngredients";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../../components/AppHeader/AppHeader";
-import { getIngredientsDataFromState } from "../../utils/funcs";
+import { authState, getIngredientsDataFromState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
 export const Home = () => {
-  const { error } = useSelector(getIngredientsDataFromState);
+  // const {  error, sAuthChecked, isAuthRequest, isResetPassword } =
+  //   useSelector(getIngredientsDataFromState);
+  const { user, error, isAuthChecked, isAuthRequest, isResetPassword } =
+    useSelector(authState);
+  console.log(
+    `{user:${user}, isAuthChecked:${isAuthChecked}, isAuthRequest:${isAuthRequest}, isResetPassword:${isResetPassword}, error:${error}}`
+  );
 
-  if (error) {
-    return <ErrorMessage />;
-  }
+  // if (error) {
+  //   return <ErrorMessage />;
+  // }
   return (
     <div className={styles.AppHome}>
       <AppHeader title={"Личный кабинет"}></AppHeader>
