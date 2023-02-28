@@ -21,18 +21,14 @@ export const ResetPassword = () => {
   const { error, isResetPassword } = useSelector(authState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const isCheckForgotPage = location?.state?.isCheckForgotPage;
 
   useEffect(() => {
-    if (!isCheckForgotPage) {
+    if (isResetPassword) {
+      navigate("/reset-password");
+    } else {
       navigate("/forgot-password");
     }
-    if (isResetPassword) {
-      navigate("/login");
-    }
-  }, [isCheckForgotPage, isResetPassword]);
+  }, [isResetPassword]);
 
   const onSubmit = (e) => {
     e.preventDefault();

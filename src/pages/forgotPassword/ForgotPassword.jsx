@@ -24,12 +24,12 @@ export const ForgotPassword = () => {
   //   useSelector(getForgotPassword);
   const dispatch = useDispatch();
   const onSubmit = (e) => {
+    e.preventDefault();
     if (!inputData.email) {
       return;
     }
-    e.preventDefault();
     dispatch(getCodeToResetPassword(inputData.email));
-    navigate("/reset-password", { state: { isCheckForgotPage: true } });
+    navigate("/reset-password");
   };
 
   // useEffect(() => {
