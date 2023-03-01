@@ -18,17 +18,16 @@ export const ResetPassword = () => {
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const { error, isResetPassword } = useSelector(authState);
+  const { error } = useSelector(authState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isForgotPasswordFlag = useLocation()?.state?.isForgotPasswordFlag;
 
   useEffect(() => {
-    if (isResetPassword) {
-      navigate("/reset-password");
-    } else {
+    if (!isForgotPasswordFlag) {
       navigate("/forgot-password");
     }
-  }, [isResetPassword]);
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();

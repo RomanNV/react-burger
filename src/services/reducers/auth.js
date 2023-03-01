@@ -16,7 +16,6 @@ const initialState = {
   isAuthRequest: false,
   error: null,
   user: null,
-  isResetPassword: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -50,7 +49,6 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isAuthRequest: false,
         isAuthChecked: true,
-        isResetPassword: action.payload,
       };
     }
     case GET_USER_SUCCESS: {

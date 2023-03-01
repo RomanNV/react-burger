@@ -18,8 +18,9 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
 export const Profile = () => {
   const location = useLocation();
-  const { user, error } = useSelector(authState);
-  console.log(error);
+  const state = useSelector(authState);
+  console.log(state);
+  const { user, error } = state;
   const dispatch = useDispatch();
 
   const INITIALINPUT = { login: user?.email, password: "", name: user?.name };

@@ -1,30 +1,31 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { authState } from "../../utils/funcs";
 
-export default function RequiredAuth({ redirectTo, children }) {
-  const dispatch = useDispatch();
+export default function RequiredAuth({
+  redirectTo,
+  children,
+  onlyUnAuth = false,
+}) {
   const { isAuthChecked, user } = useSelector(authState);
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   console.log("in use effect");
-  //   dispatch(checkUserAuth());
-  // }, []);
-
-  useEffect(() => {
-    if (!user) {
-      navigate(redirectTo, { state: { from: location.pathname } });
-    }
-  }, [user, navigate]);
 
   if (!isAuthChecked) {
-    return "Loaded...";
+    // Запрос еще выполняется
+    return null;
   }
 
+  if (onlyUnAuth && user) {
+    // Пользователь авторизован, но запрос предназначен только для неавторизованных пользователей
+    // Нужно сделать редирект на главную страницу или на тот адрес, что записан в location.state.from
+    navigate("/");
+  }
+
+  if (!onlyUnAuth && !user) {
+    // Сервер не ответил
+    return <Navigate to={redirectTo} state={{ from: location }} />;
+  }
+  return children;
   //state added need
-  return <>{children}</>;
 }

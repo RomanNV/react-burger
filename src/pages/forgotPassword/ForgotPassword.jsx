@@ -8,12 +8,12 @@ import styles from "./ForgotPassword.module.css";
 import { getCodeToResetPassword } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { authState, getForgotPassword } from "../../utils/funcs";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
 export const ForgotPassword = () => {
   const INITIALINPUT = { email: "" };
-
+  const location = useLocation();
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -29,7 +29,7 @@ export const ForgotPassword = () => {
       return;
     }
     dispatch(getCodeToResetPassword(inputData.email));
-    navigate("/reset-password");
+    navigate("/reset-password", { state: { isForgotPasswordFlag: true } });
   };
 
   // useEffect(() => {

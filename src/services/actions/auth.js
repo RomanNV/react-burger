@@ -10,7 +10,6 @@ import {
 } from "../../utils/funcs";
 
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
-
 export const AUTH_CHECK = "AUTH_CHECK";
 export const AUTH_REQUEST = "AUTH_REQUEST";
 export const CHANGE_USER_DATA_SUCCESS = "CHANGE_USER_DATA_SUCCESS";
@@ -23,13 +22,14 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
 export const checkUserAuth = () => {
   return function (dispatch) {
+    console.log("in checkUserAuth");
     if (getCookie("accessToken")) {
-      console.log("in checkuserauth");
       dispatch({
         type: AUTH_REQUEST,
       });
       getUser()
         .then((res) => {
+          console.log("in getUser chance");
           if (res.success) {
             dispatch({ type: GET_USER_SUCCESS, payload: res.user });
           }
@@ -42,7 +42,6 @@ export const checkUserAuth = () => {
         })
         .finally(dispatch({ type: AUTH_CHECK }));
     } else {
-      console.log("no token");
       dispatch({ type: AUTH_CHECK });
     }
   };
@@ -54,7 +53,7 @@ export const getCodeToResetPassword = (email) => {
     postEmailToGetCode(email)
       .then((res) => {
         if (res.success) {
-          dispatch({ type: CODE_TO_RESET_SUCCESS, payload: true });
+          dispatch({ type: CODE_TO_RESET_SUCCESS });
         }
       })
       .catch((err) => {
@@ -155,12 +154,13 @@ export const changeUserDataAction = (data) => {
     dispatch({ type: AUTH_REQUEST });
     changeUserData(data)
       .then((res) => {
-        console.log(res);
+        console.log("in changeUserDataAction");
         if (res.success) {
           dispatch({ type: CHANGE_USER_DATA_SUCCESS, payload: res.user });
         }
       })
       .catch((err) => {
+        console.log("error in catch changeUserDataAction");
         dispatch({
           type: AUTH_FAILURE,
           payload: err.message,

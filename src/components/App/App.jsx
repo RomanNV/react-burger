@@ -26,17 +26,38 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="*" element={<Error404 />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
+        <Route
+          path="/login"
+          element={
+            <RequiredAuth onlyUnAuth={true}>
+              <Login />
+            </RequiredAuth>
+          }
+        ></Route>
+        <Route
+          path="/register"
+          element={
+            <RequiredAuth onlyUnAuth={true}>
+              <RegisterPage />
+            </RequiredAuth>
+          }
+        ></Route>
         <Route
           path="/forgot-password"
           element={
-            <RequiredAuth>
+            <RequiredAuth onlyUnAuth={true}>
               <ForgotPassword />
             </RequiredAuth>
           }
         ></Route>
-        <Route path="/reset-password" element={<ResetPassword />}></Route>
+        <Route
+          path="/reset-password"
+          element={
+            <RequiredAuth onlyUnAuth={true}>
+              <ResetPassword />
+            </RequiredAuth>
+          }
+        ></Route>
         <Route
           path="/profile"
           element={

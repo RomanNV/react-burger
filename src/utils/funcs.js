@@ -1,4 +1,4 @@
-import { setCookie, getCookie } from "../cookie/cookie.js";
+import { setCookie, getCookie, deleteCookie } from "../cookie/cookie.js";
 import { DATA_URL, END_POINT } from "./const.js";
 import { requestData } from "./requestData.js";
 
@@ -52,7 +52,12 @@ const getPrice = (arr) => {
 };
 
 const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  return res.ok
+    ? res.json()
+    : res.json().then((err) => {
+        console.log(err, "in reponse error");
+        return Promise.reject(err);
+      });
 };
 
 const postEmailToGetCode = (email) => {
@@ -92,6 +97,7 @@ const refreshToken = () => {
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
+  console.log("refresh token", fetchBody);
 
   return fetch(`${END_POINT}auth/token`, {
     method: "POST",
@@ -99,13 +105,14 @@ const refreshToken = () => {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  });
+  }).then(checkReponse);
 };
 
 export const fetchWithRefresh = async (url, options) => {
   try {
     console.log("in fetchrefresh");
     const res = await fetch(url, options);
+    console.log("step 1");
     return await checkReponse(res);
   } catch (err) {
     if (err.message === "jwt expired") {
@@ -115,8 +122,11 @@ export const fetchWithRefresh = async (url, options) => {
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("accessToken", refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      setCookie(
+        "accessToken",
+        refreshData.accessToken.split("Bearer")[1].trim()
+      );
+      options.headers.authorization = "Bearer" + " " + refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
       return await checkReponse(res);
     } else {
@@ -147,12 +157,15 @@ const login = (data) => {
 };
 const logOut = () => {
   const refreshToken = { token: localStorage.getItem("refreshToken") };
+  const accessToken = getCookie("accessToken").trim();
+  localStorage.removeItem("refreshToken");
+  deleteCookie("accessToken");
   const fetchBody = JSON.stringify(refreshToken);
   return fetch(`${END_POINT}auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      Authorization: "Bearer" + " " + accessToken,
     },
     body: fetchBody,
   }).then(checkReponse);
@@ -160,6 +173,7 @@ const logOut = () => {
 
 const changeUserData = (data) => {
   const fetchBody = JSON.stringify(data);
+  console.log("in changeUserData");
   return fetchWithRefresh(`${END_POINT}auth/user`, {
     method: "PATCH",
     headers: {
