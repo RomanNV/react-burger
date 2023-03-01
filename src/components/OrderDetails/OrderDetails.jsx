@@ -3,17 +3,19 @@ import doneImage from "../../images/done.svg";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { totalPriceState } from "../../utils/funcs";
 
 export const OrderDetails = () => {
-  const { orderData, isOrderDataRequest, isEmptyOrder } = useSelector(
-    (state) => state.totalPrice
-  );
+  const { orderData, isOrderDataRequest, isEmptyOrder, error } =
+    useSelector(totalPriceState);
+
   return (
     <>
       <div className={styles.modal_content}>
         <div className={styles.content_box}>
           {isEmptyOrder ? (
-            <EmptyOrderMessage />
+            <EmptyOrderMessage error={error} />
           ) : (
             <>
               <div className={styles.order_box}>

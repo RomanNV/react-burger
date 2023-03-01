@@ -30,6 +30,7 @@ import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(getConstructorModal);
   const { ingredients, bun } = useSelector(getConstructorData);
+  console.log(bun);
 
   const [listIdOrder, setListIdOrder] = useState([]);
 

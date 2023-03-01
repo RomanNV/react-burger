@@ -13,10 +13,9 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 export const Home = () => {
   // const {  error, sAuthChecked, isAuthRequest, isResetPassword } =
   //   useSelector(getIngredientsDataFromState);
-  const { user, error, isAuthChecked, isAuthRequest, isResetPassword } =
-    useSelector(authState);
+  const { user, error, isAuthChecked, isAuthRequest } = useSelector(authState);
   console.log(
-    `{user:${user}, isAuthChecked:${isAuthChecked}, isAuthRequest:${isAuthRequest}, isResetPassword:${isResetPassword}, error:${error}}`
+    `{user:${user}, isAuthChecked:${isAuthChecked}, isAuthRequest:${isAuthRequest}, error:${error}}`
   );
 
   // if (error) {

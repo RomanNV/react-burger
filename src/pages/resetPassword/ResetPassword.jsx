@@ -32,11 +32,12 @@ export const ResetPassword = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(getRequestToResetPassword(inputData));
+    navigate("/login");
   };
 
-  // if (error) {
-  //   return <ErrorMessage error={error.message}></ErrorMessage>;
-  // }
+  if (error) {
+    return <ErrorMessage error={error.message}></ErrorMessage>;
+  }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

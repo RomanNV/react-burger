@@ -35,6 +35,8 @@ export const authReducer = (state = initialState, action) => {
         isAuthRequest: false,
         isAuthChecked: true,
         user: action.payload,
+        error: null,
+        isPasswordReset: false,
       };
     }
     case RESET_PASSWORD_SUCCESS: {
@@ -42,6 +44,8 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isAuthChecked: true,
         isAuthRequest: false,
+        error: null,
+        isPasswordReset: true,
       };
     }
     case CODE_TO_RESET_SUCCESS: {
@@ -49,6 +53,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isAuthRequest: false,
         isAuthChecked: true,
+        error: null,
       };
     }
     case GET_USER_SUCCESS: {
@@ -57,6 +62,7 @@ export const authReducer = (state = initialState, action) => {
         isAuthChecked: true,
         isAuthRequest: false,
         user: action.payload,
+        error: null,
       };
     }
     case LOGIN_SUCCESS: {
@@ -65,6 +71,7 @@ export const authReducer = (state = initialState, action) => {
         isAuthChecked: true,
         isAuthRequest: false,
         user: action.payload,
+        error: null,
       };
     }
     case LOGOUT_SUCCESS: {
@@ -73,10 +80,16 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isAuthRequest: false,
         user: null,
+        error: null,
       };
     }
     case CHANGE_USER_DATA_SUCCESS: {
-      return { ...state, isAuthRequest: false, user: action.payload };
+      return {
+        ...state,
+        isAuthRequest: false,
+        user: action.payload,
+        error: null,
+      };
     }
     case AUTH_FAILURE: {
       return { ...state, isAuthRequest: false, error: action.payload };

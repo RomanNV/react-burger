@@ -32,16 +32,6 @@ export const ForgotPassword = () => {
     navigate("/reset-password", { state: { isForgotPasswordFlag: true } });
   };
 
-  // useEffect(() => {
-  //   if (isGetCodeToResetPassword) {
-  //     navigate("/reset-password");
-  //   }
-  // }, [isGetCodeToResetPassword]);
-
-  // if (error) {
-  //   return <ErrorMessage error={error}></ErrorMessage>;
-  // }
-
   return (
     <>
       <AppHeader />

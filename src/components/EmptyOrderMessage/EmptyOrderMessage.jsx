@@ -1,11 +1,10 @@
 import styles from "./EmptyOrderMessage.module.css";
 
-export const EmptyOrderMessage = () => {
+export const EmptyOrderMessage = ({ error }) => {
+  console.log(error);
   return (
     <div className={`${styles.box_message}  `}>
-      <p className="text text_type_digits-default">
-        В бургере не может не быть булок
-      </p>
+      <p className="text text_type_digits-default">{error}</p>
     </div>
   );
 };

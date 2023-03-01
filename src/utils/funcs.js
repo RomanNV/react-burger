@@ -2,19 +2,6 @@ import { setCookie, getCookie, deleteCookie } from "../cookie/cookie.js";
 import { DATA_URL, END_POINT } from "./const.js";
 import { requestData } from "./requestData.js";
 
-const getOrder = (arr) => {
-  const fetchBody = JSON.stringify({
-    ingredients: arr,
-  });
-  return requestData(`${DATA_URL}orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: fetchBody,
-  });
-};
-
 const getDataIng = () => {
   return fetch(`${DATA_URL}ingredients`);
 };
@@ -23,11 +10,11 @@ const getDataOrder = (arr) => {
   const fetchBody = JSON.stringify({
     ingredients: arr,
   });
-
-  return fetch(`${DATA_URL}orders`, {
+  return fetchWithRefresh(`${DATA_URL}orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
+      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
     },
     body: fetchBody,
   });
@@ -72,6 +59,7 @@ const postEmailToGetCode = (email) => {
 };
 const postToResetPassword = (data) => {
   const fetchBody = JSON.stringify(data);
+  console.log(data);
   return fetch(`${END_POINT}password-reset/reset`, {
     method: "POST",
     headers: {
@@ -118,15 +106,14 @@ export const fetchWithRefresh = async (url, options) => {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
-        console.log("in refresh error");
         return Promise.reject(refreshData);
       }
+      console.log(refreshData.refreshToken);
+      console.log(refreshData.accessToken.split("Bearer")[1]);
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie(
-        "accessToken",
-        refreshData.accessToken.split("Bearer")[1].trim()
-      );
-      options.headers.authorization = "Bearer" + " " + refreshData.accessToken;
+      setCookie("accessToken", refreshData.accessToken.split("Bearer")[1]);
+      options.headers.authorization =
+        "Bearer" + " " + getCookie("accessToken").trim();
       const res = await fetch(url, options); //повторяем запрос
       return await checkReponse(res);
     } else {
@@ -136,12 +123,12 @@ export const fetchWithRefresh = async (url, options) => {
 };
 //пока поменял на get запрос
 const getUser = () => {
-  console.log("ingetuser");
+  console.log("in getuser");
   return fetchWithRefresh(`${END_POINT}auth/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
     },
   });
 };
@@ -165,7 +152,7 @@ const logOut = () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer" + " " + accessToken,
+      authorization: "Bearer" + " " + accessToken,
     },
     body: fetchBody,
   }).then(checkReponse);
@@ -178,7 +165,7 @@ const changeUserData = (data) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
     },
     body: fetchBody,
   });
@@ -190,8 +177,8 @@ const getConstructorModal = (state) => state.constructorModal;
 const getIngredientsDataFromState = (state) => state.ingredientsData;
 const getIngredientsModal = (state) => state.ingredientModal;
 const authState = (state) => state.auth;
+const totalPriceState = (state) => state.totalPrice;
 export {
-  getOrder,
   getDataIng,
   getDataOrder,
   getPrice,
@@ -209,4 +196,5 @@ export {
   logOut,
   authState,
   changeUserData,
+  totalPriceState,
 };
