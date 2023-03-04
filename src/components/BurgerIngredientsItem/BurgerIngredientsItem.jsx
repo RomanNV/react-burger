@@ -52,7 +52,6 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
 
   return (
     <div
-      opacity
       ref={drag}
       className={`${styles.ingredient_box} `}
       style={{ opacity: `${opacityNum}` }}

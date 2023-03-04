@@ -6,7 +6,13 @@ import {
 import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
-import { useLocation, Link } from "react-router-dom";
+import {
+  useLocation,
+  Link,
+  Outlet,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../utils/funcs";
 import {
@@ -20,13 +26,23 @@ export const Profile = () => {
   const state = useSelector(authState);
   const { user, error } = state;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const INITIALINPUT = { login: user?.email, password: "", name: user?.name };
+  const INITIALINPUT = {
+    login: user?.email,
+    password: "",
+    name: user?.name,
+    isShowButon: false,
+  };
   const [prevInput, setPrevInput] = useState(INITIALINPUT);
   const [inputData, setInputData] = useState(INITIALINPUT);
 
   const onChange = (e) => {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+      isShowButon: true,
+    });
   };
   useEffect(() => {
     setPrevInput({
@@ -40,10 +56,18 @@ export const Profile = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(changeUserDataAction(inputData));
+    setInputData({
+      ...inputData,
+      isShowButon: false,
+    });
   };
   const onCancel = (e) => {
     e.preventDefault();
     setInputData(prevInput);
+    setInputData({
+      ...inputData,
+      isShowButon: false,
+    });
   };
   const logOut = (e) => {
     e.preventDefault();
@@ -52,6 +76,10 @@ export const Profile = () => {
   if (error) {
     return <ErrorMessage error={error.message}></ErrorMessage>;
   }
+  if (location.pathname === "/profile/orders") {
+    return <Outlet></Outlet>;
+  }
+
   return (
     <>
       <AppHeader title={"Личный кабинет"} />
@@ -67,7 +95,7 @@ export const Profile = () => {
                 Профиль{" "}
               </Link>
               <Link
-                to={"/profile/orders "}
+                to={"orders "}
                 className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
               >
                 История заказов
@@ -89,7 +117,7 @@ export const Profile = () => {
           </div>
 
           <div className={styles.wrap_content_form}>
-            <form className={styles.profile_form}>
+            <form className={styles.profile_form} onSubmit={onSubmit}>
               <Input
                 onChange={onChange}
                 placeholder="Имя"
@@ -112,11 +140,18 @@ export const Profile = () => {
                 icon="EditIcon"
               ></PasswordInput>
             </form>
-            <Button onClick={onSubmit}> Сохранить</Button>
-            <Button onClick={onCancel}> Отмена</Button>
+            {inputData.isShowButon ? (
+              <>
+                <Button onClick={onSubmit}> Сохранить</Button>
+                <Button onClick={onCancel}> Отмена</Button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
+      <Outlet></Outlet>;
     </>
   );
 };

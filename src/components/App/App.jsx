@@ -6,6 +6,7 @@ import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
 import { Home } from "../../pages/home/Home";
 import { Ingredient } from "../../pages/ingredient/Ingredient";
 import { Login } from "../../pages/login/Login";
+import { OrderPage } from "../../pages/orderPage/OrderPage";
 import { Profile } from "../../pages/profile/Profile";
 import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
@@ -40,7 +41,7 @@ function App() {
         <Route
           path="/register"
           element={
-            <RequiredAuth onlyUnAuth={true}>
+            <RequiredAuth onlyUnAuth={true} redirectTo={"/login"}>
               <RegisterPage />
             </RequiredAuth>
           }
@@ -62,13 +63,16 @@ function App() {
           }
         ></Route>
         <Route
-          path="/profile"
+          path="profile"
           element={
             <RequiredAuth redirectTo={"/login"}>
               <Profile />
             </RequiredAuth>
           }
-        ></Route>
+        >
+          <Route path="/profile/:orders" element={<OrderPage />}></Route>
+        </Route>
+
         <Route path="/ingredients/:id" element={<Ingredient />}></Route>
       </Routes>
       {background && (
