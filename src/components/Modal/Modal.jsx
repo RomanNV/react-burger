@@ -6,7 +6,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ children, isOpenModal, closeModal }) => {
+export const Modal = ({ children, isOpenModal = true, closeModal }) => {
   if (isOpenModal) {
     return createPortal(
       <>

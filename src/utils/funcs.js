@@ -1,6 +1,5 @@
 import { setCookie, getCookie, deleteCookie } from "../cookie/cookie.js";
 import { DATA_URL, END_POINT } from "./const.js";
-import { requestData } from "./requestData.js";
 
 const getDataIng = () => {
   return fetch(`${DATA_URL}ingredients`);
@@ -42,7 +41,6 @@ const checkReponse = (res) => {
   return res.ok
     ? res.json()
     : res.json().then((err) => {
-        console.log(err, "in reponse error");
         return Promise.reject(err);
       });
 };
@@ -59,7 +57,6 @@ const postEmailToGetCode = (email) => {
 };
 const postToResetPassword = (data) => {
   const fetchBody = JSON.stringify(data);
-  console.log(data);
   return fetch(`${END_POINT}password-reset/reset`, {
     method: "POST",
     headers: {
@@ -81,11 +78,9 @@ const registerNewUser = (data) => {
 };
 
 const refreshToken = () => {
-  console.log("in refresh token");
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
-  console.log("refresh token", fetchBody);
 
   return fetch(`${END_POINT}auth/token`, {
     method: "POST",
@@ -98,9 +93,7 @@ const refreshToken = () => {
 
 export const fetchWithRefresh = async (url, options) => {
   try {
-    console.log("in fetchrefresh");
     const res = await fetch(url, options);
-    console.log("step 1");
     return await checkReponse(res);
   } catch (err) {
     if (err.message === "jwt expired") {
@@ -108,8 +101,7 @@ export const fetchWithRefresh = async (url, options) => {
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      console.log(refreshData.refreshToken);
-      console.log(refreshData.accessToken.split("Bearer")[1]);
+
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken.split("Bearer")[1]);
       options.headers.authorization =
@@ -123,7 +115,6 @@ export const fetchWithRefresh = async (url, options) => {
 };
 //пока поменял на get запрос
 const getUser = () => {
-  console.log("in getuser");
   return fetchWithRefresh(`${END_POINT}auth/user`, {
     method: "GET",
     headers: {
@@ -160,7 +151,6 @@ const logOut = () => {
 
 const changeUserData = (data) => {
   const fetchBody = JSON.stringify(data);
-  console.log("in changeUserData");
   return fetchWithRefresh(`${END_POINT}auth/user`, {
     method: "PATCH",
     headers: {

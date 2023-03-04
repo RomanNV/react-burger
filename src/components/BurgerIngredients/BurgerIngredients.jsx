@@ -2,28 +2,12 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import { useMemo, useRef, useState } from "react";
-import { Modal } from "../Modal/Modal";
-import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
-import {
-  getIngredientsDataFromState,
-  getIngredientsModal,
-} from "../../utils/funcs";
+import { getIngredientsDataFromState } from "../../utils/funcs";
 
 export const BurgerIngredients = () => {
-  const { dataIngredients, viewItem } = useSelector(
-    getIngredientsDataFromState
-  );
-  const { isOpenIngredientModal } = useSelector(getIngredientsModal);
-
+  const { dataIngredients } = useSelector(getIngredientsDataFromState);
   const [position, setPosition] = useState("one");
-
-  const dispatch = useDispatch();
-
-  const closeModal = () => {
-    dispatch({ type: CLOSE_INGREDIENT_MODAL });
-  };
 
   const bunTab = useRef(null);
   const sauceTab = useRef(null);
@@ -78,11 +62,6 @@ export const BurgerIngredients = () => {
 
   return (
     <>
-      {
-        <Modal closeModal={closeModal} isOpenModal={isOpenIngredientModal}>
-          <IngredientDetails {...viewItem}></IngredientDetails>
-        </Modal>
-      }
       <section className={styles.content_box}>
         <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
         <div className={styles.tab_box}>

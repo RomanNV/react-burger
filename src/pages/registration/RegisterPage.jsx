@@ -14,7 +14,7 @@ import { registerNewUserAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 export const RegisterPage = () => {
   const INITIALINPUT = { email: "", password: "", name: "" };
-  const { error, user } = useSelector(authState);
+  const { error } = useSelector(authState);
   const dispatch = useDispatch();
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e) => {
@@ -25,9 +25,9 @@ export const RegisterPage = () => {
     dispatch(registerNewUserAction(inputData));
     setInputData(INITIALINPUT);
   };
-  // if (error) {
-  //   return <ErrorMessage error={error.message}></ErrorMessage>;
-  // }
+  if (error) {
+    return <ErrorMessage error={error.message}></ErrorMessage>;
+  }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

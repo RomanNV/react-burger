@@ -6,12 +6,11 @@ import {
 import { useEffect, useState } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
-import { useLocation, Link, useSearchParams } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../utils/funcs";
 import {
   changeUserDataAction,
-  checkUserAuth,
   logOutAction,
 } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
@@ -19,7 +18,6 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 export const Profile = () => {
   const location = useLocation();
   const state = useSelector(authState);
-  console.log(state);
   const { user, error } = state;
   const dispatch = useDispatch();
 
@@ -51,14 +49,9 @@ export const Profile = () => {
     e.preventDefault();
     dispatch(logOutAction());
   };
-
-  // useEffect(() => {
-  //   dispatch(checkUserAuth());
-  // }, [dispatch, user]);
-
-  // if (error) {
-  //   return <ErrorMessage error={error}></ErrorMessage>;
-  // }
+  if (error) {
+    return <ErrorMessage error={error.message}></ErrorMessage>;
+  }
   return (
     <>
       <AppHeader title={"Личный кабинет"} />

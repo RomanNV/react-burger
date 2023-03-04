@@ -1,4 +1,3 @@
-import { getCookie } from "../../cookie/cookie";
 import { getDataOrder } from "../../utils/funcs";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";

@@ -5,9 +5,10 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function AppHeader({ title }) {
+  const pathName = useLocation().pathname;
   return (
     <header className={style.content_box}>
       <nav className={style.nav_grid_box}>
@@ -16,7 +17,11 @@ export default function AppHeader({ title }) {
             <BurgerIcon type="primary" />
             <Link
               to="/"
-              className={`${style.nav_link_a1} text text_type_main-default`}
+              className={
+                pathName === "/"
+                  ? `${style.nav_link_a1} text text_type_main-default`
+                  : `${style.nav_link_a2} text text_type_main-default `
+              }
             >
               Конструктор
             </Link>
@@ -36,7 +41,11 @@ export default function AppHeader({ title }) {
           <ProfileIcon type="secondary" />
           <Link
             to="/profile"
-            className={`${style.nav_link_a2} text text_type_main-default`}
+            className={
+              pathName === "/profile"
+                ? `${style.nav_link_a1} text text_type_main-default`
+                : `${style.nav_link_a2} text text_type_main-default `
+            }
           >
             {title}
           </Link>

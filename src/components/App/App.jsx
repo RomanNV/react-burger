@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Error404 } from "../../pages/Error404/Error404";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
 import { Home } from "../../pages/home/Home";
@@ -11,10 +11,13 @@ import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
+import { Modal } from "../Modal/Modal";
 import RequiredAuth from "../RequiredAuth/RequiredAuth";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredientsData());
@@ -22,8 +25,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <Routes location={background || location}>
         <Route path="/" element={<Home />}></Route>
         <Route path="*" element={<Error404 />}></Route>
         <Route
@@ -68,7 +71,12 @@ function App() {
         ></Route>
         <Route path="/ingredients/:id" element={<Ingredient />}></Route>
       </Routes>
-    </BrowserRouter>
+      {background && (
+        <Routes>
+          (<Route path="/ingredients/:id" element={<Ingredient />}></Route>)
+        </Routes>
+      )}
+    </>
   );
 }
 

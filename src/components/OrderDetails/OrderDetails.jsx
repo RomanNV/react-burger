@@ -3,7 +3,6 @@ import doneImage from "../../images/done.svg";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { totalPriceState } from "../../utils/funcs";
 
 export const OrderDetails = () => {
