@@ -1,13 +1,11 @@
 import {
   EmailInput,
   Button,
-  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import AppHeader from "../../components/AppHeader/AppHeader";
+import { useState } from "react";
 import styles from "./Login.module.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
 import { authState } from "../../utils/funcs";
@@ -17,8 +15,6 @@ import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHe
 export const Login = () => {
   const INITIALINPUT = { email: "", password: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
-  const navigate = useNavigate();
-  const location = useLocation();
   const onChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };

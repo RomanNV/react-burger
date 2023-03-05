@@ -1,15 +1,25 @@
 import { setCookie, getCookie, deleteCookie } from "../cookie/cookie.js";
-import { DATA_URL, END_POINT } from "./const.js";
+import {
+  DATA_URL_INGREDIENTS,
+  LOGIN_POINT,
+  LOGOUT_POINT,
+  ORDER_POINT,
+  PASSWORD_RESET,
+  REGISTER_POINT,
+  SEND_CODE_TO_RESET,
+  TOKEN_POINT,
+  USER_POINT,
+} from "./const.js";
 
 const getDataIng = () => {
-  return fetch(`${DATA_URL}ingredients`);
+  return fetch(DATA_URL_INGREDIENTS);
 };
 
 const getDataOrder = (arr) => {
   const fetchBody = JSON.stringify({
     ingredients: arr,
   });
-  return fetchWithRefresh(`${DATA_URL}orders`, {
+  return fetchWithRefresh(ORDER_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -47,7 +57,7 @@ const checkReponse = (res) => {
 
 const postEmailToGetCode = (email) => {
   const fetchBody = JSON.stringify({ email });
-  return fetch(`${END_POINT}password-reset`, {
+  return fetch(PASSWORD_RESET, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -57,7 +67,7 @@ const postEmailToGetCode = (email) => {
 };
 const postToResetPassword = (data) => {
   const fetchBody = JSON.stringify(data);
-  return fetch(`${END_POINT}password-reset/reset`, {
+  return fetch(SEND_CODE_TO_RESET, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -68,7 +78,7 @@ const postToResetPassword = (data) => {
 
 const registerNewUser = (data) => {
   const fetchBody = JSON.stringify(data);
-  return fetch(`${END_POINT}auth/register`, {
+  return fetch(REGISTER_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -81,8 +91,7 @@ const refreshToken = () => {
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
-
-  return fetch(`${END_POINT}auth/token`, {
+  return fetch(TOKEN_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -114,7 +123,7 @@ export const fetchWithRefresh = async (url, options) => {
   }
 };
 const getUser = () => {
-  return fetchWithRefresh(`${END_POINT}auth/user`, {
+  return fetchWithRefresh(USER_POINT, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -124,7 +133,7 @@ const getUser = () => {
 };
 const login = (data) => {
   const fetchBody = JSON.stringify(data);
-  return fetch(`${END_POINT}auth/login`, {
+  return fetch(LOGIN_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -138,7 +147,7 @@ const logOut = () => {
   localStorage.removeItem("refreshToken");
   deleteCookie("accessToken");
   const fetchBody = JSON.stringify(refreshToken);
-  return fetch(`${END_POINT}auth/logout`, {
+  return fetch(LOGOUT_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -150,7 +159,7 @@ const logOut = () => {
 
 const changeUserData = (data) => {
   const fetchBody = JSON.stringify(data);
-  return fetchWithRefresh(`${END_POINT}auth/user`, {
+  return fetchWithRefresh(USER_POINT, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

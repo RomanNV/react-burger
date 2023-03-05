@@ -3,14 +3,13 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { getRequestToResetPassword } from "../../services/actions/auth";
 import { authState } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const ResetPassword = () => {
@@ -24,12 +23,6 @@ export const ResetPassword = () => {
   const dispatch = useDispatch();
   const isForgotPasswordFlag = useLocation()?.state?.isForgotPasswordFlag;
 
-  useEffect(() => {
-    if (!isForgotPasswordFlag) {
-      navigate("/forgot-password");
-    }
-  }, [navigate, isForgotPasswordFlag]);
-
   const onSuccess = () => {
     navigate("/login");
   };
@@ -42,7 +35,7 @@ export const ResetPassword = () => {
   if (error) {
     return <ErrorMessage error={error}></ErrorMessage>;
   }
-  return (
+  return isForgotPasswordFlag ? (
     <LayoutWithHeader>
       <div className={styles.reset_password_form}>
         <div className={styles.wrap_content_form}>
@@ -81,5 +74,7 @@ export const ResetPassword = () => {
         </div>
       </div>
     </LayoutWithHeader>
+  ) : (
+    <Navigate to={"/forgot-password"} />
   );
 };

@@ -20,7 +20,7 @@ export const Ingredient = () => {
       })[0];
       return filteredData;
     } else return viewItem;
-  }, [viewItem, dataIngredients]);
+  }, [viewItem, dataIngredients, id]);
 
   const closeModal = () => {
     navigate("/");

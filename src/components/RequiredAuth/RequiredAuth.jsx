@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { authState } from "../../utils/funcs";
+import PropTypes from "prop-types";
 
 export default function RequiredAuth({
   redirectTo,
@@ -33,3 +33,8 @@ export default function RequiredAuth({
   return children;
   //state added need
 }
+RequiredAuth.propTypes = {
+  redirectTo: PropTypes.string,
+  children: PropTypes.any,
+  onlyUnAuth: PropTypes.bool,
+};

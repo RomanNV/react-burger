@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../utils/funcs";
 import { useNavigate, Link } from "react-router-dom";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const ForgotPassword = () => {
   const INITIALINPUT = { email: "" };
@@ -38,8 +39,7 @@ export const ForgotPassword = () => {
   }
 
   return (
-    <>
-      <AppHeader />
+    <LayoutWithHeader>
       <div className={styles.forgot_password_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
@@ -72,6 +72,6 @@ export const ForgotPassword = () => {
           </p>
         </div>
       </div>
-    </>
+    </LayoutWithHeader>
   );
 };

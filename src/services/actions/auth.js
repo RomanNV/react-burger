@@ -8,7 +8,6 @@ import {
   logOut,
   changeUserData,
 } from "../../utils/funcs";
-
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const AUTH_CHECK = "AUTH_CHECK";
 export const AUTH_REQUEST = "AUTH_REQUEST";
@@ -19,7 +18,7 @@ export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-
+//проверка токеа на валидность реализована в функции fetchWithRefresh в funcs
 export const checkUserAuth = () => {
   return function (dispatch) {
     if (getCookie("accessToken")) {
@@ -104,8 +103,6 @@ export const getRequestToResetPassword = (inputData, callback) => {
       });
   };
 };
-
-//добавить добавление токенов
 
 export const loginAction = (inputData) => {
   return function (dispatch) {

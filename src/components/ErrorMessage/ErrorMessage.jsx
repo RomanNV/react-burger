@@ -1,4 +1,6 @@
 import styles from "./ErrorMessage.module.css";
+import PropTypes from "prop-types";
+
 export const ErrorMessage = ({ error }) => {
   return (
     <div className={styles.error_message}>
@@ -6,4 +8,7 @@ export const ErrorMessage = ({ error }) => {
       <p>{error?.message}</p>
     </div>
   );
+};
+ErrorMessage.propTypes = {
+  error: PropTypes.object.isRequired,
 };

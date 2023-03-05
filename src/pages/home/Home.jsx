@@ -2,7 +2,6 @@ import styles from "./Home.module.css";
 import { useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import { authState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";

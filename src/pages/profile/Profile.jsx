@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
-import { useLocation, Link, Outlet, useNavigate } from "react-router-dom";
+import { useLocation, Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../utils/funcs";
 import {
@@ -20,7 +20,6 @@ export const Profile = () => {
   const state = useSelector(authState);
   const { user, error } = state;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const INITIALINPUT = {
     login: user?.email,
