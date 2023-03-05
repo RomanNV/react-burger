@@ -11,6 +11,7 @@ import { getRequestToResetPassword } from "../../services/actions/auth";
 import { authState } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const ResetPassword = () => {
   const INITIALINPUT = { password: "", token: "" };
@@ -27,24 +28,26 @@ export const ResetPassword = () => {
     if (!isForgotPasswordFlag) {
       navigate("/forgot-password");
     }
-  }, []);
+  }, [navigate, isForgotPasswordFlag]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(getRequestToResetPassword(inputData));
+  const onSuccess = () => {
     navigate("/login");
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getRequestToResetPassword(inputData, onSuccess));
+  };
+
   if (error) {
-    return <ErrorMessage error={error.message}></ErrorMessage>;
+    return <ErrorMessage error={error}></ErrorMessage>;
   }
   return (
-    <>
-      <AppHeader title={"Личный кабинет"} />
+    <LayoutWithHeader>
       <div className={styles.reset_password_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-          <form className={styles.reset_form}>
+          <form className={styles.reset_form} onSubmit={onSubmit}>
             <PasswordInput
               onChange={onChange}
               value={inputData.password}
@@ -58,16 +61,15 @@ export const ResetPassword = () => {
               name={"token"}
               onChange={onChange}
             ></Input>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              extraClass={styles.enter_button}
+            >
+              Сохранить
+            </Button>
           </form>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            extraClass={styles.enter_button}
-            onClick={onSubmit}
-          >
-            Сохранить
-          </Button>
         </div>
         <div className={styles.wrap_link}>
           <p className={`${styles.p} text text_type_main-default`}>
@@ -78,6 +80,6 @@ export const ResetPassword = () => {
           </p>
         </div>
       </div>
-    </>
+    </LayoutWithHeader>
   );
 };

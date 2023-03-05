@@ -21,18 +21,20 @@ export const ForgotPassword = () => {
   const { error } = useSelector(authState);
 
   const dispatch = useDispatch();
+  const onSuccess = () => {
+    navigate("/reset-password", { state: { isForgotPasswordFlag: true } });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (!inputData.email) {
       return;
     }
-    dispatch(getCodeToResetPassword(inputData.email));
-    navigate("/reset-password", { state: { isForgotPasswordFlag: true } });
+    dispatch(getCodeToResetPassword(inputData.email, onSuccess));
   };
 
   if (error) {
-    return <ErrorMessage error={error.message} />;
+    return <ErrorMessage error={error} />;
   }
 
   return (
@@ -41,7 +43,7 @@ export const ForgotPassword = () => {
       <div className={styles.forgot_password_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-          <form className={styles.forgot_form}>
+          <form className={styles.forgot_form} onSubmit={onSubmit}>
             <EmailInput
               onChange={onChange}
               value={inputData.email}
@@ -49,16 +51,15 @@ export const ForgotPassword = () => {
               isIcon={false}
               placeholder="Укажите ваш E-mail"
             ></EmailInput>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              extraClass={styles.enter_button}
+            >
+              Восстановить
+            </Button>
           </form>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={onSubmit}
-            extraClass={styles.enter_button}
-          >
-            Восстановить
-          </Button>
         </div>
         <div className={styles.wrap_link}>
           <p

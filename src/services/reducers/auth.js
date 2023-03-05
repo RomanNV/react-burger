@@ -75,7 +75,6 @@ export const authReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_SUCCESS: {
-      console.log("LOGOUT_SUCCESS");
       return {
         ...state,
         isAuthRequest: false,

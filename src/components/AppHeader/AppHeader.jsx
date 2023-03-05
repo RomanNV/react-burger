@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
 
-export default function AppHeader({ title }) {
+export default function AppHeader() {
   const pathName = useLocation().pathname;
   return (
     <header className={style.content_box}>
@@ -47,7 +47,7 @@ export default function AppHeader({ title }) {
                 : `${style.nav_link_a2} text text_type_main-default `
             }
           >
-            {title}
+            Личный кабинет
           </Link>
         </div>
       </nav>

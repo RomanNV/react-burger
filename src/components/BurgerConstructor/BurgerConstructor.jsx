@@ -19,7 +19,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {
-  GET_TOTAL_PRICE,
   ADD_BUN,
   ADD_INGREDIENT,
   getIngredientWithId,
@@ -30,7 +29,6 @@ import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(getConstructorModal);
   const { ingredients, bun } = useSelector(getConstructorData);
-  console.log(bun);
 
   const [listIdOrder, setListIdOrder] = useState([]);
 

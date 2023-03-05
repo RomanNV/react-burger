@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Error404 } from "../../pages/Error404/Error404";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
 import { Home } from "../../pages/home/Home";
@@ -12,7 +12,6 @@ import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
-import { Modal } from "../Modal/Modal";
 import RequiredAuth from "../RequiredAuth/RequiredAuth";
 
 function App() {
@@ -41,7 +40,7 @@ function App() {
         <Route
           path="/register"
           element={
-            <RequiredAuth onlyUnAuth={true} redirectTo={"/login"}>
+            <RequiredAuth onlyUnAuth={true}>
               <RegisterPage />
             </RequiredAuth>
           }
@@ -70,7 +69,7 @@ function App() {
             </RequiredAuth>
           }
         >
-          <Route path="/profile/:orders" element={<OrderPage />}></Route>
+          <Route path="orders" element={<OrderPage />}></Route>
         </Route>
 
         <Route path="/ingredients/:id" element={<Ingredient />}></Route>

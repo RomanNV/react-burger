@@ -1,6 +1,7 @@
 import {
   EmailInput,
   Button,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
 import { authState } from "../../utils/funcs";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const Login = () => {
   const INITIALINPUT = { email: "", password: "" };
@@ -21,36 +23,24 @@ export const Login = () => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
   const dispatch = useDispatch();
-  const { user, error } = useSelector(authState);
+  const { error } = useSelector(authState);
 
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginAction(inputData));
   };
 
-  useEffect(() => {
-    if (user && location.state) {
-      const from = location.state?.from;
-      navigate(from);
-      return;
-    } else {
-      if (user) {
-        navigate("/");
-      }
-    }
-  }, [user]);
-
   if (error) {
-    return <ErrorMessage error={error.message}></ErrorMessage>;
+    return <ErrorMessage error={error}></ErrorMessage>;
   }
 
   return (
-    <>
-      <AppHeader title={"Личный кабинет"} />
+    <LayoutWithHeader>
       <div className={styles.login_form}>
         <div className={styles.wrap_content_form}>
           <h1 className="text text_type_main-medium">Вход</h1>
-          <form className={styles.form_login}>
+
+          <form className={styles.form_login} onSubmit={onSubmit}>
             <EmailInput
               onChange={onChange}
               value={inputData.email}
@@ -63,36 +53,31 @@ export const Login = () => {
               name={"password"}
               extraClass="mb-2"
             />
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              extraClass={styles.enter_button}
+            >
+              Вход
+            </Button>
           </form>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            extraClass={styles.enter_button}
-            onClick={onSubmit}
-          >
-            Войти
-          </Button>
         </div>
         <div className={styles.wrap_link}>
           <p className={` text text_type_main-default text_color_inactive`}>
             Вы новый пользователь?
-            <Link to="/register">
-              <a className={styles.a_link} href="">
-                Зарегистрироваться
-              </a>
+            <Link className={styles.a_link} to="/register">
+              Зарегистрироваться
             </Link>
           </p>
           <p className={` text text_type_main-default text_color_inactive`}>
             Забыли пароль?
-            <Link to="/forgot-password">
-              <a className={styles.a_link} href="">
-                Восстановиnь пароль
-              </a>
+            <Link to="/forgot-password" className={styles.a_link}>
+              Восстановиnь пароль
             </Link>
           </p>
         </div>
       </div>
-    </>
+    </LayoutWithHeader>
   );
 };

@@ -113,7 +113,6 @@ export const fetchWithRefresh = async (url, options) => {
     }
   }
 };
-//пока поменял на get запрос
 const getUser = () => {
   return fetchWithRefresh(`${END_POINT}auth/user`, {
     method: "GET",

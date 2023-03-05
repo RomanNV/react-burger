@@ -7,21 +7,23 @@ import { authState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const Home = () => {
   const { error } = useSelector(authState);
   if (error) {
-    return <ErrorMessage error={error.message} />;
+    return <ErrorMessage error={error} />;
   }
   return (
-    <div className={styles.AppHome}>
-      <AppHeader title={"Личный кабинет"}></AppHeader>
-      <div className={styles.apphome_grid_container}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
+    <LayoutWithHeader>
+      <div className={styles.AppHome}>
+        <div className={styles.apphome_grid_container}>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        </div>
       </div>
-    </div>
+    </LayoutWithHeader>
   );
 };

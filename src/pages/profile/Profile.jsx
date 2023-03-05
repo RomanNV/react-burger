@@ -4,15 +4,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from "./Profile.module.css";
-import {
-  useLocation,
-  Link,
-  Outlet,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, Link, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../utils/funcs";
 import {
@@ -20,6 +13,7 @@ import {
   logOutAction,
 } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
 export const Profile = () => {
   const location = useLocation();
@@ -63,26 +57,28 @@ export const Profile = () => {
   };
   const onCancel = (e) => {
     e.preventDefault();
-    setInputData(prevInput);
     setInputData({
-      ...inputData,
+      ...prevInput,
       isShowButon: false,
     });
   };
+
   const logOut = (e) => {
     e.preventDefault();
     dispatch(logOutAction());
   };
+
   if (error) {
-    return <ErrorMessage error={error.message}></ErrorMessage>;
+    return <ErrorMessage error={error}></ErrorMessage>;
   }
+
+  //отрисовка вложенного маршрута
   if (location.pathname === "/profile/orders") {
     return <Outlet></Outlet>;
   }
 
   return (
-    <>
-      <AppHeader title={"Личный кабинет"} />
+    <LayoutWithHeader>
       <div className={styles.box_container}>
         <div className={styles.flex_container}>
           <div className={styles.link_box}>
@@ -139,19 +135,27 @@ export const Profile = () => {
                 name={"password"}
                 icon="EditIcon"
               ></PasswordInput>
+              {inputData.isShowButon ? (
+                <>
+                  <Button htmlType="submit" type="primary" size="large">
+                    Сохранить
+                  </Button>
+                  <Button
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                    onClick={onCancel}
+                  >
+                    Отмена
+                  </Button>
+                </>
+              ) : (
+                <></>
+              )}
             </form>
-            {inputData.isShowButon ? (
-              <>
-                <Button onClick={onSubmit}> Сохранить</Button>
-                <Button onClick={onCancel}> Отмена</Button>
-              </>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       </div>
-      <Outlet></Outlet>;
-    </>
+    </LayoutWithHeader>
   );
 };
