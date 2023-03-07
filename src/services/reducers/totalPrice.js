@@ -13,7 +13,7 @@ const initialState = {
 export const totalPriceReducer = (state = initialState, action) => {
   switch (action.type) {
     case NOT_BUN: {
-      return { ...state, isEmptyOrder: true };
+      return { ...state, isEmptyOrder: true, error: action.payload };
     }
     case GET_ORDER_REQUEST: {
       return { ...state, isOrderDataRequest: true, isEmptyOrder: false };
@@ -23,7 +23,7 @@ export const totalPriceReducer = (state = initialState, action) => {
         ...state,
         orderData: "",
         isOrderDataRequest: false,
-        error: action.error,
+        error: action.payload,
         isEmptyOrder: false,
       };
     }
@@ -33,6 +33,7 @@ export const totalPriceReducer = (state = initialState, action) => {
         isOrderDataRequest: false,
         orderData: action.orderData,
         isEmptyOrder: false,
+        error: null,
       };
     }
     default:

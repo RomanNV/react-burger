@@ -3,21 +3,21 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredientModal";
 import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
 import { getConstructorData } from "../../utils/funcs";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
   const { name, price, image, _id, type } = ingredient;
   const { ingredients, bun } = useSelector(getConstructorData);
   const [counter, setCounter] = useState({ bun: 0, ingredient: 0 });
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const openModal = () => {
-    dispatch({ type: OPEN_INGREDIENT_MODAL });
-  };
+  const location = useLocation();
+
   const getViewItem = () => {
     dispatch({ type: GET_VIEW_ITEM, viewItem: ingredient });
   };
@@ -52,12 +52,13 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
 
   return (
     <div
-      opacity
       ref={drag}
       className={`${styles.ingredient_box} `}
       style={{ opacity: `${opacityNum}` }}
       onClick={() => {
-        openModal();
+        navigate(`/ingredients/${_id}`, {
+          state: { background: location.pathname },
+        });
         getViewItem();
       }}
     >

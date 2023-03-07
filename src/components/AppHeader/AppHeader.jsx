@@ -1,52 +1,56 @@
 import style from "./AppHeader.module.css";
-import PropTypes from "prop-types";
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation } from "react-router-dom";
 
-export default function AppHeader({ constructor, listItems, profile }) {
+export default function AppHeader() {
+  const pathName = useLocation().pathname;
   return (
     <header className={style.content_box}>
       <nav className={style.nav_grid_box}>
         <div className={style.nav_link_box}>
           <div className={style.nav_link}>
             <BurgerIcon type="primary" />
-            <a
-              href=""
-              className={`${style.nav_link_a1} text text_type_main-default`}
+            <Link
+              to="/"
+              className={
+                pathName === "/"
+                  ? `${style.nav_link_a1} text text_type_main-default`
+                  : `${style.nav_link_a2} text text_type_main-default `
+              }
             >
-              {constructor}
-            </a>
+              Конструктор
+            </Link>
           </div>
           <div className={style.nav_link}>
             <ListIcon type="secondary" />
-            <a
-              href=""
+            <Link
+              to="/login"
               className={`${style.nav_link_a2} text text_type_main-default`}
             >
-              {listItems}
-            </a>
+              Лента заказов
+            </Link>
           </div>
         </div>
         <Logo />
         <div className={style.nav_link}>
           <ProfileIcon type="secondary" />
-          <a
-            href=""
-            className={`${style.nav_link_a2} text text_type_main-default`}
+          <Link
+            to="/profile"
+            className={
+              pathName === "/profile"
+                ? `${style.nav_link_a1} text text_type_main-default`
+                : `${style.nav_link_a2} text text_type_main-default `
+            }
           >
-            {profile}
-          </a>
+            Личный кабинет
+          </Link>
         </div>
       </nav>
     </header>
   );
 }
-AppHeader.propTypes = {
-  constructor: PropTypes.string,
-  listItems: PropTypes.string,
-  profile: PropTypes.string,
-};

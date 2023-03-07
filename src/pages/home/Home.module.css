@@ -1,0 +1,9 @@
+.AppHome {
+  position: relative;
+  background-color: #131316;
+}
+.apphome_grid_container {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+}

@@ -1,0 +1,19 @@
+.error_page {
+  position: relative;
+  width: 720px;
+  height: 540px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px white solid;
+  height: 200px;
+}
+.wrap_content {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
