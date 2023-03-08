@@ -2,7 +2,7 @@ import styles from "./Home.module.css";
 import { useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { authState } from "../../utils/funcs";
+import { authState, getIngredientsDataFromState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
@@ -10,8 +10,11 @@ import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHe
 
 export const Home = () => {
   const { error } = useSelector(authState);
-  if (error) {
-    return <ErrorMessage error={error} />;
+  const errorIngredients = useSelector(getIngredientsDataFromState).error;
+  console.log(errorIngredients);
+  if (error || errorIngredients) {
+    console.log(error, errorIngredients);
+    return <ErrorMessage error={error || errorIngredients} />;
   }
   return (
     <LayoutWithHeader>
