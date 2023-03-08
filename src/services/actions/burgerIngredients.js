@@ -10,7 +10,7 @@ export const getIngredientsData = () => {
     getDataIng()
       .then((res) => {
         if (!res.ok) {
-          dispatch({ type: GET_INGREDIENTS_FAILED, error: "Ишибка сервера!" });
+          dispatch({ type: GET_INGREDIENTS_FAILED, error: "Ошибка сервера!" });
         }
         return res.json();
       })
@@ -21,7 +21,10 @@ export const getIngredientsData = () => {
         });
       })
       .catch((err) => {
-        dispatch({ type: GET_INGREDIENTS_FAILED, error: err.message });
+        dispatch({
+          type: GET_INGREDIENTS_FAILED,
+          error: "Ошибка сервера, попробуйте еще раз",
+        });
       });
   };
 };
