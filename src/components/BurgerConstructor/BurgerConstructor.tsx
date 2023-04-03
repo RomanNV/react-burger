@@ -25,12 +25,13 @@ import {
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
+import { IngredientCard, IngredientCardWithId } from "../../types/commonTypes";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(getConstructorModal);
   const { ingredients, bun } = useSelector(getConstructorData);
 
-  const [listIdOrder, setListIdOrder] = useState([]);
+  const [listIdOrder, setListIdOrder] = useState<IngredientCardWithId[]>([]);
 
   const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ export const BurgerConstructor = () => {
   //подключаем drop для поля конструктора
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop({ ingredient }) {
+    drop({ ingredient }: IngredientCardWithId) {
       if (ingredient.type === "bun") {
         dispatch({ type: ADD_BUN, bun: { ingredient } });
       } else {

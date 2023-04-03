@@ -19,6 +19,7 @@ export const constructorReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT: {
+      console.log(action.ingredients);
       return {
         ...state,
         ingredients: [...state.ingredients, action.ingredients],

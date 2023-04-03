@@ -1,8 +1,13 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import PropTypes from "prop-types";
+import { BunFields } from "../../types/commonTypes";
 
-export const BurgerBunTop = ({ name, price, image }) => {
+export const BurgerBunTop: React.FC<BunFields> = ({
+  name,
+  price,
+  image,
+}: BunFields): JSX.Element => {
   return (
     <>
       <ConstructorElement
@@ -14,10 +19,4 @@ export const BurgerBunTop = ({ name, price, image }) => {
       ></ConstructorElement>
     </>
   );
-};
-BurgerBunTop.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  isLocked: PropTypes.bool,
 };

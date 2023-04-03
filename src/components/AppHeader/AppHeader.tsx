@@ -1,4 +1,5 @@
 import style from "./AppHeader.module.css";
+import { FC } from "react";
 import {
   BurgerIcon,
   ListIcon,
@@ -6,9 +7,10 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
+import { func } from "prop-types";
 
-export default function AppHeader() {
-  const pathName = useLocation().pathname;
+export const AppHeader: FC = (): JSX.Element => {
+  const pathName: string = useLocation().pathname;
   return (
     <header className={style.content_box}>
       <nav className={style.nav_grid_box}>
@@ -53,4 +55,4 @@ export default function AppHeader() {
       </nav>
     </header>
   );
-}
+};

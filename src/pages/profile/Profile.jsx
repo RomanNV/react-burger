@@ -52,6 +52,7 @@ export const Profile = () => {
     setInputData({
       ...inputData,
       isShowButon: false,
+      password: "",
     });
   };
   const onCancel = (e) => {

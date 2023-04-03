@@ -13,6 +13,7 @@ import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
 import RequiredAuth from "../RequiredAuth/RequiredAuth";
+import { LocationState } from "../../types/commonTypes";
 
 function App() {
   const dispatch = useDispatch();

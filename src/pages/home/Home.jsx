@@ -4,7 +4,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { authState, getIngredientsDataFromState } from "../../utils/funcs";
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
-import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
+import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor.jsx";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
