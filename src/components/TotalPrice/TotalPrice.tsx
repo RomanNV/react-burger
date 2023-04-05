@@ -3,14 +3,17 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import { getOrderNum } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authState } from "../../utils/funcs";
+import { TotalPriceType } from "../../types/commonTypes";
 
-export const TotalPrice = ({ listIdOrder, totalPrice }) => {
+export const TotalPrice: React.FC<TotalPriceType> = ({
+  listIdOrder,
+  totalPrice,
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector(authState);
   const navigate = useNavigate();
@@ -24,14 +27,16 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
   const getOrder = () => {
     if (!user) {
       navigate("/login", { state: { from: location.pathname } });
-    } else dispatch(getOrderNum(listIdOrder));
+    } else dispatch<any>(getOrderNum(listIdOrder));
   };
 
   return (
     <div className={styles.button_container}>
       <span className={styles.price_box}>
         <p className="text text_type_main-large">{totalPrice}</p>
-        <CurrencyIcon className={styles.icon} type="primary" />
+        <div className={styles.icon}>
+          <CurrencyIcon type="primary" />
+        </div>
       </span>
       <Button
         onClick={() => {
@@ -46,9 +51,4 @@ export const TotalPrice = ({ listIdOrder, totalPrice }) => {
       </Button>
     </div>
   );
-};
-
-TotalPrice.propTypes = {
-  listIdOrder: PropTypes.array,
-  totalPrice: PropTypes.number,
 };

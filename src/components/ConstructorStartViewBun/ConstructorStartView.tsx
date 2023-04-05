@@ -1,6 +1,6 @@
 import styles from "./ConstructorStartViewBun.module.css";
 
-export const ConstructorStartViewBunTop = () => {
+export const ConstructorStartViewBunTop: React.FC = () => {
   return (
     <div className={styles.bun_body_top}>
       <p className={`text text_type_main-default ${styles.p_position}`}>
@@ -9,7 +9,7 @@ export const ConstructorStartViewBunTop = () => {
     </div>
   );
 };
-export const ConstructorStartViewBunBottom = () => {
+export const ConstructorStartViewBunBottom: React.FC = () => {
   return (
     <div className={styles.bun_body_bottom}>
       <p className={`text text_type_main-default ${styles.p_position}`}>
@@ -18,7 +18,7 @@ export const ConstructorStartViewBunBottom = () => {
     </div>
   );
 };
-export const ConstructorStartViewBunIngredient = () => {
+export const ConstructorStartViewBunIngredient: React.FC = () => {
   return (
     <div className={styles.bun_body_ingredient}>
       <p className={`text text_type_main-default ${styles.p_position}`}>

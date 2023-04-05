@@ -1,6 +1,6 @@
+import { IngredientCard } from "../../types/commonTypes";
 import styles from "./IngredientDetails.module.css";
-import PropTypes from "prop-types";
-export const IngredientDetails = ({
+export const IngredientDetails: React.FC<IngredientCard> = ({
   image_large,
   name,
   calories,
@@ -54,13 +54,4 @@ export const IngredientDetails = ({
       </div>
     </div>
   );
-};
-IngredientDetails.propTypes = {
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image_large: PropTypes.string,
-  name: PropTypes.string,
-  proteins: PropTypes.number,
-  toggleModal: PropTypes.func,
 };

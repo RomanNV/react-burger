@@ -19,7 +19,8 @@ export const getOrderNum = (arr) => {
         });
       })
       .catch((err) => {
-        dispatch({ type: GET_ORDER_FAILED, error: err.message });
+        console.log(err);
+        dispatch({ type: GET_ORDER_FAILED, payload: err.message });
       });
   };
 };

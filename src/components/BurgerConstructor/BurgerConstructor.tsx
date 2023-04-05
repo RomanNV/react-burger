@@ -25,13 +25,13 @@ import {
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
-import { IngredientCard, IngredientCardWithId } from "../../types/commonTypes";
+import { IngredientCardWithId } from "../../types/commonTypes";
 
 export const BurgerConstructor = () => {
   const { isOpenConstructorModal } = useSelector(getConstructorModal);
   const { ingredients, bun } = useSelector(getConstructorData);
 
-  const [listIdOrder, setListIdOrder] = useState<IngredientCardWithId[]>([]);
+  const [listIdOrder, setListIdOrder] = useState<string[]>([]);
 
   const dispatch = useDispatch();
 
@@ -89,7 +89,7 @@ export const BurgerConstructor = () => {
                 <ConstructorStartViewBunIngredient />
               </li>
             ) : (
-              ingredients.map((item, index) => {
+              ingredients.map((item: IngredientCardWithId, index: number) => {
                 const { itemId } = item;
                 return (
                   <ConstructorItem

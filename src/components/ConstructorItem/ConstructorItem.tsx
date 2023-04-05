@@ -1,3 +1,4 @@
+import type { XYCoord } from "dnd-core";
 import {
   ConstructorElement,
   DragIcon,
@@ -10,11 +11,18 @@ import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   REORDER_INGREDIENT_LIST,
 } from "../../services/actions/burgerConstructor";
-import PropTypes from "prop-types";
 import styles from "./ConstructorItem.module.css";
 import { getConstructorData } from "../../utils/funcs";
+import {
+  ConstructorItemType,
+  DragItem,
+  IngredientCardWithId,
+} from "../../types/commonTypes";
 
-export const ConstructorItem = ({ item, index }) => {
+export const ConstructorItem: React.FC<ConstructorItemType> = ({
+  item,
+  index,
+}) => {
   const { ingredients } = useSelector(getConstructorData);
   const dispatch = useDispatch();
   const {
@@ -22,9 +30,9 @@ export const ConstructorItem = ({ item, index }) => {
     ingredient: { image, name, price },
   } = item;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const reorderItem = (dragIndex, hoverIndex) => {
+  const reorderItem = (dragIndex: number, hoverIndex: number): void => {
     const splicedList = update([...ingredients], {
       $splice: [
         [dragIndex, 1],
@@ -37,10 +45,12 @@ export const ConstructorItem = ({ item, index }) => {
     });
   };
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<DragItem, void>({
     accept: "constructorElement",
 
-    hover(item, monitor) {
+    hover(item: DragItem, monitor) {
+      console.log(item);
+
       if (!ref.current) {
         return;
       }
@@ -53,7 +63,7 @@ export const ConstructorItem = ({ item, index }) => {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -69,16 +79,16 @@ export const ConstructorItem = ({ item, index }) => {
   const [{ isDragging }, drag] = useDrag({
     type: "constructorElement",
     item: { index },
-    collect: (monitor) => {
+    collect: (monitor: any) => {
       return {
         isDragging: monitor.isDragging(),
       };
     },
   });
 
-  const deleteConstructorItem = (id) => {
+  const deleteConstructorItem = (id: number): void => {
     const filteredIngredients = ingredients.filter(
-      (item) => item.itemId !== id
+      (item: IngredientCardWithId) => item.itemId !== id
     );
     dispatch({
       type: DELETE_CONSTRUCTOR_INGREDIENT,
@@ -87,24 +97,22 @@ export const ConstructorItem = ({ item, index }) => {
   };
 
   drag(drop(ref));
+
   const opacity = isDragging ? 0.5 : 1;
 
   return (
-    <li className={styles.li} ref={ref} style={{ opacity: `${opacity}` }}>
-      <DragIcon type="primary" />
-      <ConstructorElement
-        text={name}
-        price={price}
-        thumbnail={image}
-        handleClose={() => {
-          deleteConstructorItem(itemId);
-        }}
-      ></ConstructorElement>
-    </li>
+    <div ref={ref}>
+      <li className={styles.li} style={{ opacity: `${opacity}` }}>
+        <DragIcon type="primary" />
+        <ConstructorElement
+          text={name}
+          price={price}
+          thumbnail={image}
+          handleClose={() => {
+            deleteConstructorItem(itemId);
+          }}
+        ></ConstructorElement>
+      </li>
+    </div>
   );
-};
-
-ConstructorItem.propTypes = {
-  item: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
 };

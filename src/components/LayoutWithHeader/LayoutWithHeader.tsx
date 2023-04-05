@@ -1,6 +1,7 @@
+import React from "react";
 import { AppHeader } from "../AppHeader/AppHeader";
 
-export const LayoutWithHeader: React.FC = ({ children }: any) => {
+export const LayoutWithHeader = ({ children }: any) => {
   return (
     <>
       <AppHeader />

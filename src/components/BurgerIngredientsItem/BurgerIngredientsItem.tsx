@@ -1,20 +1,29 @@
 import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
 import { getConstructorData } from "../../utils/funcs";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  BurgerIngredientsItemType,
+  CounterStateType,
+} from "../../types/commonTypes";
 
-export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
+export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
+  ingredient,
+  setBunId,
+  bunId,
+}) => {
   const { name, price, image, _id, type } = ingredient;
   const { ingredients, bun } = useSelector(getConstructorData);
-  const [counter, setCounter] = useState({ bun: 0, ingredient: 0 });
+  const [counter, setCounter] = useState<CounterStateType>({
+    bun: 0,
+    ingredient: 0,
+  });
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -79,9 +88,4 @@ export function BurgerIngredientsItem({ ingredient, setBunId, bunId }) {
       </p>
     </div>
   );
-}
-BurgerIngredientsItem.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  bunId: PropTypes.string.isRequired,
-  setBunId: PropTypes.func.isRequired,
 };

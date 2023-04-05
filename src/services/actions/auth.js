@@ -32,9 +32,10 @@ export const checkUserAuth = () => {
           }
         })
         .catch((err) => {
+          console.log(err);
           dispatch({
             type: AUTH_FAILURE,
-            payload: err,
+            payload: err.message,
           });
         })
         .finally(dispatch({ type: AUTH_CHECK }));
@@ -55,9 +56,10 @@ export const getCodeToResetPassword = (email, callback) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         dispatch({
           type: AUTH_FAILURE,
-          payload: err,
+          payload: err.message,
         });
       });
   };
@@ -77,7 +79,7 @@ export const registerNewUserAction = (inputData) => {
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err,
+          payload: err.message,
         });
       });
   };
@@ -98,7 +100,7 @@ export const getRequestToResetPassword = (inputData, callback) => {
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err,
+          payload: err.message,
         });
       });
   };
@@ -121,7 +123,7 @@ export const loginAction = (inputData) => {
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err,
+          payload: err.message,
         });
       });
   };

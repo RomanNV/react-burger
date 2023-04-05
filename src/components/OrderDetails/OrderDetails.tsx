@@ -5,10 +5,9 @@ import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
 import { totalPriceState } from "../../utils/funcs";
 
-export const OrderDetails = () => {
+export const OrderDetails: React.FC = () => {
   const { orderData, isOrderDataRequest, isEmptyOrder, error } =
     useSelector(totalPriceState);
-
   return (
     <>
       <div className={styles.modal_content}>
