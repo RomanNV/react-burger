@@ -12,15 +12,20 @@ import { Link } from "react-router-dom";
 import { registerNewUserAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
+import { InitialInputRegister } from "../../types/commonTypes";
 export const RegisterPage = () => {
-  const INITIALINPUT = { email: "", password: "", name: "" };
+  const INITIALINPUT: InitialInputRegister = {
+    email: "",
+    password: "",
+    name: "",
+  };
   const { error } = useSelector(authState);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registerNewUserAction(inputData));
     setInputData(INITIALINPUT);

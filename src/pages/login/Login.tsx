@@ -12,16 +12,16 @@ import { authState } from "../../utils/funcs";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
-export const Login = () => {
-  const INITIALINPUT = { email: "", password: "" };
+export const Login: React.FC = () => {
+  const INITIALINPUT: { email: ""; password: "" } = { email: "", password: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const { error } = useSelector(authState);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginAction(inputData));
   };

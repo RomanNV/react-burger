@@ -33,7 +33,7 @@ export interface CloseModalType {
 }
 export interface ModalType extends CloseModalType {
   children: React.ReactElement;
-  isOpenModal: boolean;
+  isOpenModal?: boolean;
 }
 export interface ColorRingType {
   visible: boolean;
@@ -75,4 +75,31 @@ export interface BurgerIngredientsItemType {
   ingredient: IngredientCard;
   setBunId: (arg: string) => void;
   bunId: string;
+}
+export interface BurgerGroupType {
+  tabData: Array<IngredientCard>;
+  title: string;
+}
+export interface RequiredAuthRedirectType {
+  redirectTo: string;
+}
+export interface RequiredAuthType {
+  children: any;
+  onlyUnAuth?: boolean;
+}
+
+export interface InitialInputPage {
+  password: string;
+  name: string;
+}
+export interface InitialInputProfile extends InitialInputPage {
+  isShowButon: boolean;
+  login: string;
+}
+export interface InitialInputRegister extends InitialInputPage {
+  email: string;
+}
+export interface InitialInputReset {
+  password: string;
+  token: string;
 }

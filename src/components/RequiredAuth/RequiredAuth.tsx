@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, Navigate } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { authState } from "../../utils/funcs";
-import PropTypes from "prop-types";
+import {
+  RequiredAuthType,
+  RequiredAuthRedirectType,
+} from "../../types/commonTypes";
 
-export default function RequiredAuth({
-  redirectTo,
-  children,
-  onlyUnAuth = false,
-}) {
+export const RequiredAuth: React.FC<
+  RequiredAuthRedirectType & RequiredAuthType
+> = ({ redirectTo, children, onlyUnAuth = false }) => {
   const { isAuthChecked, user } = useSelector(authState);
   const location = useLocation();
-  const navigate = useNavigate();
 
   if (!isAuthChecked) {
     // Запрос еще выполняется
@@ -32,9 +32,4 @@ export default function RequiredAuth({
   }
   return children;
   //state added need
-}
-RequiredAuth.propTypes = {
-  redirectTo: PropTypes.string,
-  children: PropTypes.any,
-  onlyUnAuth: PropTypes.bool,
 };

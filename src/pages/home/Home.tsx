@@ -8,12 +8,10 @@ import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerCons
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const { error } = useSelector(authState);
   const errorIngredients = useSelector(getIngredientsDataFromState).error;
-  console.log(errorIngredients);
   if (error || errorIngredients) {
-    console.log(error, errorIngredients);
     return <ErrorMessage error={error || errorIngredients} />;
   }
   return (

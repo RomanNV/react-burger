@@ -11,23 +11,24 @@ import { authState } from "../../utils/funcs";
 import styles from "./ResetPassword.module.css";
 import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
+import { InitialInputReset } from "../../types/commonTypes";
 
 export const ResetPassword = () => {
-  const INITIALINPUT = { password: "", token: "" };
+  const INITIALINPUT: InitialInputReset = { password: "", token: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
   const { error } = useSelector(authState);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const isForgotPasswordFlag = useLocation()?.state?.isForgotPasswordFlag;
 
   const onSuccess = () => {
     navigate("/login");
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(getRequestToResetPassword(inputData, onSuccess));
   };

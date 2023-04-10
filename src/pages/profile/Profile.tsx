@@ -14,23 +14,24 @@ import {
 } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
+import { InitialInputProfile } from "../../types/commonTypes";
 
-export const Profile = () => {
+export const Profile: React.FC = () => {
   const location = useLocation();
   const state = useSelector(authState);
   const { user, error } = state;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
-  const INITIALINPUT = {
+  const INITIALINPUT: InitialInputProfile = {
     login: user?.email,
     password: "",
     name: user?.name,
     isShowButon: false,
   };
-  const [prevInput, setPrevInput] = useState(INITIALINPUT);
-  const [inputData, setInputData] = useState(INITIALINPUT);
+  const [prevInput, setPrevInput] = useState<InitialInputProfile>(INITIALINPUT);
+  const [inputData, setInputData] = useState<InitialInputProfile>(INITIALINPUT);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({
       ...inputData,
       [e.target.name]: e.target.value,
@@ -46,7 +47,7 @@ export const Profile = () => {
     });
   }, [user]);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(changeUserDataAction(inputData));
     setInputData({
@@ -55,7 +56,7 @@ export const Profile = () => {
       password: "",
     });
   };
-  const onCancel = (e) => {
+  const onCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setInputData({
       ...prevInput,
@@ -63,7 +64,7 @@ export const Profile = () => {
     });
   };
 
-  const logOut = (e) => {
+  const logOut = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(logOutAction());
   };
@@ -87,6 +88,7 @@ export const Profile = () => {
                 className={`${styles.a_link} text text_type_main-medium ${
                   location.pathname === "/profile" ? styles.a_link_active : null
                 }`}
+                to={""}
               >
                 Профиль{" "}
               </Link>

@@ -1,5 +1,5 @@
 import styles from "./Error404.module.css";
-export const Error404 = () => {
+export const Error404: React.FC = () => {
   return (
     <div className={styles.wrap_content}>
       <div className={styles.error_page}>

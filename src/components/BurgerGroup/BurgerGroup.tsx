@@ -1,18 +1,16 @@
 import { BurgerIngredientsItem } from "../BurgerIngredientsItem/BurgerIngredientsItem";
 import styles from "./BurgerGroup.module.css";
-import PropTypes from "prop-types";
-import { propTypeData } from "../../utils/propTypeData.js";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-export function BurgerGroup({ tabData, title }) {
+import { BurgerGroupType } from "../../types/commonTypes";
+import { ingredientsDataState } from "../../utils/funcs";
+export const BurgerGroup: React.FC<BurgerGroupType> = ({ tabData, title }) => {
   //состояние для сохранения id булки
-  const [bunId, setBunId] = useState("");
+  const [bunId, setBunId] = useState<string>("");
 
-  const { isDataIngredientsRequest } = useSelector(
-    (state) => state.ingredientsData
-  );
+  const { isDataIngredientsRequest } = useSelector(ingredientsDataState);
 
   return (
     <div className={styles.group_box}>
@@ -36,9 +34,4 @@ export function BurgerGroup({ tabData, title }) {
       </ul>
     </div>
   );
-}
-
-BurgerGroup.propTypes = {
-  tabData: PropTypes.arrayOf(PropTypes.shape(propTypeData)).isRequired,
-  title: PropTypes.string.isRequired,
 };

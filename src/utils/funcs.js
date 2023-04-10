@@ -176,6 +176,7 @@ const getIngredientsDataFromState = (state) => state.ingredientsData;
 const getIngredientsModal = (state) => state.ingredientModal;
 const authState = (state) => state.auth;
 const totalPriceState = (state) => state.totalPrice;
+const ingredientsDataState = (state) => state.ingredientsData;
 export {
   getDataIng,
   getDataOrder,
@@ -195,4 +196,5 @@ export {
   authState,
   changeUserData,
   totalPriceState,
+  ingredientsDataState,
 };

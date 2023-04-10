@@ -12,11 +12,10 @@ import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
-import RequiredAuth from "../RequiredAuth/RequiredAuth";
-import { LocationState } from "../../types/commonTypes";
+import { RequiredAuth } from "../RequiredAuth/RequiredAuth";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const location = useLocation();
   const background = location.state && location.state.background;
 
@@ -33,7 +32,7 @@ function App() {
         <Route
           path="/login"
           element={
-            <RequiredAuth onlyUnAuth={true}>
+            <RequiredAuth onlyUnAuth={true} redirectTo={""}>
               <Login />
             </RequiredAuth>
           }
@@ -41,7 +40,7 @@ function App() {
         <Route
           path="/register"
           element={
-            <RequiredAuth onlyUnAuth={true}>
+            <RequiredAuth onlyUnAuth={true} redirectTo={""}>
               <RegisterPage />
             </RequiredAuth>
           }
@@ -49,7 +48,7 @@ function App() {
         <Route
           path="/forgot-password"
           element={
-            <RequiredAuth onlyUnAuth={true}>
+            <RequiredAuth onlyUnAuth={true} redirectTo={""}>
               <ForgotPassword />
             </RequiredAuth>
           }
@@ -57,7 +56,7 @@ function App() {
         <Route
           path="/reset-password"
           element={
-            <RequiredAuth onlyUnAuth={true}>
+            <RequiredAuth onlyUnAuth={true} redirectTo={""}>
               <ResetPassword />
             </RequiredAuth>
           }
