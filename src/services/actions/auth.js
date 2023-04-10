@@ -8,6 +8,7 @@ import {
   logOut,
   changeUserData,
 } from "../../utils/funcs";
+import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const AUTH_CHECK = "AUTH_CHECK";
 export const AUTH_REQUEST = "AUTH_REQUEST";
@@ -136,6 +137,7 @@ export const logOutAction = () => {
       .then((res) => {
         if (res.success) {
           dispatch({ type: LOGOUT_SUCCESS });
+          dispatch({ type: CLEAR_CONSTRUCTOR });
         }
       })
       .catch((err) => {

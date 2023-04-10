@@ -3,6 +3,7 @@ import {
   ADD_BUN,
   ADD_INGREDIENT,
   REORDER_INGREDIENT_LIST,
+  CLEAR_CONSTRUCTOR,
 } from "../actions/burgerConstructor";
 
 const initialState = {
@@ -19,7 +20,6 @@ export const constructorReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT: {
-      console.log(action.ingredients);
       return {
         ...state,
         ingredients: [...state.ingredients, action.ingredients],
@@ -36,6 +36,9 @@ export const constructorReducer = (state = initialState, action) => {
 
     case REORDER_INGREDIENT_LIST: {
       return { ...state, ingredients: action.splisedList };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return { ...state, bun: [], ingredients: [] };
     }
 
     default:

@@ -11,9 +11,10 @@ import { loginAction } from "../../services/actions/auth";
 import { authState } from "../../utils/funcs";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
+import { InitialLoginPage } from "../../types/commonTypes";
 
 export const Login: React.FC = () => {
-  const INITIALINPUT: { email: ""; password: "" } = { email: "", password: "" };
+  const INITIALINPUT: InitialLoginPage = { email: "", password: "" };
   const [inputData, setInputData] = useState(INITIALINPUT);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });

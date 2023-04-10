@@ -1,4 +1,12 @@
-import { setCookie, getCookie, deleteCookie } from "../cookie/cookie.js";
+import { setCookie, getCookie, deleteCookie } from "../cookie/cookie";
+import {
+  IngredientCard,
+  IngredientCardWithId,
+  InitialInputProfile,
+  InitialInputRegister,
+  InitialInputReset,
+  InitialLoginPage,
+} from "../types/commonTypes";
 import {
   DATA_URL_INGREDIENTS,
   LOGIN_POINT,
@@ -9,13 +17,13 @@ import {
   SEND_CODE_TO_RESET,
   TOKEN_POINT,
   USER_POINT,
-} from "./const.js";
+} from "./const";
 
-const getDataIng = () => {
+const getDataIng = (): Promise<Response> => {
   return fetch(DATA_URL_INGREDIENTS);
 };
 
-const getDataOrder = (arr) => {
+const getDataOrder = (arr: string[]) => {
   const fetchBody = JSON.stringify({
     ingredients: arr,
   });
@@ -23,13 +31,13 @@ const getDataOrder = (arr) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///delete trim
     },
     body: fetchBody,
   });
 };
 
-const getPrice = (arr) => {
+const getPrice = (arr: IngredientCardWithId[]) => {
   if (arr.length === 0) {
     return 0;
   } else {
@@ -47,7 +55,7 @@ const getPrice = (arr) => {
   }
 };
 
-const checkReponse = (res) => {
+const checkReponse = (res: Response) => {
   return res.ok
     ? res.json()
     : res.json().then((err) => {
@@ -55,7 +63,7 @@ const checkReponse = (res) => {
       });
 };
 
-const postEmailToGetCode = (email) => {
+const postEmailToGetCode = (email: string): Promise<Response> => {
   const fetchBody = JSON.stringify({ email });
   return fetch(PASSWORD_RESET, {
     method: "POST",
@@ -65,7 +73,7 @@ const postEmailToGetCode = (email) => {
     body: fetchBody,
   }).then(checkReponse);
 };
-const postToResetPassword = (data) => {
+const postToResetPassword = (data: InitialInputReset): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
   return fetch(SEND_CODE_TO_RESET, {
     method: "POST",
@@ -76,7 +84,7 @@ const postToResetPassword = (data) => {
   }).then(checkReponse);
 };
 
-const registerNewUser = (data) => {
+const registerNewUser = (data: InitialInputRegister): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
   return fetch(REGISTER_POINT, {
     method: "POST",
@@ -100,11 +108,14 @@ const refreshToken = () => {
   }).then(checkReponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async <T>(
+  url: string,
+  options: RequestInit
+): Promise<T> => {
   try {
     const res = await fetch(url, options);
     return await checkReponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
@@ -112,9 +123,14 @@ export const fetchWithRefresh = async (url, options) => {
       }
 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("accessToken", refreshData.accessToken.split("Bearer")[1]);
-      options.headers.authorization =
-        "Bearer" + " " + getCookie("accessToken").trim();
+      setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
+      options = {
+        ...options,
+        headers: {
+          ...options?.headers,
+          authorization: "Bearer" + " " + getCookie("accessToken")?.trim(),
+        },
+      }; ///delete trim
       const res = await fetch(url, options); //повторяем запрос
       return await checkReponse(res);
     } else {
@@ -122,16 +138,16 @@ export const fetchWithRefresh = async (url, options) => {
     }
   }
 };
-const getUser = () => {
+const getUser = (): Promise<Response> => {
   return fetchWithRefresh(USER_POINT, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///deleted trim
     },
   });
 };
-const login = (data) => {
+const login = (data: InitialLoginPage): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
   return fetch(LOGIN_POINT, {
     method: "POST",
@@ -141,9 +157,9 @@ const login = (data) => {
     body: fetchBody,
   }).then(checkReponse);
 };
-const logOut = () => {
+const logOut = (): Promise<Response> => {
   const refreshToken = { token: localStorage.getItem("refreshToken") };
-  const accessToken = getCookie("accessToken").trim();
+  const accessToken = getCookie("accessToken")?.trim(); ///delete trim
   localStorage.removeItem("refreshToken");
   deleteCookie("accessToken");
   const fetchBody = JSON.stringify(refreshToken);
@@ -157,26 +173,26 @@ const logOut = () => {
   }).then(checkReponse);
 };
 
-const changeUserData = (data) => {
+const changeUserData = (data: InitialInputProfile): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
   return fetchWithRefresh(USER_POINT, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      authorization: "Bearer" + " " + getCookie("accessToken").trim(),
+      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///deleted trim
     },
     body: fetchBody,
   });
 };
 
-const getIngredientsFromState = (state) => state.ingredientsData;
-const getConstructorData = (state) => state.constructorData;
-const getConstructorModal = (state) => state.constructorModal;
-const getIngredientsDataFromState = (state) => state.ingredientsData;
-const getIngredientsModal = (state) => state.ingredientModal;
-const authState = (state) => state.auth;
-const totalPriceState = (state) => state.totalPrice;
-const ingredientsDataState = (state) => state.ingredientsData;
+const getIngredientsFromState = (state: any) => state.ingredientsData;
+const getConstructorData = (state: any) => state.constructorData;
+const getConstructorModal = (state: any) => state.constructorModal;
+const getIngredientsDataFromState = (state: any) => state.ingredientsData;
+const getIngredientsModal = (state: any) => state.ingredientModal;
+const authState = (state: any) => state.auth;
+const totalPriceState = (state: any) => state.totalPrice;
+const ingredientsDataState = (state: any) => state.ingredientsData;
 export {
   getDataIng,
   getDataOrder,

@@ -1,4 +1,5 @@
 import React from "react";
+import { isMainThread } from "worker_threads";
 
 export interface LocationState {
   from?: {
@@ -102,4 +103,8 @@ export interface InitialInputRegister extends InitialInputPage {
 export interface InitialInputReset {
   password: string;
   token: string;
+}
+export interface InitialLoginPage {
+  email: string;
+  password: string;
 }
