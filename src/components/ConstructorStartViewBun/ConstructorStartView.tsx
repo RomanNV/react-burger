@@ -4,7 +4,7 @@ export const ConstructorStartViewBunTop: React.FC = () => {
   return (
     <div className={styles.bun_body_top}>
       <p className={`text text_type_main-default ${styles.p_position}`}>
-        Добавьте булку
+        Добавьте булку (верх)
       </p>
     </div>
   );
@@ -13,7 +13,7 @@ export const ConstructorStartViewBunBottom: React.FC = () => {
   return (
     <div className={styles.bun_body_bottom}>
       <p className={`text text_type_main-default ${styles.p_position}`}>
-        Добавьте булку
+        Добавьте булку (низ)
       </p>
     </div>
   );

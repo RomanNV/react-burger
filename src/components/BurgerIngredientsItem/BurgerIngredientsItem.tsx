@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
-import { getConstructorData } from "../../utils/funcs";
+import { getConstructorData } from "../../services/reducers/stateFuncs";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   BurgerIngredientsItemType,

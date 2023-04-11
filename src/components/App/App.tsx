@@ -12,6 +12,7 @@ import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
+import { AppHeader } from "../AppHeader/AppHeader";
 import { RequiredAuth } from "../RequiredAuth/RequiredAuth";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <>
+      <AppHeader></AppHeader>
       <Routes location={background || location}>
         <Route path="/" element={<Home />}></Route>
         <Route path="*" element={<Error404 />}></Route>

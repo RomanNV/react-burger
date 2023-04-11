@@ -3,7 +3,7 @@ import doneImage from "../../images/done.svg";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
-import { totalPriceState } from "../../utils/funcs";
+import { totalPriceState } from "../../services/reducers/stateFuncs";
 
 export const OrderDetails: React.FC = () => {
   const { orderData, isOrderDataRequest, isEmptyOrder, error } =

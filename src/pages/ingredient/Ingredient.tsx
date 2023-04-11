@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getIngredientsDataFromState } from "../../utils/funcs";
+import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
 import { useNavigate, useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { IngredientDetails } from "../../components/IngredientDetails/IngredientDetails";

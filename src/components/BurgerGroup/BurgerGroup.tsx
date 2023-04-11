@@ -3,9 +3,8 @@ import styles from "./BurgerGroup.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { BurgerGroupType } from "../../types/commonTypes";
-import { ingredientsDataState } from "../../utils/funcs";
+import { ingredientsDataState } from "../../services/reducers/stateFuncs";
 export const BurgerGroup: React.FC<BurgerGroupType> = ({ tabData, title }) => {
   //состояние для сохранения id булки
   const [bunId, setBunId] = useState<string>("");

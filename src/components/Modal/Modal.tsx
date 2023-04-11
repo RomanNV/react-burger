@@ -1,10 +1,8 @@
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 import { ModalOverlay } from "../ModalOverlay/ModalOverlay";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalType } from "../../types/commonTypes";
-import React from "react";
 
 export const Modal = ({
   children,

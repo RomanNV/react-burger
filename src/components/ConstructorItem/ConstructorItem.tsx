@@ -12,7 +12,7 @@ import {
   REORDER_INGREDIENT_LIST,
 } from "../../services/actions/burgerConstructor";
 import styles from "./ConstructorItem.module.css";
-import { getConstructorData } from "../../utils/funcs";
+import { getConstructorData } from "../../services/reducers/stateFuncs";
 import {
   ConstructorItemType,
   DragItem,

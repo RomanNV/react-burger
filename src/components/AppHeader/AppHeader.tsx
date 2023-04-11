@@ -38,7 +38,10 @@ export const AppHeader: FC = (): JSX.Element => {
             </Link>
           </div>
         </div>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
+
         <div className={style.nav_link}>
           <ProfileIcon type="secondary" />
           <Link

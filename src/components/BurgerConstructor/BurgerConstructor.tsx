@@ -11,11 +11,11 @@ import { Modal } from "../Modal/Modal";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { useEffect, useMemo, useState } from "react";
 import { TotalPrice } from "../TotalPrice/TotalPrice";
+import { getPrice } from "../../utils/funcs";
 import {
-  getPrice,
   getConstructorData,
   getConstructorModal,
-} from "../../utils/funcs";
+} from "../../services/reducers/stateFuncs";
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {

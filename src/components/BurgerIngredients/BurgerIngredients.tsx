@@ -3,7 +3,7 @@ import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { getIngredientsDataFromState } from "../../utils/funcs";
+import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
 import { IngredientCard } from "../../types/commonTypes";
 
 export const BurgerIngredients: React.FC = () => {

@@ -1,6 +1,5 @@
 import styles from "./ModalOverlay.module.css";
 import { useEffect } from "react";
-import PropTypes from "prop-types";
 import { CloseModalType } from "../../types/commonTypes";
 
 export const ModalOverlay: React.FC<CloseModalType> = ({ closeModal }) => {

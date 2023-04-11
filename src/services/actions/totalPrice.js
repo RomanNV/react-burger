@@ -1,4 +1,5 @@
 import { getDataOrder } from "../../utils/funcs";
+import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
@@ -17,6 +18,7 @@ export const getOrderNum = (arr) => {
           type: GET_ORDER_SUCCESS,
           orderData: responceData.order.number,
         });
+        dispatch({ type: CLEAR_CONSTRUCTOR });
       })
       .catch((err) => {
         console.log(err);

@@ -7,13 +7,12 @@ import { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { useLocation, Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authState } from "../../utils/funcs";
+import { authState } from "../../services/reducers/stateFuncs";
 import {
   changeUserDataAction,
   logOutAction,
 } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { LayoutWithHeader } from "../../components/LayoutWithHeader/LayoutWithHeader";
 import { InitialInputProfile } from "../../types/commonTypes";
 
 export const Profile: React.FC = () => {
@@ -79,85 +78,83 @@ export const Profile: React.FC = () => {
   }
 
   return (
-    <LayoutWithHeader>
-      <div className={styles.box_container}>
-        <div className={styles.flex_container}>
-          <div className={styles.link_box}>
-            <div className={styles.wrap_link}>
-              <Link
-                className={`${styles.a_link} text text_type_main-medium ${
-                  location.pathname === "/profile" ? styles.a_link_active : null
-                }`}
-                to={""}
-              >
-                Профиль{" "}
-              </Link>
-              <Link
-                to={"orders "}
-                className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
-              >
-                История заказов
-              </Link>
-
-              <Link
-                to={"/"}
-                onClick={logOut}
-                className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
-              >
-                Выход
-              </Link>
-            </div>
-            <p
-              className={`${styles.footer_link_box} text text_type_main_small text_color_inactive `}
+    <div className={styles.box_container}>
+      <div className={styles.flex_container}>
+        <div className={styles.link_box}>
+          <div className={styles.wrap_link}>
+            <Link
+              className={`${styles.a_link} text text_type_main-medium ${
+                location.pathname === "/profile" ? styles.a_link_active : null
+              }`}
+              to={""}
             >
-              В этом разделе вы можете изменить свои персональные данные
-            </p>
-          </div>
+              Профиль{" "}
+            </Link>
+            <Link
+              to={"orders "}
+              className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
+            >
+              История заказов
+            </Link>
 
-          <div className={styles.wrap_content_form}>
-            <form className={styles.profile_form} onSubmit={onSubmit}>
-              <Input
-                onChange={onChange}
-                placeholder="Имя"
-                icon="EditIcon"
-                name="name"
-                value={inputData.name}
-              ></Input>
-              <Input
-                onChange={onChange}
-                placeholder="Логин"
-                name="login"
-                icon="EditIcon"
-                value={inputData.login}
-              ></Input>
-
-              <PasswordInput
-                onChange={onChange}
-                value={inputData.password}
-                name={"password"}
-                icon="EditIcon"
-              ></PasswordInput>
-              {inputData.isShowButon ? (
-                <>
-                  <Button htmlType="submit" type="primary" size="large">
-                    Сохранить
-                  </Button>
-                  <Button
-                    htmlType="button"
-                    type="primary"
-                    size="large"
-                    onClick={onCancel}
-                  >
-                    Отмена
-                  </Button>
-                </>
-              ) : (
-                <></>
-              )}
-            </form>
+            <Link
+              to={"/"}
+              onClick={logOut}
+              className={`${styles.a_link} text text_type_main-medium text_color_inactive`}
+            >
+              Выход
+            </Link>
           </div>
+          <p
+            className={`${styles.footer_link_box} text text_type_main_small text_color_inactive `}
+          >
+            В этом разделе вы можете изменить свои персональные данные
+          </p>
+        </div>
+
+        <div className={styles.wrap_content_form}>
+          <form className={styles.profile_form} onSubmit={onSubmit}>
+            <Input
+              onChange={onChange}
+              placeholder="Имя"
+              icon="EditIcon"
+              name="name"
+              value={inputData.name}
+            ></Input>
+            <Input
+              onChange={onChange}
+              placeholder="Логин"
+              name="login"
+              icon="EditIcon"
+              value={inputData.login}
+            ></Input>
+
+            <PasswordInput
+              onChange={onChange}
+              value={inputData.password}
+              name={"password"}
+              icon="EditIcon"
+            ></PasswordInput>
+            {inputData.isShowButon ? (
+              <>
+                <Button htmlType="submit" type="primary" size="large">
+                  Сохранить
+                </Button>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="large"
+                  onClick={onCancel}
+                >
+                  Отмена
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
+          </form>
         </div>
       </div>
-    </LayoutWithHeader>
+    </div>
   );
 };
