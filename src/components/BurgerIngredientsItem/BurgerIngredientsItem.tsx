@@ -32,8 +32,6 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
   };
   //отслеживаем id булки и меняем состояние
   useEffect(() => {
-    console.log(bun, bunId);
-
     if (bun.length !== 0 && bunId === _id) {
       setCounter({ ...counter, bun: 2 });
     } else {
@@ -42,8 +40,6 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
   }, [bunId]);
   //определяем количество ингредиентов, а также запоминаем id булки
   useEffect(() => {
-    console.log("i am use Eff");
-
     const filtredList = [...ingredients].filter((item) => {
       return item.ingredient._id === _id;
     });

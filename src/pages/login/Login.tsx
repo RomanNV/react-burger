@@ -3,7 +3,6 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,13 +14,9 @@ import { useForm } from "../../hooks/useForm";
 
 export const Login: React.FC = () => {
   const INITIALINPUT: InitialLoginPage = { email: "", password: "" };
-  // const [inputData, setInputData] = useState(INITIALINPUT);
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInputData({ ...inputData, [e.target.name]: e.target.value });
-  // };
   const dispatch = useDispatch<any>();
   const { error } = useSelector(authState);
-  const { values, handleChange, setValues } = useForm(INITIALINPUT);
+  const { values, handleChange } = useForm(INITIALINPUT);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

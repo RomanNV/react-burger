@@ -29,7 +29,6 @@ export const Profile: React.FC = () => {
   };
   const [prevInput, setPrevInput] = useState<InitialInputProfile>(INITIALINPUT);
   const [inputData, setInputData] = useState<InitialInputProfile>(INITIALINPUT);
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({
       ...inputData,

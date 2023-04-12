@@ -21,7 +21,6 @@ export const getOrderNum = (arr) => {
         dispatch({ type: CLEAR_CONSTRUCTOR });
       })
       .catch((err) => {
-        console.log(err);
         dispatch({ type: GET_ORDER_FAILED, payload: err.message });
       });
   };

@@ -22,8 +22,6 @@ export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
 // создаем функцию проверки ответа на `ok`
 const checkResponse = (res: Response) => {
-  console.log(res);
-
   if (res.ok) {
     return res.json();
   }

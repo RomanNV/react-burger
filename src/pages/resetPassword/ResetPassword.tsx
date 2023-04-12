@@ -3,7 +3,6 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { getRequestToResetPassword } from "../../services/actions/auth";
@@ -11,13 +10,11 @@ import { authState } from "../../services/reducers/stateFuncs";
 import styles from "./ResetPassword.module.css";
 import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { InitialInputReset } from "../../types/commonTypes";
+import { useForm } from "../../hooks/useForm";
 
 export const ResetPassword = () => {
   const INITIALINPUT: InitialInputReset = { password: "", token: "" };
-  const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
-  };
+  const { values, handleChange } = useForm(INITIALINPUT);
   const { error } = useSelector(authState);
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
@@ -29,7 +26,7 @@ export const ResetPassword = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(getRequestToResetPassword(inputData, onSuccess));
+    dispatch(getRequestToResetPassword(values, onSuccess));
   };
 
   if (error) {
@@ -41,17 +38,17 @@ export const ResetPassword = () => {
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <form className={styles.reset_form} onSubmit={onSubmit}>
           <PasswordInput
-            onChange={onChange}
-            value={inputData.password}
+            onChange={handleChange}
+            value={values.password}
             name={"password"}
             extraClass="mb-2"
           ></PasswordInput>
 
           <Input
             placeholder="Введите код из письма"
-            value={inputData.token}
+            value={values.token}
             name={"token"}
-            onChange={onChange}
+            onChange={handleChange}
           ></Input>
           <Button
             htmlType="submit"

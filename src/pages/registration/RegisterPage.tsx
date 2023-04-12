@@ -4,7 +4,6 @@ import {
   PasswordInput,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./RegisterPage.module.css";
 import { authState } from "../../services/reducers/stateFuncs";
@@ -12,6 +11,7 @@ import { Link } from "react-router-dom";
 import { registerNewUserAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { InitialInputRegister } from "../../types/commonTypes";
+import { useForm } from "../../hooks/useForm";
 export const RegisterPage = () => {
   const INITIALINPUT: InitialInputRegister = {
     email: "",
@@ -20,14 +20,11 @@ export const RegisterPage = () => {
   };
   const { error } = useSelector(authState);
   const dispatch = useDispatch<any>();
-  const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
-  };
+  const { values, handleChange, setValues } = useForm(INITIALINPUT);
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registerNewUserAction(inputData));
-    setInputData(INITIALINPUT);
+    dispatch(registerNewUserAction(values));
+    setValues(INITIALINPUT);
   };
   if (error) {
     return <ErrorMessage error={error}></ErrorMessage>;
@@ -40,19 +37,19 @@ export const RegisterPage = () => {
           <Input
             placeholder="Имя"
             name="name"
-            value={inputData.name}
-            onChange={onChange}
+            value={values.name}
+            onChange={handleChange}
           ></Input>
           <EmailInput
-            onChange={onChange}
-            value={inputData.email}
+            onChange={handleChange}
+            value={values.email}
             name={"email"}
             isIcon={false}
           ></EmailInput>
 
           <PasswordInput
-            onChange={onChange}
-            value={inputData.password}
+            onChange={handleChange}
+            value={values.password}
             name={"password"}
             extraClass="mb-2"
           />

@@ -49,8 +49,6 @@ export const ConstructorItem: React.FC<ConstructorItemType> = ({
     accept: "constructorElement",
 
     hover(item: DragItem, monitor) {
-      console.log(item);
-
       if (!ref.current) {
         return;
       }

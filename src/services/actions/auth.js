@@ -33,7 +33,7 @@ export const checkUserAuth = () => {
         .catch((err) => {
           dispatch({
             type: AUTH_FAILURE,
-            payload: err.message,
+            payload: err,
           });
         })
         .finally(dispatch({ type: AUTH_CHECK }));
@@ -52,10 +52,9 @@ export const getCodeToResetPassword = (email, callback) => {
         callback();
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: AUTH_FAILURE,
-          payload: err.message,
+          payload: err,
         });
       });
   };
@@ -73,7 +72,7 @@ export const registerNewUserAction = (inputData) => {
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err.message,
+          payload: err,
         });
       });
   };
@@ -103,7 +102,6 @@ export const loginAction = (inputData) => {
     dispatch({ type: AUTH_REQUEST });
     login(inputData)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("refreshToken", res.refreshToken);
         setCookie("accessToken", res.accessToken.split("Bearer")[1]);
         dispatch({
@@ -124,7 +122,7 @@ export const logOutAction = () => {
   return function (dispatch) {
     dispatch({ type: AUTH_REQUEST });
     logOut()
-      .then((res) => {
+      .then(() => {
         dispatch({ type: LOGOUT_SUCCESS });
         dispatch({ type: CLEAR_CONSTRUCTOR });
       })
