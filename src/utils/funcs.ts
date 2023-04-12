@@ -1,6 +1,5 @@
 import { setCookie, getCookie, deleteCookie } from "../cookie/cookie";
 import {
-  IngredientCard,
   IngredientCardWithId,
   InitialInputProfile,
   InitialInputRegister,
@@ -18,9 +17,41 @@ import {
   TOKEN_POINT,
   USER_POINT,
 } from "./const";
+// 1 раз объявляем базовый урл
+export const BASE_URL = "https://norma.nomoreparties.space/api/";
+
+// создаем функцию проверки ответа на `ok`
+const checkResponse = (res: Response) => {
+  console.log(res);
+
+  if (res.ok) {
+    return res.json();
+  }
+
+  // не забываем выкидывать ошибку, чтобы она попала в `catch`
+  return Promise.reject(`Ошибка ${res.status}`);
+};
+
+// создаем функцию проверки на `success`
+const checkSuccess = (res: any) => {
+  if (res && res.success) {
+    return res;
+  }
+  // не забываем выкидывать ошибку, чтобы она попала в `catch`
+  return Promise.reject(`Ответ не success: ${res}`);
+};
+
+// создаем универсальную фукнцию запроса с проверкой ответа и `success`
+// В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
+const request = (endpoint: string, options?: any) => {
+  // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
+  return fetch(`${BASE_URL}${endpoint}`, options)
+    .then(checkResponse)
+    .then(checkSuccess);
+};
 
 const getDataIng = (): Promise<Response> => {
-  return fetch(DATA_URL_INGREDIENTS);
+  return request(DATA_URL_INGREDIENTS);
 };
 
 const getDataOrder = (arr: string[]) => {
@@ -55,57 +86,49 @@ const getPrice = (arr: IngredientCardWithId[]) => {
   }
 };
 
-const checkReponse = (res: Response) => {
-  return res.ok
-    ? res.json()
-    : res.json().then((err) => {
-        return Promise.reject(err);
-      });
-};
-
 const postEmailToGetCode = (email: string): Promise<Response> => {
   const fetchBody = JSON.stringify({ email });
-  return fetch(PASSWORD_RESET, {
+  return request(PASSWORD_RESET, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 const postToResetPassword = (data: InitialInputReset): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
-  return fetch(SEND_CODE_TO_RESET, {
+  return request(SEND_CODE_TO_RESET, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 
 const registerNewUser = (data: InitialInputRegister): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
-  return fetch(REGISTER_POINT, {
+  return request(REGISTER_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 
 const refreshToken = () => {
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
-  return fetch(TOKEN_POINT, {
+  return request(TOKEN_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 
 export const fetchWithRefresh = async <T>(
@@ -113,14 +136,10 @@ export const fetchWithRefresh = async <T>(
   options: RequestInit
 ): Promise<T> => {
   try {
-    const res = await fetch(url, options);
-    return await checkReponse(res);
+    return await request(url, options);
   } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
-      if (!refreshData.success) {
-        return Promise.reject(refreshData);
-      }
 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
@@ -130,9 +149,8 @@ export const fetchWithRefresh = async <T>(
           ...options?.headers,
           authorization: "Bearer" + " " + getCookie("accessToken")?.trim(),
         },
-      }; ///delete trim
-      const res = await fetch(url, options); //повторяем запрос
-      return await checkReponse(res);
+      };
+      return await request(url, options); //повторяем запрос
     } else {
       return Promise.reject(err);
     }
@@ -149,13 +167,13 @@ const getUser = (): Promise<Response> => {
 };
 const login = (data: InitialLoginPage): Promise<Response> => {
   const fetchBody = JSON.stringify(data);
-  return fetch(LOGIN_POINT, {
+  return request(LOGIN_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 const logOut = (): Promise<Response> => {
   const refreshToken = { token: localStorage.getItem("refreshToken") };
@@ -163,14 +181,14 @@ const logOut = (): Promise<Response> => {
   localStorage.removeItem("refreshToken");
   deleteCookie("accessToken");
   const fetchBody = JSON.stringify(refreshToken);
-  return fetch(LOGOUT_POINT, {
+  return request(LOGOUT_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       authorization: "Bearer" + " " + accessToken,
     },
     body: fetchBody,
-  }).then(checkReponse);
+  });
 };
 
 const changeUserData = (data: InitialInputProfile): Promise<Response> => {

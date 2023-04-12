@@ -28,12 +28,9 @@ export const checkUserAuth = () => {
       });
       getUser()
         .then((res) => {
-          if (res.success) {
-            dispatch({ type: GET_USER_SUCCESS, payload: res.user });
-          }
+          dispatch({ type: GET_USER_SUCCESS, payload: res.user });
         })
         .catch((err) => {
-          console.log(err);
           dispatch({
             type: AUTH_FAILURE,
             payload: err.message,
@@ -50,11 +47,9 @@ export const getCodeToResetPassword = (email, callback) => {
   return function (dispatch) {
     dispatch({ type: AUTH_REQUEST });
     postEmailToGetCode(email)
-      .then((res) => {
-        if (res.success) {
-          dispatch({ type: CODE_TO_RESET_SUCCESS });
-          callback();
-        }
+      .then(() => {
+        dispatch({ type: CODE_TO_RESET_SUCCESS });
+        callback();
       })
       .catch((err) => {
         console.log(err);
@@ -71,11 +66,9 @@ export const registerNewUserAction = (inputData) => {
     dispatch({ type: AUTH_REQUEST });
     registerNewUser(inputData)
       .then((res) => {
-        if (res.success) {
-          localStorage.setItem("refreshToken", res.refreshToken);
-          setCookie("accessToken", res.accessToken.split("Bearer")[1]);
-          dispatch({ type: REGISTRATION_SUCCESS, payload: res.user });
-        }
+        localStorage.setItem("refreshToken", res.refreshToken);
+        setCookie("accessToken", res.accessToken.split("Bearer")[1]);
+        dispatch({ type: REGISTRATION_SUCCESS, payload: res.user });
       })
       .catch((err) => {
         dispatch({
@@ -90,18 +83,16 @@ export const getRequestToResetPassword = (inputData, callback) => {
   return function (dispatch) {
     dispatch({ type: AUTH_REQUEST });
     postToResetPassword(inputData)
-      .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: RESET_PASSWORD_SUCCESS,
-          });
-          callback();
-        }
+      .then(() => {
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+        });
+        callback();
       })
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err.message,
+          payload: err,
         });
       });
   };
@@ -112,19 +103,18 @@ export const loginAction = (inputData) => {
     dispatch({ type: AUTH_REQUEST });
     login(inputData)
       .then((res) => {
-        if (res.success) {
-          localStorage.setItem("refreshToken", res.refreshToken);
-          setCookie("accessToken", res.accessToken.split("Bearer")[1]);
-          dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.user,
-          });
-        }
+        console.log(res);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        setCookie("accessToken", res.accessToken.split("Bearer")[1]);
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.user,
+        });
       })
       .catch((err) => {
         dispatch({
           type: AUTH_FAILURE,
-          payload: err.message,
+          payload: err,
         });
       });
   };
@@ -135,10 +125,8 @@ export const logOutAction = () => {
     dispatch({ type: AUTH_REQUEST });
     logOut()
       .then((res) => {
-        if (res.success) {
-          dispatch({ type: LOGOUT_SUCCESS });
-          dispatch({ type: CLEAR_CONSTRUCTOR });
-        }
+        dispatch({ type: LOGOUT_SUCCESS });
+        dispatch({ type: CLEAR_CONSTRUCTOR });
       })
       .catch((err) => {
         dispatch({
@@ -154,9 +142,7 @@ export const changeUserDataAction = (data) => {
     dispatch({ type: AUTH_REQUEST });
     changeUserData(data)
       .then((res) => {
-        if (res.success) {
-          dispatch({ type: CHANGE_USER_DATA_SUCCESS, payload: res.user });
-        }
+        dispatch({ type: CHANGE_USER_DATA_SUCCESS, payload: res.user });
       })
       .catch((err) => {
         dispatch({
