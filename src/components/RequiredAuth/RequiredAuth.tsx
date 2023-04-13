@@ -14,9 +14,12 @@ export const RequiredAuth: React.FC<
 
   if (!isAuthChecked) {
     // Запрос еще выполняется
+
     return null;
   }
   if (onlyUnAuth && user) {
+    console.log(onlyUnAuth, user, location?.state?.from);
+
     // Пользователь авторизован, но запрос предназначен только для неавторизованных пользователей
     // Нужно сделать редирект на главную страницу или на тот адрес, что записан в location.state.from
     return location?.state?.from ? (
@@ -27,6 +30,8 @@ export const RequiredAuth: React.FC<
   }
 
   if (!onlyUnAuth && !user) {
+    console.log("lllll");
+
     // Сервер не ответил
     return <Navigate to={redirectTo} state={{ from: location.pathname }} />;
   }
