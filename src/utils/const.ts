@@ -1,0 +1,9 @@
+export const DATA_URL_INGREDIENTS = "ingredients";
+export const ORDER_POINT = "orders";
+export const PASSWORD_RESET = "password-reset";
+export const SEND_CODE_TO_RESET = "password-reset/reset";
+export const REGISTER_POINT = "auth/register";
+export const TOKEN_POINT = "auth/token";
+export const USER_POINT = "auth/user";
+export const LOGIN_POINT = "auth/login";
+export const LOGOUT_POINT = "auth/logout";

@@ -8,12 +8,6 @@ export const getIngredientsData = () => {
   return function (dispatch) {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
     getDataIng()
-      .then((res) => {
-        if (!res.ok) {
-          dispatch({ type: GET_INGREDIENTS_FAILED, error: "Ошибка сервера!" });
-        }
-        return res.json();
-      })
       .then((responceData) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
