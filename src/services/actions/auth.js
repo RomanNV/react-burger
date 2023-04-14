@@ -28,6 +28,7 @@ export const checkUserAuth = () => {
       });
       getUser()
         .then((res) => {
+          console.log(res);
           dispatch({ type: GET_USER_SUCCESS, payload: res.user });
         })
         .catch((err) => {
@@ -102,6 +103,7 @@ export const loginAction = (inputData) => {
     dispatch({ type: AUTH_REQUEST });
     login(inputData)
       .then((res) => {
+        console.log(res);
         localStorage.setItem("refreshToken", res.refreshToken);
         setCookie("accessToken", res.accessToken.split("Bearer")[1]);
         dispatch({
@@ -110,6 +112,7 @@ export const loginAction = (inputData) => {
         });
       })
       .catch((err) => {
+        console.log(err);
         dispatch({
           type: AUTH_FAILURE,
           payload: err,

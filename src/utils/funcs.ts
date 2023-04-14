@@ -22,32 +22,86 @@ export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
 // создаем функцию проверки ответа на `ok`
 const checkResponse = (res: Response) => {
-  if (res.ok) {
-    return res.json();
-  }
+  return res.ok
+    ? res.json()
+    : res.json().then((res) => {
+        if (res && res.success) {
+          return res;
+        } else {
+          return Promise.reject(res.message);
+        }
+      });
 
   // не забываем выкидывать ошибку, чтобы она попала в `catch`
-  return Promise.reject(`Ошибка ${res.status}`);
 };
 
 // создаем функцию проверки на `success`
-const checkSuccess = (res: any) => {
-  if (res && res.success) {
-    return res;
-  }
-  // не забываем выкидывать ошибку, чтобы она попала в `catch`
-  return Promise.reject(`Ответ не success: ${res}`);
-};
+// const checkSuccess = (res: any) => {
+//   if (res && res.success) {
+//     return res;
+//   }
+//   // не забываем выкидывать ошибку, чтобы она попала в `catch`
+//   return Promise.reject(`Ответ не success: ${res}`);
+// };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
 const request = (endpoint: string, options?: any) => {
+  console.log("in request");
+
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options)
-    .then(checkResponse)
-    .then(checkSuccess);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
+  // .then(checkSuccess);
+};
+const refreshToken = () => {
+  console.log("i am in refresh");
+
+  const fetchBody = JSON.stringify({
+    token: localStorage.getItem("refreshToken"),
+  });
+  return request(TOKEN_POINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
 };
 
+export const fetchWithRefresh = async <T>(
+  url: string,
+  options: RequestInit
+): Promise<T> => {
+  try {
+    const newReq = await request(url, options);
+    console.log(newReq);
+
+    return newReq;
+  } catch (err: any) {
+    console.log("i am in catch");
+
+    if (err === "jwt expired") {
+      console.log("jwt expired");
+
+      const refreshData = await refreshToken(); //обновляем токен
+
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
+      options = {
+        ...options,
+        headers: {
+          ...options?.headers,
+          authorization: "Bearer" + " " + getCookie("accessToken")?.trim(),
+        },
+      };
+      return await request(url, options); //повторяем запрос
+    } else {
+      console.log(err);
+
+      return Promise.reject(err);
+    }
+  }
+};
 const getDataIng = (): Promise<Response> => {
   return request(DATA_URL_INGREDIENTS);
 };
@@ -116,44 +170,6 @@ const registerNewUser = (data: InitialInputRegister): Promise<Response> => {
   });
 };
 
-const refreshToken = () => {
-  const fetchBody = JSON.stringify({
-    token: localStorage.getItem("refreshToken"),
-  });
-  return request(TOKEN_POINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: fetchBody,
-  });
-};
-
-export const fetchWithRefresh = async <T>(
-  url: string,
-  options: RequestInit
-): Promise<T> => {
-  try {
-    return await request(url, options);
-  } catch (err: any) {
-    if (err.message === "jwt expired") {
-      const refreshData = await refreshToken(); //обновляем токен
-
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
-      options = {
-        ...options,
-        headers: {
-          ...options?.headers,
-          authorization: "Bearer" + " " + getCookie("accessToken")?.trim(),
-        },
-      };
-      return await request(url, options); //повторяем запрос
-    } else {
-      return Promise.reject(err);
-    }
-  }
-};
 const getUser = (): Promise<Response> => {
   return fetchWithRefresh(USER_POINT, {
     method: "GET",

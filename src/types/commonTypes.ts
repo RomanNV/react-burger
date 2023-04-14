@@ -108,3 +108,8 @@ export interface InitialLoginPage {
   email: string;
   password: string;
 }
+
+interface ActionA {
+  type: "a";
+  a: string;
+}
