@@ -1,12 +1,16 @@
 import { setCookie, getCookie, deleteCookie } from "../cookie/cookie";
 import {
+  getIngredients,
+  getOrder,
   IngredientCardWithId,
   InitialInputProfile,
   InitialInputRegister,
   InitialInputReset,
   InitialLoginPage,
+  UserAuth,
 } from "../types/commonTypes";
 import {
+  BASE_URL,
   DATA_URL_INGREDIENTS,
   LOGIN_POINT,
   LOGOUT_POINT,
@@ -18,105 +22,30 @@ import {
   USER_POINT,
 } from "./const";
 // 1 раз объявляем базовый урл
-export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
-// создаем функцию проверки ответа на `ok`
-const checkResponse = (res: Response) => {
-  if (res.ok) {
-    return res.json();
-  }
+function checkReponce<T>(res: Response): Promise<T> {
+  return res.ok
+    ? (res.json() as Promise<T>)
+    : (res.json() as Promise<Error>).then((err) => {
+        return Promise.reject(err);
+      });
+}
 
-  // не забываем выкидывать ошибку, чтобы она попала в `catch`
-  return Promise.reject(`Ошибка ${res.status}`);
-};
-
-// создаем функцию проверки на `success`
 const checkSuccess = (res: any) => {
   if (res && res.success) {
     return res;
   }
   // не забываем выкидывать ошибку, чтобы она попала в `catch`
-  return Promise.reject(`Ответ не success: ${res}`);
+  return Promise.reject(res);
 };
 
-// создаем универсальную фукнцию запроса с проверкой ответа и `success`
-// В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = (endpoint: string, options?: any) => {
-  // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
+function request<T>(endpoint: string, options?: any): Promise<T> {
   return fetch(`${BASE_URL}${endpoint}`, options)
-    .then(checkResponse)
+    .then(checkReponce)
     .then(checkSuccess);
-};
+}
 
-const getDataIng = (): Promise<Response> => {
-  return request(DATA_URL_INGREDIENTS);
-};
-
-const getDataOrder = (arr: string[]) => {
-  const fetchBody = JSON.stringify({
-    ingredients: arr,
-  });
-  return fetchWithRefresh(ORDER_POINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///delete trim
-    },
-    body: fetchBody,
-  });
-};
-
-const getPrice = (arr: IngredientCardWithId[]) => {
-  if (arr.length === 0) {
-    return 0;
-  } else {
-    let acc = 0;
-    arr.forEach((item) => {
-      const ingredient = item.ingredient;
-
-      acc =
-        ingredient.type === "bun"
-          ? ingredient.price * 2 + acc
-          : acc + ingredient.price;
-    });
-
-    return acc;
-  }
-};
-
-const postEmailToGetCode = (email: string): Promise<Response> => {
-  const fetchBody = JSON.stringify({ email });
-  return request(PASSWORD_RESET, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: fetchBody,
-  });
-};
-const postToResetPassword = (data: InitialInputReset): Promise<Response> => {
-  const fetchBody = JSON.stringify(data);
-  return request(SEND_CODE_TO_RESET, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: fetchBody,
-  });
-};
-
-const registerNewUser = (data: InitialInputRegister): Promise<Response> => {
-  const fetchBody = JSON.stringify(data);
-  return request(REGISTER_POINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: fetchBody,
-  });
-};
-
-const refreshToken = () => {
+const refreshToken = (): any => {
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
@@ -134,10 +63,11 @@ export const fetchWithRefresh = async <T>(
   options: RequestInit
 ): Promise<T> => {
   try {
-    return await request(url, options);
+    return await request<T>(url, options);
   } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
+      console.log(refreshData);
 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
@@ -154,18 +84,46 @@ export const fetchWithRefresh = async <T>(
     }
   }
 };
-const getUser = (): Promise<Response> => {
-  return fetchWithRefresh(USER_POINT, {
-    method: "GET",
+
+const getDataIng = () => {
+  return request<getIngredients>(DATA_URL_INGREDIENTS);
+};
+
+const getDataOrder = (arr: string[]) => {
+  const fetchBody = JSON.stringify({
+    ingredients: arr,
+  });
+  return fetchWithRefresh<getOrder>(ORDER_POINT, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///deleted trim
+      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///delete trim
     },
+    body: fetchBody,
   });
 };
-const login = (data: InitialLoginPage): Promise<Response> => {
-  const fetchBody = JSON.stringify(data);
-  return request(LOGIN_POINT, {
+
+const getPrice = (arr: IngredientCardWithId[]): number => {
+  if (arr.length === 0) {
+    return 0;
+  } else {
+    let acc = 0;
+    arr.forEach((item) => {
+      const ingredient = item.ingredient;
+
+      acc =
+        ingredient.type === "bun"
+          ? ingredient.price * 2 + acc
+          : acc + ingredient.price;
+    });
+
+    return acc;
+  }
+};
+
+const postEmailToGetCode = (email: string) => {
+  const fetchBody = JSON.stringify({ email });
+  return request<UserAuth["postEmailToReset"]>(PASSWORD_RESET, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -173,13 +131,54 @@ const login = (data: InitialLoginPage): Promise<Response> => {
     body: fetchBody,
   });
 };
-const logOut = (): Promise<Response> => {
+const postToResetPassword = (data: InitialInputReset) => {
+  const fetchBody = JSON.stringify(data);
+  return request<UserAuth["resetPassword"]>(SEND_CODE_TO_RESET, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
+};
+
+const registerNewUser = (data: InitialInputRegister) => {
+  const fetchBody = JSON.stringify(data);
+  return request<UserAuth["getUserWithToken"]>(REGISTER_POINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
+};
+
+const getUser = () => {
+  return fetchWithRefresh<UserAuth["getUser"]>(USER_POINT, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      authorization: "Bearer" + " " + getCookie("accessToken")?.trim(), ///deleted trim
+    },
+  });
+};
+const login = (data: InitialLoginPage) => {
+  const fetchBody = JSON.stringify(data);
+  return request<UserAuth["getUserWithToken"]>(LOGIN_POINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: fetchBody,
+  });
+};
+const logOut = () => {
   const refreshToken = { token: localStorage.getItem("refreshToken") };
   const accessToken = getCookie("accessToken")?.trim(); ///delete trim
   localStorage.removeItem("refreshToken");
   deleteCookie("accessToken");
   const fetchBody = JSON.stringify(refreshToken);
-  return request(LOGOUT_POINT, {
+  return request<UserAuth["logout"]>(LOGOUT_POINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -189,9 +188,9 @@ const logOut = (): Promise<Response> => {
   });
 };
 
-const changeUserData = (data: InitialInputProfile): Promise<Response> => {
+const changeUserData = (data: InitialInputProfile) => {
   const fetchBody = JSON.stringify(data);
-  return fetchWithRefresh(USER_POINT, {
+  return fetchWithRefresh<UserAuth["getUser"]>(USER_POINT, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

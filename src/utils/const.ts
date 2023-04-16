@@ -7,3 +7,4 @@ export const TOKEN_POINT = "auth/token";
 export const USER_POINT = "auth/user";
 export const LOGIN_POINT = "auth/login";
 export const LOGOUT_POINT = "auth/logout";
+export const BASE_URL = "https://norma.nomoreparties.space/api/";

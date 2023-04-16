@@ -108,3 +108,43 @@ export interface InitialLoginPage {
   email: string;
   password: string;
 }
+export interface User {
+  email: string;
+  name: string;
+}
+export interface UserAuth {
+  getUser: { user: User; success?: boolean };
+  getUserWithToken: {
+    refreshToken: string;
+    accessToken: string;
+    user: User;
+    success?: boolean;
+  };
+  resetPassword: { success?: boolean; message: string };
+  postEmailToReset: { success?: boolean; message: string };
+  logout: { success?: boolean; message: string };
+  authError: { success?: boolean; message: string };
+}
+export interface getOrder {
+  success?: boolean;
+  order: {
+    ingredients: IngredientCard[];
+    _id: number;
+    owner: {
+      name: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+    price: number;
+  };
+}
+export interface getIngredients {
+  data: IngredientCard[];
+  success?: boolean;
+}
