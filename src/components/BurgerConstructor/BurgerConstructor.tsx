@@ -19,6 +19,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
 import {
+  addBun,
+  addIngredient,
   ADD_BUN,
   ADD_INGREDIENT,
   getIngredientWithId,
@@ -56,12 +58,9 @@ export const BurgerConstructor = () => {
     accept: "ingredient",
     drop({ ingredient }: IngredientCardWithId) {
       if (ingredient.type === "bun") {
-        dispatch({ type: ADD_BUN, bun: { ingredient } });
+        dispatch(addBun(ingredient));
       } else {
-        dispatch({
-          type: ADD_INGREDIENT,
-          ingredients: getIngredientWithId(ingredient),
-        });
+        dispatch(addIngredient(ingredient));
       }
     },
   });

@@ -14,7 +14,7 @@ import {
   logOut,
   changeUserData,
 } from "../../utils/funcs";
-import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
+import { clearConstructor, CLEAR_CONSTRUCTOR } from "./burgerConstructor";
 export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
 export const AUTH_CHECK: "AUTH_CHECK" = "AUTH_CHECK";
 export const AUTH_REQUEST: "AUTH_REQUEST" = "AUTH_REQUEST";
@@ -140,7 +140,7 @@ export const logOutAction = () => {
     logOut()
       .then(() => {
         dispatch({ type: LOGOUT_SUCCESS });
-        dispatch({ type: CLEAR_CONSTRUCTOR });
+        dispatch(clearConstructor());
       })
       .catch((err) => {
         dispatch({

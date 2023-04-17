@@ -1,3 +1,4 @@
+import { IngredientCard, IngredientCardWithId } from "../../types/commonTypes";
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   ADD_BUN,
@@ -7,12 +8,21 @@ import {
   burgerConstructorActions,
 } from "../actions/burgerConstructor";
 
-const initialState = {
+interface InitStateBurgerConstructor {
+  ingredients: Array<IngredientCardWithId>;
+  bun: ReadonlyArray<{ ingredient: IngredientCard }>;
+}
+const initialState: InitStateBurgerConstructor = {
   ingredients: [],
   bun: [],
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+  state = initialState,
+  action: burgerConstructorActions
+): InitStateBurgerConstructor => {
+  console.log(state);
+
   switch (action.type) {
     case ADD_BUN: {
       return {
@@ -30,7 +40,6 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE_CONSTRUCTOR_INGREDIENT: {
       return {
         ...state,
-
         ingredients: action.ingredients,
       };
     }

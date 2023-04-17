@@ -8,7 +8,9 @@ import update from "immutability-helper";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteConstructorIngredient,
   DELETE_CONSTRUCTOR_INGREDIENT,
+  reorderIngredientList,
   REORDER_INGREDIENT_LIST,
 } from "../../services/actions/burgerConstructor";
 import styles from "./ConstructorItem.module.css";
@@ -16,6 +18,7 @@ import { getConstructorData } from "../../services/reducers/stateFuncs";
 import {
   ConstructorItemType,
   DragItem,
+  IngredientCard,
   IngredientCardWithId,
 } from "../../types/commonTypes";
 
@@ -39,10 +42,7 @@ export const ConstructorItem: React.FC<ConstructorItemType> = ({
         [hoverIndex, 0, [...ingredients][dragIndex]],
       ],
     });
-    dispatch({
-      type: REORDER_INGREDIENT_LIST,
-      splisedList: splicedList,
-    });
+    dispatch(reorderIngredientList(splicedList));
   };
 
   const [, drop] = useDrop<DragItem, void>({
@@ -85,13 +85,11 @@ export const ConstructorItem: React.FC<ConstructorItemType> = ({
   });
 
   const deleteConstructorItem = (id: number): void => {
-    const filteredIngredients = ingredients.filter(
+    const filteredIngredients: IngredientCardWithId[] = ingredients.filter(
       (item: IngredientCardWithId) => item.itemId !== id
     );
-    dispatch({
-      type: DELETE_CONSTRUCTOR_INGREDIENT,
-      ingredients: filteredIngredients,
-    });
+
+    dispatch(deleteConstructorIngredient(filteredIngredients));
   };
 
   drag(drop(ref));
