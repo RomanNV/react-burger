@@ -76,8 +76,6 @@ export const registerNewUserAction = (inputData: InitialInputRegister) => {
     dispatch({ type: AUTH_REQUEST });
     registerNewUser(inputData)
       .then((res) => {
-        console.log(res);
-
         localStorage.setItem("refreshToken", res.refreshToken);
         setCookie("accessToken", res.accessToken.split("Bearer")[1], {});
         dispatch({ type: REGISTRATION_SUCCESS, payload: res.user });
