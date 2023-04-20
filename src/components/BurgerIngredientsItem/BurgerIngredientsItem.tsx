@@ -2,10 +2,7 @@ import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GET_VIEW_ITEM,
-  getViewItem,
-} from "../../services/actions/burgerIngredients";
+import { getViewItemAction } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
 import { getConstructorData } from "../../services/reducers/stateFuncs";
@@ -31,7 +28,7 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
   const location = useLocation();
 
   const getViewIngredient = () => {
-    dispatch(getViewItem(ingredient));
+    dispatch(getViewItemAction(ingredient));
   };
 
   //отслеживаем id булки и меняем состояние

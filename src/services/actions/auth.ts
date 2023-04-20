@@ -4,6 +4,8 @@ import {
   InitialInputRegister,
   InitialInputReset,
   InitialLoginPage,
+  User,
+  UserAuth,
 } from "../../types/commonTypes";
 import {
   postToResetPassword,
@@ -14,7 +16,7 @@ import {
   logOut,
   changeUserData,
 } from "../../utils/funcs";
-import { clearConstructor, CLEAR_CONSTRUCTOR } from "./burgerConstructor";
+import { clearConstructorAction } from "./burgerConstructor";
 export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
 export const AUTH_CHECK: "AUTH_CHECK" = "AUTH_CHECK";
 export const AUTH_REQUEST: "AUTH_REQUEST" = "AUTH_REQUEST";
@@ -29,62 +31,138 @@ export const RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS" =
   "RESET_PASSWORD_SUCCESS";
 export const LOGIN_SUCCESS: "LOGIN_SUCCESS" = "LOGIN_SUCCESS";
 export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+
+export interface AuthUser {
+  payload: User;
+}
+export interface AuthRequest {
+  type: typeof AUTH_REQUEST;
+}
+export interface GetUserSuccess extends AuthUser {
+  type: typeof GET_USER_SUCCESS;
+}
+export interface AuthFailure {
+  type: typeof AUTH_FAILURE;
+  payload: string;
+}
+export interface AuthCheck {
+  type: typeof AUTH_CHECK;
+}
+export interface CodeToResetSuccess {
+  type: typeof CODE_TO_RESET_SUCCESS;
+}
+export interface RegistrationSuccess extends AuthUser {
+  type: typeof REGISTRATION_SUCCESS;
+}
+export interface ResetPasswordSuccess {
+  type: typeof RESET_PASSWORD_SUCCESS;
+}
+
+export interface LoginSuccess extends AuthUser {
+  type: typeof LOGIN_SUCCESS;
+}
+export interface ChangeUserDataSuccess extends AuthUser {
+  type: typeof CHANGE_USER_DATA_SUCCESS;
+}
+export interface LogOutSuccess {
+  type: typeof LOGOUT_SUCCESS;
+}
+export type AuthActions =
+  | LogOutSuccess
+  | ChangeUserDataSuccess
+  | LoginSuccess
+  | ResetPasswordSuccess
+  | RegistrationSuccess
+  | CodeToResetSuccess
+  | AuthCheck
+  | AuthFailure
+  | GetUserSuccess
+  | AuthRequest;
+
+export function changeUserAction(
+  res: UserAuth["getUser"]
+): ChangeUserDataSuccess {
+  return { type: CHANGE_USER_DATA_SUCCESS, payload: res.user };
+}
+export function authFailureAction(err: Error): AuthFailure {
+  return { type: AUTH_FAILURE, payload: err.message };
+}
+export function loginSuccessAction(
+  responce: UserAuth["getUser"]
+): LoginSuccess {
+  return { type: LOGIN_SUCCESS, payload: responce.user };
+}
+export function resetPasswordSuccessAction(): ResetPasswordSuccess {
+  return { type: RESET_PASSWORD_SUCCESS };
+}
+export function registrationSuccessAction(
+  responce: UserAuth["getUser"]
+): RegistrationSuccess {
+  return { type: REGISTRATION_SUCCESS, payload: responce.user };
+}
+export function postCodeToResetPasswordAction(): CodeToResetSuccess {
+  return {
+    type: CODE_TO_RESET_SUCCESS,
+  };
+}
+export function authRequestAction(): AuthRequest {
+  return { type: AUTH_REQUEST };
+}
+
+export function logOutSuccessAction(): LogOutSuccess {
+  return { type: LOGOUT_SUCCESS };
+}
+
+export function authCheckAction(): AuthCheck {
+  return { type: AUTH_CHECK };
+}
+export function getUserSuccessAction(res: UserAuth["getUser"]): GetUserSuccess {
+  return { type: GET_USER_SUCCESS, payload: res.user };
+}
 //проверка токеа на валидность реализована в функции fetchWithRefresh в funcs
 export const checkUserAuth = () => {
   return function (dispatch: any) {
     if (getCookie("accessToken")) {
-      dispatch({
-        type: AUTH_REQUEST,
-      });
+      dispatch(authRequestAction());
       getUser()
         .then((res) => {
-          const { user } = res;
-          dispatch({ type: GET_USER_SUCCESS, payload: user });
+          dispatch(getUserSuccessAction(res));
         })
         .catch((err) => {
-          dispatch({
-            type: AUTH_FAILURE,
-            payload: err.message,
-          });
+          dispatch(authFailureAction(err));
         })
-        .finally(dispatch({ type: AUTH_CHECK }));
+        .finally(dispatch(authCheckAction()));
     } else {
-      dispatch({ type: AUTH_CHECK });
+      dispatch(authCheckAction());
     }
   };
 };
 
 export const getCodeToResetPassword = (email: string, callback: Function) => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     postEmailToGetCode(email)
       .then(() => {
-        dispatch({ type: CODE_TO_RESET_SUCCESS });
+        dispatch(postCodeToResetPasswordAction());
         callback();
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };
 
 export const registerNewUserAction = (inputData: InitialInputRegister) => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     registerNewUser(inputData)
       .then((res) => {
         localStorage.setItem("refreshToken", res.refreshToken);
         setCookie("accessToken", res.accessToken.split("Bearer")[1], {});
-        dispatch({ type: REGISTRATION_SUCCESS, payload: res.user });
+        dispatch(registrationSuccessAction(res));
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };
@@ -94,73 +172,56 @@ export const getRequestToResetPassword = (
   callback: Function
 ) => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     postToResetPassword(inputData)
       .then(() => {
-        dispatch({
-          type: RESET_PASSWORD_SUCCESS,
-        });
+        dispatch(resetPasswordSuccessAction());
         callback();
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };
 
 export const loginAction = (inputData: InitialLoginPage) => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     login(inputData)
-      .then((res: any) => {
+      .then((res) => {
         localStorage.setItem("refreshToken", res.refreshToken);
         setCookie("accessToken", res.accessToken.split("Bearer")[1], {});
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: res.user,
-        });
+        dispatch(loginSuccessAction(res));
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };
 
 export const logOutAction = () => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     logOut()
       .then(() => {
-        dispatch({ type: LOGOUT_SUCCESS });
-        dispatch(clearConstructor());
+        dispatch(logOutSuccessAction());
+        dispatch(clearConstructorAction());
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };
 
 export const changeUserDataAction = (data: InitialInputProfile) => {
   return function (dispatch: any) {
-    dispatch({ type: AUTH_REQUEST });
+    dispatch(authRequestAction());
     changeUserData(data)
-      .then((res: any) => {
-        dispatch({ type: CHANGE_USER_DATA_SUCCESS, payload: res.user });
+      .then((res) => {
+        dispatch(changeUserAction(res));
       })
       .catch((err) => {
-        dispatch({
-          type: AUTH_FAILURE,
-          payload: err.message,
-        });
+        dispatch(authFailureAction(err));
       });
   };
 };

@@ -25,20 +25,20 @@ export interface GetViewItem {
   type: typeof GET_VIEW_ITEM;
   viewItem: IngredientCard;
 }
-export function getViewItem(ingredient: IngredientCard): GetViewItem {
+export function getViewItemAction(ingredient: IngredientCard): GetViewItem {
   return { type: GET_VIEW_ITEM, viewItem: ingredient };
 }
 
-export function getIngredientRequest(): GetIngredientRequest {
+export function getIngredientRequestAction(): GetIngredientRequest {
   return { type: GET_INGREDIENTS_REQUEST };
 }
-export function getIngredientFailed(err: Error): GetIngredientFailed {
+export function getIngredientFailedAction(err: Error): GetIngredientFailed {
   return {
     type: GET_INGREDIENTS_FAILED,
     error: `Ошибка сервера, попробуйте еще ${err.message}`,
   };
 }
-export function getIngredientSuccess(
+export function getIngredientSuccessAction(
   responceData: getIngredients
 ): GetIngredientSuccess {
   return {
@@ -49,13 +49,13 @@ export function getIngredientSuccess(
 
 export const getIngredientsData = () => {
   return function (dispatch: any) {
-    dispatch(getIngredientRequest());
+    dispatch(getIngredientRequestAction());
     getDataIng()
       .then((responceData) => {
-        dispatch(getIngredientSuccess(responceData));
+        dispatch(getIngredientSuccessAction(responceData));
       })
       .catch((err) => {
-        dispatch(getIngredientFailed(err));
+        dispatch(getIngredientFailedAction(err));
       });
   };
 };

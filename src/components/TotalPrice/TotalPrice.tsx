@@ -4,7 +4,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import { openConstructorModalAction } from "../../services/actions/constructorModal";
 import { getOrderNum } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authState } from "../../services/reducers/stateFuncs";
@@ -20,7 +20,7 @@ export const TotalPrice: React.FC<TotalPriceType> = ({
   const location = useLocation();
   const openModal = () => {
     if (user) {
-      dispatch({ type: OPEN_CONSTRUCTOR_MODAL });
+      dispatch(openConstructorModalAction());
     }
   };
 

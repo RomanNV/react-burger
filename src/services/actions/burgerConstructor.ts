@@ -42,19 +42,19 @@ export const getIngredientWithId = (
   return { ingredient, itemId: Math.random() };
 };
 
-export function addIngredient(ingredient: IngredientCard): AddIngredient {
+export function addIngredientAction(ingredient: IngredientCard): AddIngredient {
   return { type: ADD_INGREDIENT, ingredients: getIngredientWithId(ingredient) };
 }
 
-export function addBun(ingredient: IngredientCard): AddBun {
+export function addBunAction(ingredient: IngredientCard): AddBun {
   return { type: ADD_BUN, bun: { ingredient } };
 }
 
-export function clearConstructor(): ClearConstructor {
+export function clearConstructorAction(): ClearConstructor {
   return { type: CLEAR_CONSTRUCTOR };
 }
 
-export function deleteConstructorIngredient(
+export function deleteConstructorIngredientAction(
   ingredient: IngredientCardWithId[]
 ): DeleteConstructorIngredient {
   return { type: DELETE_CONSTRUCTOR_INGREDIENT, ingredients: ingredient };

@@ -3,14 +3,25 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
+  TotalPriceActions,
 } from "../actions/totalPrice";
+
+export interface InitStateTotalPrice {
+  orderData: number | null;
+  isOrderDataRequest: boolean;
+  isEmptyOrder: boolean;
+  error: string | null;
+}
 const initialState = {
-  orderData: "",
+  orderData: null,
   isOrderDataRequest: false,
   isEmptyOrder: false,
-  error: "",
+  error: null,
 };
-export const totalPriceReducer = (state = initialState, action) => {
+export const totalPriceReducer = (
+  state = initialState,
+  action: TotalPriceActions
+): InitStateTotalPrice => {
   switch (action.type) {
     case NOT_BUN: {
       return { ...state, isEmptyOrder: true, error: action.payload };
@@ -21,7 +32,7 @@ export const totalPriceReducer = (state = initialState, action) => {
     case GET_ORDER_FAILED: {
       return {
         ...state,
-        orderData: "",
+        orderData: null,
         isOrderDataRequest: false,
         error: action.payload,
         isEmptyOrder: false,
