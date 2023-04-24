@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../../types";
 import { getIngredients, IngredientCard } from "../../types/commonTypes";
 import { getDataIng } from "../../utils/funcs";
 
@@ -25,6 +26,13 @@ export interface GetViewItem {
   type: typeof GET_VIEW_ITEM;
   viewItem: IngredientCard;
 }
+
+export type BurgerIngredientsActions =
+  | GetIngredientRequest
+  | GetIngredientFailed
+  | GetIngredientSuccess
+  | GetViewItem;
+
 export function getViewItemAction(ingredient: IngredientCard): GetViewItem {
   return { type: GET_VIEW_ITEM, viewItem: ingredient };
 }
@@ -47,8 +55,8 @@ export function getIngredientSuccessAction(
   };
 }
 
-export const getIngredientsData = () => {
-  return function (dispatch: any) {
+export const getIngredientsData: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch(getIngredientRequestAction());
     getDataIng()
       .then((responceData) => {
@@ -59,8 +67,3 @@ export const getIngredientsData = () => {
       });
   };
 };
-export type BurgerIngredientsActions =
-  | GetIngredientRequest
-  | GetIngredientFailed
-  | GetIngredientSuccess
-  | GetViewItem;

@@ -7,15 +7,15 @@ import {
   BurgerIngredientsActions,
 } from "../actions/burgerIngredients";
 
-interface InitialStateType {
+export interface InitialIngredientsState {
   dataIngredients: IngredientCard[];
-  viewItem: Object | IngredientCard;
+  viewItem: null | IngredientCard;
   isDataIngredientsRequest: boolean;
   error: string;
 }
-const initialState: InitialStateType = {
+const initialState: InitialIngredientsState = {
   dataIngredients: [],
-  viewItem: {},
+  viewItem: null,
   isDataIngredientsRequest: false,
   error: "",
 };
@@ -23,7 +23,7 @@ const initialState: InitialStateType = {
 export const burgerIngredientsReducer = (
   state = initialState,
   action: BurgerIngredientsActions
-): InitialStateType => {
+): InitialIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, isDataIngredientsRequest: true };

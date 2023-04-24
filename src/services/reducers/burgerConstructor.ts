@@ -10,7 +10,7 @@ import {
 
 interface InitStateBurgerConstructor {
   ingredients: Array<IngredientCardWithId>;
-  bun: ReadonlyArray<{ ingredient: IngredientCard }>;
+  bun: Array<IngredientCardWithId>;
 }
 const initialState: InitStateBurgerConstructor = {
   ingredients: [],
@@ -27,7 +27,7 @@ export const constructorReducer = (
     case ADD_BUN: {
       return {
         ...state,
-        bun: [action.bun],
+        bun: [action.ingredient],
       };
     }
     case ADD_INGREDIENT: {

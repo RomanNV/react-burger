@@ -35,7 +35,7 @@ export const BurgerIngredients: React.FC = () => {
     }
   };
 
-  const tabDataBun: [IngredientCard] = useMemo(
+  const tabDataBun: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "bun") {
@@ -45,7 +45,7 @@ export const BurgerIngredients: React.FC = () => {
     [dataIngredients]
   );
 
-  const tabDataMain: [IngredientCard] = useMemo(
+  const tabDataMain: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "main") {
@@ -55,7 +55,7 @@ export const BurgerIngredients: React.FC = () => {
     [dataIngredients]
   );
 
-  const tabDataSauce: [IngredientCard] = useMemo(
+  const tabDataSauce: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "sauce") {

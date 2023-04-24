@@ -16,7 +16,7 @@ export interface authInitialState {
   isAuthChecked: boolean;
   isAuthRequest: boolean;
   error: null | string;
-  user: null | User;
+  user: any;
 }
 
 const initialState: authInitialState = {

@@ -1,4 +1,5 @@
 import { setCookie, getCookie } from "../../cookie/cookie";
+import { AppDispatch, AppThunk } from "../../types";
 import {
   InitialInputProfile,
   InitialInputRegister,
@@ -120,8 +121,8 @@ export function getUserSuccessAction(res: UserAuth["getUser"]): GetUserSuccess {
   return { type: GET_USER_SUCCESS, payload: res.user };
 }
 //проверка токеа на валидность реализована в функции fetchWithRefresh в funcs
-export const checkUserAuth = () => {
-  return function (dispatch: any) {
+export const checkUserAuth: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     if (getCookie("accessToken")) {
       dispatch(authRequestAction());
       getUser()
@@ -131,15 +132,18 @@ export const checkUserAuth = () => {
         .catch((err) => {
           dispatch(authFailureAction(err));
         })
-        .finally(dispatch(authCheckAction()));
+        .finally(() => dispatch(authCheckAction()));
     } else {
       dispatch(authCheckAction());
     }
   };
 };
 
-export const getCodeToResetPassword = (email: string, callback: Function) => {
-  return function (dispatch: any) {
+export const getCodeToResetPassword: AppThunk = (
+  email: string,
+  callback: Function
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     postEmailToGetCode(email)
       .then(() => {
@@ -152,8 +156,10 @@ export const getCodeToResetPassword = (email: string, callback: Function) => {
   };
 };
 
-export const registerNewUserAction = (inputData: InitialInputRegister) => {
-  return function (dispatch: any) {
+export const registerNewUserAction: AppThunk = (
+  inputData: InitialInputRegister
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     registerNewUser(inputData)
       .then((res) => {
@@ -167,11 +173,11 @@ export const registerNewUserAction = (inputData: InitialInputRegister) => {
   };
 };
 
-export const getRequestToResetPassword = (
+export const getRequestToResetPassword: AppThunk = (
   inputData: InitialInputReset,
   callback: Function
 ) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     postToResetPassword(inputData)
       .then(() => {
@@ -184,8 +190,8 @@ export const getRequestToResetPassword = (
   };
 };
 
-export const loginAction = (inputData: InitialLoginPage) => {
-  return function (dispatch: any) {
+export const loginAction: AppThunk = (inputData: InitialLoginPage) => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     login(inputData)
       .then((res) => {
@@ -199,8 +205,8 @@ export const loginAction = (inputData: InitialLoginPage) => {
   };
 };
 
-export const logOutAction = () => {
-  return function (dispatch: any) {
+export const logOutAction: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     logOut()
       .then(() => {
@@ -213,8 +219,8 @@ export const logOutAction = () => {
   };
 };
 
-export const changeUserDataAction = (data: InitialInputProfile) => {
-  return function (dispatch: any) {
+export const changeUserDataAction: AppThunk = (data: InitialInputProfile) => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     changeUserData(data)
       .then((res) => {

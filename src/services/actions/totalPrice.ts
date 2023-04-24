@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../../types";
 import { getOrder } from "../../types/commonTypes";
 import { getDataOrder } from "../../utils/funcs";
 import { clearConstructorAction } from "./burgerConstructor";
@@ -40,8 +41,8 @@ export function notBunAction(): NotBun {
   return { type: NOT_BUN, payload: "В бургере не может не быть булок" };
 }
 
-export const getOrderNum = (arr: string[]) => {
-  return function (dispatch: any) {
+export const getOrderNum: AppThunk = (arr: string[]) => {
+  return function (dispatch: AppDispatch) {
     if (arr.length === 0) {
       dispatch(notBunAction());
       return;

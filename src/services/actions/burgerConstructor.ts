@@ -19,7 +19,7 @@ export interface DeleteConstructorIngredient {
 
 export interface AddBun {
   type: typeof ADD_BUN;
-  readonly bun: { ingredient: IngredientCard };
+  ingredient: IngredientCardWithId;
 }
 
 export interface AddIngredient {
@@ -30,24 +30,35 @@ export interface ReorderIngredientList {
   type: typeof REORDER_INGREDIENT_LIST;
   splisedList: IngredientCardWithId[];
 }
+
+export type burgerConstructorActions =
+  | ClearConstructor
+  | AddBun
+  | AddIngredient
+  | ReorderIngredientList
+  | DeleteConstructorIngredient;
+
 export function reorderIngredientList(
   list: IngredientCardWithId[]
 ): ReorderIngredientList {
   return { type: REORDER_INGREDIENT_LIST, splisedList: list };
 }
 
-export const getIngredientWithId = (
+export function getIngredientWithId(
   ingredient: IngredientCard
-): IngredientCardWithId => {
+): IngredientCardWithId {
   return { ingredient, itemId: Math.random() };
-};
+}
 
 export function addIngredientAction(ingredient: IngredientCard): AddIngredient {
   return { type: ADD_INGREDIENT, ingredients: getIngredientWithId(ingredient) };
 }
 
 export function addBunAction(ingredient: IngredientCard): AddBun {
-  return { type: ADD_BUN, bun: { ingredient } };
+  return {
+    type: ADD_BUN,
+    ingredient: getIngredientWithId(ingredient),
+  };
 }
 
 export function clearConstructorAction(): ClearConstructor {
@@ -59,10 +70,3 @@ export function deleteConstructorIngredientAction(
 ): DeleteConstructorIngredient {
   return { type: DELETE_CONSTRUCTOR_INGREDIENT, ingredients: ingredient };
 }
-
-export type burgerConstructorActions =
-  | ClearConstructor
-  | AddBun
-  | AddIngredient
-  | ReorderIngredientList
-  | DeleteConstructorIngredient;

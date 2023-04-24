@@ -104,6 +104,7 @@ const getDataOrder = (arr: string[]) => {
 };
 
 const getPrice = (arr: IngredientCardWithId[]): number => {
+  //replace заглушку
   if (arr.length === 0) {
     return 0;
   } else {

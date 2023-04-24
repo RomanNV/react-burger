@@ -15,7 +15,7 @@ export const Ingredient = () => {
 
   //если мы пришли не с главной страницы
   const temparyViewItem: IngredientCard = useMemo(() => {
-    if (Object.keys(viewItem).length === 0) {
+    if (viewItem === null) {
       const filteredData: IngredientCard = dataIngredients.filter(
         ({ _id }: IngredientCard) => {
           return _id === id;

@@ -9,13 +9,13 @@ export interface CloseConstructorModal {
 export interface OpenConstructorModal {
   type: typeof OPEN_CONSTRUCTOR_MODAL;
 }
+export type constructorModalActions =
+  | CloseConstructorModal
+  | OpenConstructorModal;
+
 export function closeConstructorModalAction(): CloseConstructorModal {
   return { type: CLOSE_CONSTRUCTOR_MODAL };
 }
 export function openConstructorModalAction(): OpenConstructorModal {
   return { type: OPEN_CONSTRUCTOR_MODAL };
 }
-
-export type constructorModalActions =
-  | CloseConstructorModal
-  | OpenConstructorModal;
