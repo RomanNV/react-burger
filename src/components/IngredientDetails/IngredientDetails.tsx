@@ -1,16 +1,20 @@
-import { IngredientCard } from "../../types/commonTypes";
+import {
+  IngredientCard,
+  IngredientCardWithToggleModal,
+} from "../../types/commonTypes";
 import styles from "./IngredientDetails.module.css";
-export const IngredientDetails: React.FC<IngredientCard> = ({
+export const IngredientDetails: React.FC<IngredientCardWithToggleModal> = ({
   image_large,
   name,
   calories,
   proteins,
   fat,
   carbohydrates,
+  isNotModal,
 }) => {
   return (
-    <div className={styles.modal_content}>
-      <header className={styles.header_box}>
+    <div className={isNotModal ? styles.page_content : styles.modal_content}>
+      <header className={isNotModal ? styles.header_page : styles.header_box}>
         <p className="text text_type_main-large">Детали ингредиента</p>
       </header>
       <div className={styles.ingredient_card}>

@@ -123,6 +123,8 @@ export function getUserSuccessAction(res: UserAuth["getUser"]): GetUserSuccess {
 //проверка токеа на валидность реализована в функции fetchWithRefresh в funcs
 export const checkUserAuth: AppThunk = () => {
   return function (dispatch: AppDispatch) {
+    console.log("in checkuser");
+
     if (getCookie("accessToken")) {
       dispatch(authRequestAction());
       getUser()
@@ -220,7 +222,7 @@ export const logOutAction: AppThunk = () => {
 };
 
 export const changeUserDataAction: AppThunk = (data: InitialInputProfile) => {
-  return function (dispatch: AppDispatch) {
+  return function (dispatch: any) {
     dispatch(authRequestAction());
     changeUserData(data)
       .then((res) => {

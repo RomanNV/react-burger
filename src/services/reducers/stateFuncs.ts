@@ -1,4 +1,3 @@
-import { store } from "../..";
 import { RootState } from "../../types/index";
 
 const getIngredientsFromState = (state: RootState) => state.ingredientsData;

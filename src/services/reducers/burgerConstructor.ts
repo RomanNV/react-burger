@@ -8,11 +8,11 @@ import {
   burgerConstructorActions,
 } from "../actions/burgerConstructor";
 
-interface InitStateBurgerConstructor {
+export interface InitStateBurgerConstructor {
   ingredients: Array<IngredientCardWithId>;
   bun: Array<IngredientCardWithId>;
 }
-const initialState: InitStateBurgerConstructor = {
+export const initialState: InitStateBurgerConstructor = {
   ingredients: [],
   bun: [],
 };

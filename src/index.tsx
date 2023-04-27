@@ -8,21 +8,26 @@ import { rootReducer } from "./services/reducers/index";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { logger } from "./bla";
+import { configureStore, MiddlewareArray } from "@reduxjs/toolkit";
+import store from "./services/store";
 
-declare const window: any;
+// declare const window: any;
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+// const composeEnhancers =
+//   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-export const store = createStore(rootReducer, enhancer);
+// const enhancer = composeEnhancers(applyMiddleware(thunk));
+// // export const store = configureStore({
+// //   reducer: rootReducer,
+// // });
+// export const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>

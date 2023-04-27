@@ -5,14 +5,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
 import { authState } from "../../services/reducers/stateFuncs";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { InitialLoginPage } from "../../types/commonTypes";
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
-
+import { useSelector } from "../../hooks/redux-hooks";
 export const Login: React.FC = () => {
   const INITIALINPUT: InitialLoginPage = { email: "", password: "" };
   const dispatch = useDispatch<any>();

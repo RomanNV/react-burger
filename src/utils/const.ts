@@ -8,3 +8,4 @@ export const USER_POINT = "auth/user";
 export const LOGIN_POINT = "auth/login";
 export const LOGOUT_POINT = "auth/logout";
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
+export const GET_ALL_ORDERS = "wss://norma.nomoreparties.space/orders/all";

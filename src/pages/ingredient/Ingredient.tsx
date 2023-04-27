@@ -3,8 +3,11 @@ import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs"
 import { useNavigate, useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { IngredientDetails } from "../../components/IngredientDetails/IngredientDetails";
-import { useMemo } from "react";
-import { IngredientCard } from "../../types/commonTypes";
+import { useEffect, useMemo, useState } from "react";
+import {
+  IngredientCard,
+  IngredientCardWithToggleModal,
+} from "../../types/commonTypes";
 
 export const Ingredient = () => {
   const { viewItem, dataIngredients } = useSelector(
@@ -12,6 +15,7 @@ export const Ingredient = () => {
   );
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isNotModal, setIsNotModal] = useState(false);
 
   //если мы пришли не с главной страницы
   const temparyViewItem: IngredientCard = useMemo(() => {
@@ -21,17 +25,34 @@ export const Ingredient = () => {
           return _id === id;
         }
       )[0];
+      setIsNotModal(true);
       return filteredData;
-    } else return viewItem;
+    } else {
+      setIsNotModal(false);
+      return viewItem;
+    }
   }, [viewItem, dataIngredients, id]);
+
+  useEffect(() => {
+    if (isNotModal) navigate(`/ingredients/${id}`);
+  }, [setIsNotModal]);
+
+  const temparyViewItemWithToggleModal: IngredientCardWithToggleModal = {
+    ...temparyViewItem,
+    isNotModal,
+  };
 
   const closeModal = () => {
     navigate("/");
   };
 
-  return (
+  return isNotModal ? (
+    <IngredientDetails {...temparyViewItemWithToggleModal}></IngredientDetails>
+  ) : (
     <Modal closeModal={closeModal}>
-      <IngredientDetails {...temparyViewItem}></IngredientDetails>
+      <IngredientDetails
+        {...temparyViewItemWithToggleModal}
+      ></IngredientDetails>
     </Modal>
   );
 };

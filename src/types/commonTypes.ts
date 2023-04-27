@@ -24,6 +24,9 @@ export interface IngredientCard {
   __v: number;
   _id: string;
 }
+export interface IngredientCardWithToggleModal extends IngredientCard {
+  isNotModal: boolean;
+}
 export interface IngredientCardWithId {
   itemId: number;
   ingredient: IngredientCard;
@@ -45,7 +48,7 @@ export interface ColorRingType {
   colors: Array<string>;
 }
 export interface ErrorType {
-  error: string;
+  error: string | null;
 }
 export interface TotalPriceType {
   listIdOrder: string[];

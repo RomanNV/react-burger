@@ -56,7 +56,7 @@ export function getIngredientSuccessAction(
 }
 
 export const getIngredientsData: AppThunk = () => {
-  return function (dispatch: AppDispatch) {
+  return function (dispatch: any) {
     dispatch(getIngredientRequestAction());
     getDataIng()
       .then((responceData) => {
