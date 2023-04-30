@@ -1,0 +1,26 @@
+.wrap_feed_item {
+  width: 578px;
+  min-height: 214px;
+  border-radius: 40px;
+  border: 1px white solid;
+  display: flex;
+  gap: 24px;
+
+  flex-direction: column;
+}
+.content_box {
+  padding: 24px 0px;
+}
+.number_order {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+}
+.time_order {
+}
+.name_order {
+  font-size: 30px;
+}
+.summ_order {
+  height: 64px;
+}

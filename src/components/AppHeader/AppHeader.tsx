@@ -31,7 +31,7 @@ export const AppHeader: FC = (): JSX.Element => {
           <div className={style.nav_link}>
             <ListIcon type="secondary" />
             <Link
-              to="/login"
+              to="/feed"
               className={`${style.nav_link_a2} text text_type_main-default`}
             >
               Лента заказов

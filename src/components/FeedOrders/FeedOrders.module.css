@@ -1,0 +1,7 @@
+.feed_orders_box {
+  width: 600px;
+  justify-self: start;
+  max-height: 910px;
+  border: 1px white solid;
+  padding-top: 100px;
+}

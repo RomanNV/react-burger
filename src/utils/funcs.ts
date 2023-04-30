@@ -75,9 +75,11 @@ export const fetchWithRefresh = async <T>(
 
       const refreshData = await refreshToken(); //обновляем токен
       console.log(refreshData);
+      console.log(refreshData.accessToken.split("Bearer")[1]);
+      console.log(getCookie("accessToken"));
 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("accessToken", "", refreshData.accessToken.split("Bearer")[1]);
+      setCookie("accessToken", refreshData.accessToken.split("Bearer")[1], {});
       options = {
         ...options,
         headers: {
@@ -86,6 +88,7 @@ export const fetchWithRefresh = async <T>(
         },
       };
       console.log("repeat request");
+      console.log(url, options);
 
       return await request(url, options); //повторяем запрос
     } else {

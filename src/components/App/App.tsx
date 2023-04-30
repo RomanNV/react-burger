@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Error404 } from "../../pages/Error404/Error404";
+import { Feed } from "../../pages/feed/Feed";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
 import { Home } from "../../pages/home/Home";
 import { Ingredient } from "../../pages/ingredient/Ingredient";
@@ -31,6 +32,7 @@ function App() {
       <Routes location={background || location}>
         <Route path="/" element={<Home />}></Route>
         <Route path="*" element={<Error404 />}></Route>
+        <Route path="/feed" element={<Feed />}></Route>
         <Route
           path="/login"
           element={

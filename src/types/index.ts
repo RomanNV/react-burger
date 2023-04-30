@@ -28,7 +28,7 @@ export type TApplicationActions =
   | TotalPriceActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, RootState, Action, TApplicationActions>
+  ThunkAction<TReturn, RootState, unknown, TApplicationActions>
 >;
 
 export type AppDispatch = typeof store.dispatch;

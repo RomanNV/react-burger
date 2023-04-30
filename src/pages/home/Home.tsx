@@ -9,10 +9,12 @@ import {
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { setCookie } from "../../cookie/cookie";
 
 export const Home: React.FC = () => {
   const { error } = useSelector(authState);
   const errorIngredients = useSelector(getIngredientsDataFromState).error;
+
   if (error || errorIngredients) {
     return <ErrorMessage error={error || errorIngredients} />;
   }
