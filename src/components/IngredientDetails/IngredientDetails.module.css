@@ -40,7 +40,7 @@
   flex-direction: column;
   width: 520px;
 }
-img {
+.img_style {
   padding: 0 20px;
   height: max-content;
   width: max-content;

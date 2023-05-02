@@ -31,7 +31,8 @@ export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, RootState, unknown, TApplicationActions>
 >;
 
-export type AppDispatch = typeof store.dispatch;
+// export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = any;
 
 export type RootState = {
   ingredientsData: InitialIngredientsState;

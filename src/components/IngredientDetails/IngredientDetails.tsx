@@ -18,7 +18,11 @@ export const IngredientDetails: React.FC<IngredientCardWithToggleModal> = ({
         <p className="text text_type_main-large">Детали ингредиента</p>
       </header>
       <div className={styles.ingredient_card}>
-        <img src={image_large} alt="Фото ингредиента" />
+        <img
+          src={image_large}
+          className={styles.img_style}
+          alt="Фото ингредиента"
+        />
         <p className="text text_type_main-medium pt-3">{name}</p>
         <div className={styles.info_box}>
           <div className={styles.info}>

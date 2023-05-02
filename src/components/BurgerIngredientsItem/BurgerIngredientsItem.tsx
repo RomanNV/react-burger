@@ -74,7 +74,7 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
         getViewIngredient();
       }}
     >
-      <img src={image} alt="фото ингредиента" />
+      <img className={styles.img_style} src={image} alt="фото ингредиента" />
       {counter.bun !== 0 && type === "bun" ? (
         <Counter count={counter.bun} size="default" extraClass="m-1" />
       ) : counter.ingredient !== 0 && type !== "bun" ? (
