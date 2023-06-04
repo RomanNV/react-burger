@@ -2,11 +2,13 @@ import { setCookie, getCookie, deleteCookie } from "../cookie/cookie";
 import {
   getIngredients,
   getOrder,
+  IngredientCard,
   IngredientCardWithId,
   InitialInputProfile,
   InitialInputRegister,
   InitialInputReset,
   InitialLoginPage,
+  OrderParams,
   UserAuth,
 } from "../types/commonTypes";
 import {
@@ -21,6 +23,7 @@ import {
   TOKEN_POINT,
   USER_POINT,
 } from "./const";
+import { dataOrders } from "./mockesData";
 // 1 раз объявляем базовый урл
 
 function checkReponce<T>(res: Response): Promise<T> {
@@ -31,7 +34,13 @@ function checkReponce<T>(res: Response): Promise<T> {
         return Promise.reject(err);
       });
 }
+// const getDataFromServer = async () => {
+//   console.log("aa");
 
+//   return await new Promise((resolve) => {
+//     setTimeout(() => resolve(dataOrders), 1000);
+//   });
+// };
 const checkSuccess = (res: any) => {
   if (res && res.success) {
     return res;
@@ -43,6 +52,8 @@ const checkSuccess = (res: any) => {
 };
 
 function request<T>(endpoint: string, options?: any): Promise<T> {
+  console.log(`${BASE_URL}${endpoint}`);
+
   return fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkReponce)
     .then(checkSuccess);
@@ -101,6 +112,16 @@ const getDataIng = () => {
   return request<getIngredients>(DATA_URL_INGREDIENTS);
 };
 
+const getChoosenOrder = (number: number) => {
+  console.log(number);
+
+  return request(`orders/${number}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+};
 const getDataOrder = (arr: string[]) => {
   const fetchBody = JSON.stringify({
     ingredients: arr,
@@ -212,7 +233,53 @@ const changeUserData = (data: InitialInputProfile) => {
     body: fetchBody,
   });
 };
+const getIngredientsArrayFromOrder = (
+  arr1: Array<string>,
+  arr2: IngredientCard[]
+): IngredientCard[] => {
+  const reducerArr = arr1.reduce((summ: any, ingredientId: string) => {
+    const orderItem = arr2.find((item: IngredientCard) => {
+      return item._id === ingredientId;
+    });
+    return [...summ, orderItem];
+  }, []);
+  return reducerArr;
+};
 
+const getOrderParams = (
+  createdAt: string,
+  status: string,
+  isOrder: boolean
+): OrderParams => {
+  const dateOfOrder = new Date(createdAt);
+
+  const getDataOrderInMillis = dateOfOrder.getTime();
+  const howMathDayAfterCreatedOrder = Math.floor(
+    (new Date().getTime() - getDataOrderInMillis) / 86400000
+  );
+  const nameDay =
+    howMathDayAfterCreatedOrder === 0
+      ? "сегодня"
+      : howMathDayAfterCreatedOrder === 1
+      ? "вчера"
+      : howMathDayAfterCreatedOrder === 2
+      ? "позавчера"
+      : 2 < howMathDayAfterCreatedOrder && howMathDayAfterCreatedOrder <= 4
+      ? `${howMathDayAfterCreatedOrder} дня назад`
+      : howMathDayAfterCreatedOrder >= 4
+      ? `${howMathDayAfterCreatedOrder} дней назад`
+      : null;
+  const currentStatus =
+    status === "done"
+      ? "Выполнен"
+      : status === "prepare"
+      ? "Готовится"
+      : "Отменен";
+  const dateString = `${nameDay}, ${dateOfOrder.getHours()}:${dateOfOrder.getMinutes()} ${
+    isOrder ? "" : "i-GMT+3"
+  }`;
+  return { currentStatus: currentStatus, dateString: dateString };
+};
 export {
   getDataIng,
   getDataOrder,
@@ -225,4 +292,7 @@ export {
   getUser,
   logOut,
   changeUserData,
+  getIngredientsArrayFromOrder,
+  getOrderParams,
+  getChoosenOrder,
 };

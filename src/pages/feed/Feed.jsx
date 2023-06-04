@@ -6,10 +6,11 @@ import styles from "./Feed.module.css";
 
 export const Feed = () => {
   useEffect(() => {});
+
   return (
     <div className={styles.content_container}>
       <FeedList dataOrders={dataOrders}></FeedList>
-      <FeedOrders></FeedOrders>
+      <FeedOrders dataOrders={dataOrders}></FeedOrders>
     </div>
   );
 };

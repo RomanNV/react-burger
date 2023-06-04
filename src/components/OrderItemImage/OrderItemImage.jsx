@@ -17,7 +17,9 @@ export const OrderItemImage = ({
         />
         {index === 5 && (
           <div className={styles.icon_count}>
-            <p className={styles.text_style}>+{ingredientCount}</p>
+            <p className={`${styles.text_style} text text_type_digits-default`}>
+              +{ingredientCount}
+            </p>
           </div>
         )}
       </div>

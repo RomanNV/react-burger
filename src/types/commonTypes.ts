@@ -150,3 +150,21 @@ export interface getIngredients {
   data: IngredientCard[];
   success?: boolean;
 }
+export interface OrderParams {
+  currentStatus: string;
+  dateString: string;
+}
+export interface IsNotModal {
+  isNotModal: boolean;
+}
+export interface OrderItem {
+  createdAt: string;
+  ingredients: string[];
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+}
+export interface OrderItemWithToggleModal extends OrderItem {
+  isNotModal: boolean;
+}

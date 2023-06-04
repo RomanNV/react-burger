@@ -69,7 +69,7 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
       style={{ opacity: `${opacityNum}` }}
       onClick={() => {
         navigate(`/ingredients/${_id}`, {
-          state: { background: location.pathname },
+          state: { background: location },
         });
         getViewIngredient();
       }}

@@ -9,6 +9,8 @@ import { authInitialState } from "../services/reducers/auth";
 import { InitStateBurgerConstructor } from "../services/reducers/burgerConstructor";
 import { InitialIngredientsState } from "../services/reducers/burgerIngredients";
 import { InitStateConstructorModal } from "../services/reducers/constructorModal";
+import { InitStateOrder } from "../services/reducers/order";
+import { InitStateOrderData } from "../services/reducers/orderDataReducer";
 import { InitStateTotalPrice } from "../services/reducers/totalPrice";
 import store from "../services/store";
 // import { ThunkAction } from "redux-thunk";
@@ -40,4 +42,6 @@ export type RootState = {
   constructorModal: InitStateConstructorModal;
   totalPrice: InitStateTotalPrice;
   auth: authInitialState;
+  order: InitStateOrder;
+  orderData: InitStateOrderData;
 };

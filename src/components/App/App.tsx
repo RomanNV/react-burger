@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Error404 } from "../../pages/Error404/Error404";
 import { Feed } from "../../pages/feed/Feed";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
@@ -8,18 +8,26 @@ import { Home } from "../../pages/home/Home";
 import { Ingredient } from "../../pages/ingredient/Ingredient";
 import { Login } from "../../pages/login/Login";
 import { OrderPage } from "../../pages/orderPage/OrderPage";
+import { OrderDetailes } from "../../pages/OrdersDetailes/OrderDetailes";
 import { Profile } from "../../pages/profile/Profile";
 import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
+import { getOrderData } from "../../services/actions/getOrderData";
 import { AppHeader } from "../AppHeader/AppHeader";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
+import { Modal } from "../Modal/Modal";
+import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { RequiredAuth } from "../RequiredAuth/RequiredAuth";
+import { UserProfileForm } from "../UserProfileForm/UserProfileForm";
+import { dataOrders } from "../../utils/mockesData";
 
 function App() {
   const dispatch = useDispatch<any>();
   const location = useLocation();
   const background = location.state && location.state.background;
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getIngredientsData());
@@ -73,14 +81,68 @@ function App() {
             </RequiredAuth>
           }
         >
+          <Route index element={<UserProfileForm />}></Route>
           <Route path="orders" element={<OrderPage />}></Route>
         </Route>
 
-        <Route path="/ingredients/:id" element={<Ingredient />}></Route>
+        <Route
+          path="/ingredients/:id"
+          element={<Ingredient isNotModal={true}></Ingredient>}
+        ></Route>
+        <Route
+          path="/profile/orders/:number"
+          element={<OrderDetailes isNotModal={true}></OrderDetailes>}
+        ></Route>
+        <Route
+          path="/feed/:number"
+          element={<OrderDetailes isNotModal={true}></OrderDetailes>}
+        ></Route>
       </Routes>
       {background && (
         <Routes>
-          (<Route path="/ingredients/:id" element={<Ingredient />}></Route>)
+          (
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal
+                closeModal={() => {
+                  console.log("in modal");
+                  navigate("/");
+                }}
+              >
+                <Ingredient isNotModal={false}></Ingredient>
+              </Modal>
+            }
+          ></Route>
+          <Route
+            path="/feed/:number"
+            element={
+              <Modal
+                closeModal={() => {
+                  console.log("in modal");
+
+                  navigate(background.pathname);
+                }}
+              >
+                <OrderDetailes isNotModal={false}></OrderDetailes>
+              </Modal>
+            }
+          ></Route>
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <Modal
+                closeModal={() => {
+                  console.log("in modal");
+
+                  navigate(background.pathname);
+                }}
+              >
+                <OrderDetailes isNotModal={false}></OrderDetailes>
+              </Modal>
+            }
+          ></Route>
+          )
         </Routes>
       )}
     </>

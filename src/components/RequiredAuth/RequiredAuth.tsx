@@ -18,8 +18,6 @@ export const RequiredAuth: React.FC<
     return null;
   }
   if (onlyUnAuth && user) {
-    console.log(onlyUnAuth, user, location?.state?.from);
-
     // Пользователь авторизован, но запрос предназначен только для неавторизованных пользователей
     // Нужно сделать редирект на главную страницу или на тот адрес, что записан в location.state.from
     return location?.state?.from ? (

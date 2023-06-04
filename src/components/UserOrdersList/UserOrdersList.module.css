@@ -1,0 +1,9 @@
+.orders_list_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 812px;
+  height: 700px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

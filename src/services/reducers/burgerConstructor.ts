@@ -21,8 +21,6 @@ export const constructorReducer = (
   state = initialState,
   action: burgerConstructorActions
 ): InitStateBurgerConstructor => {
-  console.log(state);
-
   switch (action.type) {
     case ADD_BUN: {
       return {

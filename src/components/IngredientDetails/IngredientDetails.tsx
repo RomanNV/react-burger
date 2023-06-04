@@ -12,6 +12,8 @@ export const IngredientDetails: React.FC<IngredientCardWithToggleModal> = ({
   carbohydrates,
   isNotModal,
 }) => {
+  console.log(isNotModal);
+
   return (
     <div className={isNotModal ? styles.page_content : styles.modal_content}>
       <header className={isNotModal ? styles.header_page : styles.header_box}>

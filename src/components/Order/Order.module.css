@@ -1,0 +1,62 @@
+.modal_content {
+  position: relative;
+  width: 720px;
+  height: 540px;
+  border-radius: 40px;
+  background-color: #1c1c21;
+}
+.page_content {
+  width: 640px;
+  height: 620px;
+  background-color: #131316;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* .wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+} */
+.order_wrap {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  height: 620px;
+}
+.order_number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+.status_p {
+  color: #00cccc;
+  padding-bottom: 60px;
+  padding-top: 12px;
+}
+.ingredients_wrap {
+  padding-top: 24px;
+  height: 366px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.order_footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+.price_box {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.order_footer > p {
+  color: #8585ad;
+  display: inline-block;
+}

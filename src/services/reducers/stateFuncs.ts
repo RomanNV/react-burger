@@ -1,3 +1,4 @@
+import { Root } from "react-dom/client";
 import { RootState } from "../../types/index";
 
 const getIngredientsFromState = (state: RootState) => state.ingredientsData;
@@ -7,6 +8,9 @@ const getIngredientsDataFromState = (state: RootState) => state.ingredientsData;
 const authState = (state: RootState) => state.auth;
 const totalPriceState = (state: RootState) => state.totalPrice;
 const ingredientsDataState = (state: RootState) => state.ingredientsData;
+const getOrder = (state: RootState) => state.order;
+const getDataOrders = (state: RootState) => state.orderData;
+
 export {
   getIngredientsFromState,
   getConstructorData,
@@ -15,4 +19,6 @@ export {
   authState,
   totalPriceState,
   ingredientsDataState,
+  getOrder,
+  getDataOrders,
 };
