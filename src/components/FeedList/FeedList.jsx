@@ -8,7 +8,7 @@ export const FeedList = ({ dataOrders }) => {
         Лента Заказов
       </header>
       <div className={`custom-scroll ${styles.feed_list}`}>
-        {dataOrders.orders.map((item, index) => {
+        {dataOrders.map((item, index) => {
           return <FeedItem orderItem={item} key={index}></FeedItem>;
         })}
       </div>

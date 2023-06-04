@@ -3,7 +3,7 @@ export interface InitStateOrder {
   orderItem: any;
 }
 const initialState = {
-  orderItem: {},
+  orderItem: null,
 };
 
 export const orderReducer = (

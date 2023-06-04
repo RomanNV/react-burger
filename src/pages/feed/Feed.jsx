@@ -1,15 +1,22 @@
 import { useEffect } from "react";
 import { FeedList } from "../../components/FeedList/FeedList";
 import { FeedOrders } from "../../components/FeedOrders/FeedOrders";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { startWsAction } from "../../services/actions/wsAction";
+import { getWs } from "../../services/reducers/stateFuncs";
 import { dataOrders } from "../../utils/mockesData";
 import styles from "./Feed.module.css";
 
 export const Feed = () => {
-  useEffect(() => {});
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(startWsAction());
+  }, [dispatch]);
+  const dataOrders = useSelector(getWs);
 
   return (
     <div className={styles.content_container}>
-      <FeedList dataOrders={dataOrders}></FeedList>
+      <FeedList dataOrders={dataOrders.orders}></FeedList>
       <FeedOrders dataOrders={dataOrders}></FeedOrders>
     </div>
   );

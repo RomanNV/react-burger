@@ -91,7 +91,11 @@ function App() {
         ></Route>
         <Route
           path="/profile/orders/:number"
-          element={<OrderDetailes isNotModal={true}></OrderDetailes>}
+          element={
+            <RequiredAuth redirectTo={"/login"}>
+              <OrderDetailes isNotModal={true}></OrderDetailes>
+            </RequiredAuth>
+          }
         ></Route>
         <Route
           path="/feed/:number"
@@ -106,7 +110,6 @@ function App() {
             element={
               <Modal
                 closeModal={() => {
-                  console.log("in modal");
                   navigate("/");
                 }}
               >
@@ -119,8 +122,6 @@ function App() {
             element={
               <Modal
                 closeModal={() => {
-                  console.log("in modal");
-
                   navigate(background.pathname);
                 }}
               >
@@ -133,8 +134,6 @@ function App() {
             element={
               <Modal
                 closeModal={() => {
-                  console.log("in modal");
-
                   navigate(background.pathname);
                 }}
               >

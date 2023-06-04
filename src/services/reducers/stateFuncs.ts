@@ -10,7 +10,7 @@ const totalPriceState = (state: RootState) => state.totalPrice;
 const ingredientsDataState = (state: RootState) => state.ingredientsData;
 const getOrder = (state: RootState) => state.order;
 const getDataOrders = (state: RootState) => state.orderData;
-
+const getWs = (state: RootState) => state.ws;
 export {
   getIngredientsFromState,
   getConstructorData,
@@ -21,4 +21,5 @@ export {
   ingredientsDataState,
   getOrder,
   getDataOrders,
+  getWs,
 };

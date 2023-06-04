@@ -1,9 +1,14 @@
 .modal_content {
   position: relative;
   width: 720px;
-  height: 540px;
+  height: 620px;
   border-radius: 40px;
   background-color: #1c1c21;
+  border: 1px white solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .page_content {
   width: 640px;
@@ -26,6 +31,7 @@
   flex-direction: column;
   width: 640px;
   height: 620px;
+  padding: 10px;
 }
 .order_number {
   display: flex;
@@ -41,11 +47,15 @@
 }
 .ingredients_wrap {
   padding-top: 24px;
-  height: 366px;
+  height: 340px;
+
   overflow-y: auto;
   overflow-x: hidden;
 }
 .order_footer {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: space-between;
   padding-top: 40px;

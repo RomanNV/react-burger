@@ -21,12 +21,11 @@ export const Order = ({ orderData, isNotModal }) => {
       return (summ = item.price + summ);
     }, 0);
   }, [reducerArr]);
-  const location = useLocation();
 
   const { dateString, currentStatus } = getOrderParams(createdAt, status, true);
 
   return (
-    <div className={styles.page_content}>
+    <div className={isNotModal ? styles.page_content : styles.modal_content}>
       <div className={styles.order_wrap}>
         <div className={styles.order_number}>
           <p className={`text text_type_digits-default`}>#{number}</p>

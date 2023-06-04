@@ -12,6 +12,7 @@ import { InitStateConstructorModal } from "../services/reducers/constructorModal
 import { InitStateOrder } from "../services/reducers/order";
 import { InitStateOrderData } from "../services/reducers/orderDataReducer";
 import { InitStateTotalPrice } from "../services/reducers/totalPrice";
+import { InitWs } from "../services/reducers/wsReducer";
 import store from "../services/store";
 // import { ThunkAction } from "redux-thunk";
 // import { Action, ActionCreator } from "redux";
@@ -44,4 +45,5 @@ export type RootState = {
   auth: authInitialState;
   order: InitStateOrder;
   orderData: InitStateOrderData;
+  ws: InitWs;
 };
