@@ -7,7 +7,6 @@ import thunk from "redux-thunk";
 import { rootReducer } from "./services/reducers/index";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { logger } from "./bla";
 import { configureStore, MiddlewareArray } from "@reduxjs/toolkit";
 import store from "./services/store";
 

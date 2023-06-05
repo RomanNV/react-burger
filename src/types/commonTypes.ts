@@ -168,3 +168,10 @@ export interface OrderItem {
 export interface OrderItemWithToggleModal extends OrderItem {
   isNotModal: boolean;
 }
+export interface OrderItemWithCounter {
+  item: string;
+  count: number;
+}
+export interface IngredientCardWithCounter extends IngredientCard {
+  counter: number;
+}

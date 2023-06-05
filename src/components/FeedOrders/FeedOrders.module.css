@@ -33,7 +33,7 @@
 .column_wrap {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
   height: 200px;
   overflow-y: auto;
   overflow-x: hidden;

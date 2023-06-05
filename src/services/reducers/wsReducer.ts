@@ -44,6 +44,8 @@ export const wsReducer = (state: InitWs = initialState, action: any) => {
       };
 
     case WS_GET_MESSAGE:
+      console.log(action.payload);
+
       return {
         ...state,
         error: null,

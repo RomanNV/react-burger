@@ -1,4 +1,4 @@
-import { getChoosenOrder, getDataFromServer } from "../../utils/funcs";
+import { getChoosenOrder } from "../../utils/funcs";
 
 export const GET_ORDER_DATA_SUCCESS = "GET_ORDER_DATA_SUCCESS";
 export const GET_ORDER_DATA_REQUEST = "GET_ORDER_DATA_REQUEST";

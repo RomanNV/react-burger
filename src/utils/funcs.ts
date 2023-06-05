@@ -3,11 +3,13 @@ import {
   getIngredients,
   getOrder,
   IngredientCard,
+  IngredientCardWithCounter,
   IngredientCardWithId,
   InitialInputProfile,
   InitialInputRegister,
   InitialInputReset,
   InitialLoginPage,
+  OrderItemWithCounter,
   OrderParams,
   UserAuth,
 } from "../types/commonTypes";
@@ -245,6 +247,21 @@ const getIngredientsArrayFromOrder = (
   }, []);
   return reducerArr;
 };
+const getIngredientsOrderWithCounter = (
+  arr1: Array<OrderItemWithCounter>,
+  arr2: IngredientCard[]
+): Array<IngredientCardWithCounter> => {
+  const reducerArr = arr1.reduce(
+    (summ: any, orderItemWithCounter: OrderItemWithCounter) => {
+      const orderItem = arr2.find((item: IngredientCard) => {
+        return item._id === orderItemWithCounter.item;
+      });
+      return [...summ, { ...orderItem, counter: orderItemWithCounter.count }];
+    },
+    []
+  );
+  return reducerArr;
+};
 
 const getOrderParams = (
   createdAt: string,
@@ -272,7 +289,7 @@ const getOrderParams = (
   const currentStatus =
     status === "done"
       ? "Выполнен"
-      : status === "prepare"
+      : status === "created"
       ? "Готовится"
       : "Отменен";
   const dateString = `${nameDay}, ${dateOfOrder.getHours()}:${dateOfOrder.getMinutes()} ${
@@ -295,4 +312,5 @@ export {
   getIngredientsArrayFromOrder,
   getOrderParams,
   getChoosenOrder,
+  getIngredientsOrderWithCounter,
 };

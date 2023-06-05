@@ -6,11 +6,7 @@ import { Loader } from "../../components/Loader/Loader";
 import { Order } from "../../components/Order/Order";
 import { useDispatch } from "../../hooks/redux-hooks";
 import { getOrderData } from "../../services/actions/getOrderData";
-import {
-  getDataOrders,
-  getOrder,
-  getWs,
-} from "../../services/reducers/stateFuncs";
+import { getDataOrders } from "../../services/reducers/stateFuncs";
 import { IsNotModal, OrderItem } from "../../types/commonTypes";
 
 export const OrderDetailes = ({ isNotModal }) => {

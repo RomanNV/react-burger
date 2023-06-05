@@ -1,9 +1,16 @@
 import styles from "./Profile.module.css";
 import { useLocation, Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authState } from "../../services/reducers/stateFuncs";
+import { authState, getWs } from "../../services/reducers/stateFuncs";
 import { logOutAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import {
+  disconnectWsAction,
+  startWsAction,
+  startWsProtectedWsAction,
+} from "../../services/actions/wsAction";
+import { useEffect } from "react";
+import { getCookie } from "../../cookie/cookie";
 
 export const Profile: React.FC = () => {
   const location = useLocation();

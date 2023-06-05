@@ -11,7 +11,7 @@ import {
 import { OrderItemImage } from "../OrderItemImage/OrderItemImage";
 import styles from "./FeedItem.module.css";
 export const FeedItem = ({ orderItem, isUserOrderItem }) => {
-  const { ingredients, number, _id, createdAt, status } = orderItem;
+  const { ingredients, number, _id, createdAt, status, name } = orderItem;
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const FeedItem = ({ orderItem, isUserOrderItem }) => {
           </p>
           <div className={styles.time}>{dateString}</div>
         </div>
-        <div className="text text_type_main-medium">sssssssssssssssssssss</div>
+        <div className="text text_type_main-medium">{name}</div>
         {isUserOrderItem ? <p>{currentStatus}</p> : null}
         <div className={styles.order_components}>
           <div className={styles.list_component_icons}>

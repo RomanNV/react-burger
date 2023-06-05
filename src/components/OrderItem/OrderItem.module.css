@@ -5,12 +5,14 @@
   justify-content: center;
   gap: 16px;
   padding-right: 24px;
+  max-width: 660px;
 }
 .price_box {
   justify-self: center;
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .img_icon {
   position: absolute;

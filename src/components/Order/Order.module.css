@@ -1,6 +1,6 @@
 .modal_content {
   position: relative;
-  width: 720px;
+  width: 740px;
   height: 620px;
   border-radius: 40px;
   background-color: #1c1c21;
@@ -11,7 +11,7 @@
   justify-content: center;
 }
 .page_content {
-  width: 640px;
+  width: 660px;
   height: 620px;
   background-color: #131316;
   position: fixed;
@@ -29,9 +29,8 @@
 .order_wrap {
   display: flex;
   flex-direction: column;
-  width: 640px;
+  width: 670px;
   height: 620px;
-  padding: 10px;
 }
 .order_number {
   display: flex;
@@ -42,12 +41,12 @@
 }
 .status_p {
   color: #00cccc;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
   padding-top: 12px;
 }
 .ingredients_wrap {
   padding-top: 24px;
-  height: 340px;
+  height: 380px;
 
   overflow-y: auto;
   overflow-x: hidden;
