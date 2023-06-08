@@ -1,20 +1,24 @@
 import { useMemo } from "react";
+import { InitWs } from "../../services/reducers/wsReducer";
+import { OrderItem } from "../../types/commonTypes";
 import { OrderNumberColumn } from "../OrderNumberColumn/OrderNumberColumn";
 import styles from "./FeedOrders.module.css";
 
-export const FeedOrders = ({ dataOrders }) => {
-  const { orders, totalToday, total } = dataOrders;
-
+export const FeedOrders: React.FC<InitWs> = ({
+  orders,
+  totalToday,
+  total,
+}): JSX.Element => {
   const doneOrdersArray = useMemo(() => {
-    return orders.filter((item) => {
+    return orders.filter((item: OrderItem) => {
       return item.status === "done";
     });
   }, [orders]);
 
-  const getCountOfOrders = (arr) => {
+  const getCountOfOrders = (arr: OrderItem[]) => {
     const tempArr = [...arr];
     const tempArrayTwoMeric = [];
-    const spliceArr = (arrs) => {
+    const spliceArr = (arrs: OrderItem[]) => {
       return arrs.splice(0, 9);
     };
     while (tempArr.length) {
@@ -25,10 +29,10 @@ export const FeedOrders = ({ dataOrders }) => {
   };
 
   const prepareOrdersArray = useMemo(() => {
-    return orders.filter((item) => {
+    return orders.filter((item: OrderItem) => {
       return item.status !== "done";
     });
-  }, [dataOrders]);
+  }, [orders]);
   const columnDoneOrdersArray = getCountOfOrders(doneOrdersArray);
   const columnPrepareOrdersArray = getCountOfOrders(prepareOrdersArray);
 
@@ -43,7 +47,7 @@ export const FeedOrders = ({ dataOrders }) => {
                 return (
                   <OrderNumberColumn
                     key={index}
-                    doneOrdersArray={item}
+                    array={item}
                   ></OrderNumberColumn>
                 );
               })}
@@ -56,7 +60,7 @@ export const FeedOrders = ({ dataOrders }) => {
                 return (
                   <OrderNumberColumn
                     key={index}
-                    doneOrdersArray={item}
+                    array={item}
                   ></OrderNumberColumn>
                 );
               })}

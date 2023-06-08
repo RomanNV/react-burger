@@ -1,8 +1,9 @@
+import { OrderItem } from "../../types/commonTypes";
 import styles from "./OrderNumberColumn.module.css";
-export const OrderNumberColumn = ({ doneOrdersArray }) => {
+export const OrderNumberColumn: React.FC<any> = ({ array }): JSX.Element => {
   return (
     <div className={styles.column_done_wrap}>
-      {doneOrdersArray.map((item, index) => {
+      {array.map((item: OrderItem, index: number) => {
         return (
           <p
             key={index}

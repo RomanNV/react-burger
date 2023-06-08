@@ -7,15 +7,13 @@ import {
   startWsAction,
 } from "../../services/actions/wsAction";
 import { getWs } from "../../services/reducers/stateFuncs";
-import { dataOrders } from "../../utils/mockesData";
 import styles from "./Feed.module.css";
 
-export const Feed = () => {
+export const Feed: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startWsAction());
     return () => {
-      console.log("in close");
       dispatch(disconnectWsAction());
     };
   }, [dispatch]);
@@ -24,7 +22,7 @@ export const Feed = () => {
   return (
     <div className={styles.content_container}>
       <FeedList dataOrders={dataOrders.orders}></FeedList>
-      <FeedOrders dataOrders={dataOrders}></FeedOrders>
+      <FeedOrders {...dataOrders}></FeedOrders>
     </div>
   );
 };

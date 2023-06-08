@@ -8,17 +8,15 @@ import {
 } from "../../services/actions/wsAction";
 import { getWs } from "../../services/reducers/stateFuncs";
 
-export const OrderPage = () => {
+export const OrderPage: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startWsProtectedWsAction());
     return () => {
-      console.log("in close");
       dispatch(disconnectWsAction());
     };
   }, [dispatch]);
 
   const dataOrders = useSelector(getWs);
-  console.log(dataOrders);
-  return <UserOrdersList dataOrders={dataOrders}></UserOrdersList>;
+  return <UserOrdersList {...dataOrders}></UserOrdersList>;
 };

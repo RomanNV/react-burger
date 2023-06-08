@@ -2,6 +2,7 @@ import { setCookie, getCookie, deleteCookie } from "../cookie/cookie";
 import {
   getIngredients,
   getOrder,
+  GetOrderData,
   IngredientCard,
   IngredientCardWithCounter,
   IngredientCardWithId,
@@ -25,7 +26,7 @@ import {
   TOKEN_POINT,
   USER_POINT,
 } from "./const";
-import { dataOrders } from "./mockesData";
+
 // 1 раз объявляем базовый урл
 
 function checkReponce<T>(res: Response): Promise<T> {
@@ -115,9 +116,7 @@ const getDataIng = () => {
 };
 
 const getChoosenOrder = (number: number) => {
-  console.log(number);
-
-  return request(`orders/${number}`, {
+  return request<GetOrderData>(`orders/${number}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -266,7 +265,7 @@ const getIngredientsOrderWithCounter = (
 const getOrderParams = (
   createdAt: string,
   status: string,
-  isOrder: boolean
+  isOrder?: boolean
 ): OrderParams => {
   const dateOfOrder = new Date(createdAt);
 

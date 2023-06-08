@@ -1,5 +1,6 @@
+import { AnyAction } from "redux";
 import { setCookie, getCookie } from "../../cookie/cookie";
-import { AppDispatch, AppThunk } from "../../types";
+import { AppDispatch, AppThunk, TApplicationActions } from "../../types";
 import {
   InitialInputProfile,
   InitialInputRegister,
@@ -221,8 +222,10 @@ export const logOutAction: AppThunk = () => {
   };
 };
 
-export const changeUserDataAction: AppThunk = (data: InitialInputProfile) => {
-  return function (dispatch: any) {
+export const changeUserDataAction: any | AppThunk = (
+  data: InitialInputProfile
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch(authRequestAction());
     changeUserData(data)
       .then((res) => {

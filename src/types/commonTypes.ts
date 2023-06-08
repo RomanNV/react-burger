@@ -164,6 +164,7 @@ export interface OrderItem {
   status: string;
   updatedAt: string;
   _id: string;
+  name: string;
 }
 export interface OrderItemWithToggleModal extends OrderItem {
   isNotModal: boolean;
@@ -174,4 +175,28 @@ export interface OrderItemWithCounter {
 }
 export interface IngredientCardWithCounter extends IngredientCard {
   counter: number;
+}
+export interface TypeFeedItem {
+  orderItem: OrderItem;
+  isUserOrderItem: boolean;
+}
+export interface dataOrders {
+  dataOrders: OrderItem[];
+}
+export interface GetOrderData {
+  orders: OrderItem[];
+  success: boolean;
+}
+export interface OrderData {
+  orders: OrderItem[];
+  total: string;
+  totalToday: string;
+  success: boolean;
+}
+
+export interface ItemImage {
+  ingredient: IngredientCard;
+  index: number;
+  zIndex: number;
+  ingredientCount: number;
 }

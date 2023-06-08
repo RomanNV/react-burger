@@ -1,10 +1,11 @@
+import { ItemImage } from "../../types/commonTypes";
 import styles from "./OrderItemImage.module.css";
-export const OrderItemImage = ({
+export const OrderItemImage: React.FC<ItemImage> = ({
   ingredient,
   index,
   zIndex,
   ingredientCount,
-}) => {
+}): JSX.Element => {
   return (
     <div style={{ zIndex: `${zIndex}` }}>
       <div className={styles.white_grad} style={{ zIndex: `${zIndex}` }}>

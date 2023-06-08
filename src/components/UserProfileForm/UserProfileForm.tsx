@@ -5,14 +5,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import styles from "./UserProfileForm.module.css";
-import { useLocation, Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authState } from "../../services/reducers/stateFuncs";
 import { changeUserDataAction } from "../../services/actions/auth";
-import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { InitialInputProfile } from "../../types/commonTypes";
-export const UserProfileForm = () => {
-  const location = useLocation();
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+export const UserProfileForm: React.FC = (): JSX.Element => {
   const state = useSelector(authState);
   const { user, error } = state;
   const dispatch = useDispatch();
@@ -24,7 +21,7 @@ export const UserProfileForm = () => {
   };
   const [prevInput, setPrevInput] = useState(INITIALINPUT);
   const [inputData, setInputData] = useState(INITIALINPUT);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({
       ...inputData,
       [e.target.name]: e.target.value,
@@ -40,7 +37,7 @@ export const UserProfileForm = () => {
     });
   }, [user]);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(changeUserDataAction(inputData));
     setInputData({
@@ -49,7 +46,7 @@ export const UserProfileForm = () => {
       password: "",
     });
   };
-  const onCancel = (e) => {
+  const onCancel = (e: any) => {
     e.preventDefault();
     setInputData({
       ...prevInput,

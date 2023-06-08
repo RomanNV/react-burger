@@ -1,26 +1,29 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { useSelector } from "../../hooks/redux-hooks";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
-import { OrderItemWithToggleModal } from "../../types/commonTypes";
+
 import {
   getIngredientsArrayFromOrder,
   getIngredientsOrderWithCounter,
   getOrderParams,
 } from "../../utils/funcs";
-import { OrderItem } from "../OrderItem/OrderItem";
+import { OrderItemComp } from "../OrderItemComp/OrderItemComp";
 import styles from "./Order.module.css";
 
-export const Order = ({ orderData, isNotModal }) => {
-  const { ingredients, number, _id, createdAt, status, name } =
-    orderData.orders[0];
+export const Order: React.FC<any> = ({
+  isNotModal,
+  orderData,
+}): JSX.Element => {
+  console.log(orderData);
+
+  const { ingredients, number, createdAt, status, name } = orderData.orders[0];
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
   //посчитаем сколько всего одинаковых ингредиентов и вернем массив со счетчиками
   const sortedIngredients = useMemo(() => {
     let tempIngredients = ingredients;
-    let filteredItems = []; //добавляем те ингредиенты, которых уже посчитали
-    return ingredients.reduce((summ, item) => {
+    let filteredItems: string[] = []; //добавляем те ингредиенты, которых уже посчитали
+    return ingredients.reduce((summ: string[], item: string) => {
       if (filteredItems.includes(item)) {
         return [...summ];
       }
@@ -31,7 +34,7 @@ export const Order = ({ orderData, isNotModal }) => {
       }
       const tempItem = item;
       filteredItems.push(item);
-      const tempArr = tempIngredients.filter((id) => {
+      const tempArr = tempIngredients.filter((id: string) => {
         return id !== tempItem;
       });
 
@@ -55,26 +58,35 @@ export const Order = ({ orderData, isNotModal }) => {
   const { dateString, currentStatus } = getOrderParams(createdAt, status, true);
 
   return (
-    <div className={isNotModal ? styles.page_content : styles.modal_content}>
-      <div className={styles.order_wrap}>
-        <div className={styles.order_number}>
-          <p className={`text text_type_digits-default`}>#{number}</p>
-        </div>
-        <p className="text text_type_main-medium">{name}</p>
-        <p className={`text text_type_main-small ${styles.status_p}`}>
-          {currentStatus}
-        </p>
-        <p className="text text_type_main-medium">Состав:</p>
-        <div className={`custom-scroll ${styles.ingredients_wrap}`}>
-          {arrayOfOrderItemsWithCounter.map((ingredient) => {
-            return <OrderItem {...ingredient} key={ingredient._id}></OrderItem>;
-          })}
-        </div>
-        <div className={styles.order_footer}>
-          <p className="text text_type_digits-small">{dateString}</p>
-          <div className={`p-1 ${styles.price_box}`}>
-            <span className="text text_type_digits-default">{totalPrice}</span>
-            <CurrencyIcon type="primary" />
+    <div className={styles.page_wrap}>
+      <div className={isNotModal ? styles.page_content : styles.modal_content}>
+        <div className={styles.order_wrap}>
+          <div className={styles.order_number}>
+            <p className={`text text_type_digits-default`}>#{number}</p>
+          </div>
+          <p className="text text_type_main-medium">{name}</p>
+          <p className={`text text_type_main-small ${styles.status_p}`}>
+            {currentStatus}
+          </p>
+          <p className="text text_type_main-medium">Состав:</p>
+          <div className={`custom-scroll ${styles.ingredients_wrap}`}>
+            {arrayOfOrderItemsWithCounter.map((ingredient) => {
+              return (
+                <OrderItemComp
+                  {...ingredient}
+                  key={ingredient._id}
+                ></OrderItemComp>
+              );
+            })}
+          </div>
+          <div className={styles.order_footer}>
+            <p className="text text_type_digits-small">{dateString}</p>
+            <div className={`p-1 ${styles.price_box}`}>
+              <span className="text text_type_digits-default">
+                {totalPrice}
+              </span>
+              <CurrencyIcon type="primary" />
+            </div>
           </div>
         </div>
       </div>

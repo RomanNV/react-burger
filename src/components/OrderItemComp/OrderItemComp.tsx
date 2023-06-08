@@ -1,6 +1,12 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./OrderItem.module.css";
-export const OrderItem = ({ image, counter, price, name }) => {
+import { IngredientCardWithCounter } from "../../types/commonTypes";
+import styles from "./OrderItemComp.module.css";
+export const OrderItemComp: React.FC<IngredientCardWithCounter> = ({
+  image,
+  counter,
+  price,
+  name,
+}): JSX.Element => {
   return (
     <div className={styles.ingredient_list_wrap}>
       <div className={styles.white_grad}>

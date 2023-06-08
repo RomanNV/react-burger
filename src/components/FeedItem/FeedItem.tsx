@@ -1,17 +1,26 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { getOrderItem } from "../../services/actions/order";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
+import {
+  TypeFeedItem,
+  OrderItem,
+  OrderItemWithCounter,
+} from "../../types/commonTypes";
 import {
   getIngredientsArrayFromOrder,
   getOrderParams,
 } from "../../utils/funcs";
 import { OrderItemImage } from "../OrderItemImage/OrderItemImage";
 import styles from "./FeedItem.module.css";
-export const FeedItem = ({ orderItem, isUserOrderItem }) => {
-  const { ingredients, number, _id, createdAt, status, name } = orderItem;
+
+export const FeedItem: React.FC<TypeFeedItem> = ({
+  orderItem,
+  isUserOrderItem,
+}): JSX.Element => {
+  const { ingredients, number, createdAt, status, name } = orderItem;
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,7 +70,6 @@ export const FeedItem = ({ orderItem, isUserOrderItem }) => {
                   ingredientCount={ingredientCount}
                   ingredient={ingredient}
                   index={index}
-                  className={styles.item_icons}
                   zIndex={zIndex}
                   key={index}
                 ></OrderItemImage>

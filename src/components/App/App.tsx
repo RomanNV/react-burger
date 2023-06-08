@@ -14,14 +14,10 @@ import { RegisterPage } from "../../pages/registration/RegisterPage";
 import { ResetPassword } from "../../pages/resetPassword/ResetPassword";
 import { checkUserAuth } from "../../services/actions/auth";
 import { getIngredientsData } from "../../services/actions/burgerIngredients";
-import { getOrderData } from "../../services/actions/getOrderData";
 import { AppHeader } from "../AppHeader/AppHeader";
-import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { Modal } from "../Modal/Modal";
-import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { RequiredAuth } from "../RequiredAuth/RequiredAuth";
 import { UserProfileForm } from "../UserProfileForm/UserProfileForm";
-import { dataOrders } from "../../utils/mockesData";
 
 function App() {
   const dispatch = useDispatch<any>();

@@ -5,7 +5,7 @@ import { Loader } from "../Loader/Loader";
 import { EmptyOrderMessage } from "../EmptyOrderMessage/EmptyOrderMessage";
 import { totalPriceState } from "../../services/reducers/stateFuncs";
 
-export const OrderDetails: React.FC = () => {
+export const OrderDetails: React.FC = (): JSX.Element => {
   const { orderData, isOrderDataRequest, isEmptyOrder, error } =
     useSelector(totalPriceState);
   return (
