@@ -3,7 +3,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { openConstructorModalAction } from "../../services/actions/constructorModal";
 import { getOrderNum } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";

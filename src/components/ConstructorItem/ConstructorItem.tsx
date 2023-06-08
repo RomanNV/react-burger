@@ -6,7 +6,7 @@ import {
 import { useRef } from "react";
 import update from "immutability-helper";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import {
   deleteConstructorIngredientAction,
   reorderIngredientList,
@@ -16,7 +16,6 @@ import { getConstructorData } from "../../services/reducers/stateFuncs";
 import {
   ConstructorItemType,
   DragItem,
-  IngredientCard,
   IngredientCardWithId,
 } from "../../types/commonTypes";
 

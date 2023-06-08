@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import styles from "./UserProfileForm.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { authState } from "../../services/reducers/stateFuncs";
 import { changeUserDataAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";

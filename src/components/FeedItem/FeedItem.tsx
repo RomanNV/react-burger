@@ -4,11 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { getOrderItem } from "../../services/actions/order";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
-import {
-  TypeFeedItem,
-  OrderItem,
-  OrderItemWithCounter,
-} from "../../types/commonTypes";
+import { TypeFeedItem } from "../../types/commonTypes";
 import {
   getIngredientsArrayFromOrder,
   getOrderParams,
@@ -41,7 +37,6 @@ export const FeedItem: React.FC<TypeFeedItem> = ({
   return (
     <div
       onClick={() => {
-        console.log(location.pathname);
         navigate(`${location.pathname}/${number}`, {
           state: { background: location },
         });

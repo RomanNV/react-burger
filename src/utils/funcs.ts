@@ -33,30 +33,20 @@ function checkReponce<T>(res: Response): Promise<T> {
   return res.ok
     ? (res.json() as Promise<T>)
     : (res.json() as Promise<Error>).then((err) => {
-        console.log("err");
         return Promise.reject(err);
       });
 }
-// const getDataFromServer = async () => {
-//   console.log("aa");
 
-//   return await new Promise((resolve) => {
-//     setTimeout(() => resolve(dataOrders), 1000);
-//   });
-// };
 const checkSuccess = (res: any) => {
   if (res && res.success) {
     return res;
   }
-  console.log("hi");
 
   // не забываем выкидывать ошибку, чтобы она попала в `catch`
   return Promise.reject(res);
 };
 
 function request<T>(endpoint: string, options?: any): Promise<T> {
-  console.log(`${BASE_URL}${endpoint}`);
-
   return fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkReponce)
     .then(checkSuccess);
@@ -66,7 +56,6 @@ const refreshToken = (): any => {
   const fetchBody = JSON.stringify({
     token: localStorage.getItem("refreshToken"),
   });
-  console.log("refresh token");
 
   return request(TOKEN_POINT, {
     method: "POST",
@@ -85,12 +74,7 @@ export const fetchWithRefresh = async <T>(
     return await request<T>(url, options);
   } catch (err: any) {
     if (err.message === "jwt expired") {
-      console.log("in jwt refresh");
-
       const refreshData = await refreshToken(); //обновляем токен
-      console.log(refreshData);
-      console.log(refreshData.accessToken.split("Bearer")[1]);
-      console.log(getCookie("accessToken"));
 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken.split("Bearer")[1], {});
@@ -101,8 +85,6 @@ export const fetchWithRefresh = async <T>(
           authorization: "Bearer" + " " + getCookie("accessToken")?.trim(),
         },
       };
-      console.log("repeat request");
-      console.log(url, options);
 
       return await request(url, options); //повторяем запрос
     } else {

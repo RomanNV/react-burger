@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
 import { useParams } from "react-router-dom";
 import { IngredientDetails } from "../../components/IngredientDetails/IngredientDetails";

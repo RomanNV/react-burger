@@ -1,6 +1,5 @@
-import { AnyAction } from "redux";
 import { setCookie, getCookie } from "../../cookie/cookie";
-import { AppDispatch, AppThunk, TApplicationActions } from "../../types";
+import { AppDispatch, AppThunk } from "../../types";
 import {
   InitialInputProfile,
   InitialInputRegister,
@@ -124,8 +123,6 @@ export function getUserSuccessAction(res: UserAuth["getUser"]): GetUserSuccess {
 //проверка токеа на валидность реализована в функции fetchWithRefresh в funcs
 export const checkUserAuth: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    console.log("in checkuser");
-
     if (getCookie("accessToken")) {
       dispatch(authRequestAction());
       getUser()

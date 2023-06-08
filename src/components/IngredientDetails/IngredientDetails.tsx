@@ -1,7 +1,4 @@
-import {
-  IngredientCard,
-  IngredientCardWithToggleModal,
-} from "../../types/commonTypes";
+import { IngredientCardWithToggleModal } from "../../types/commonTypes";
 import styles from "./IngredientDetails.module.css";
 export const IngredientDetails: React.FC<IngredientCardWithToggleModal> = ({
   image_large,
@@ -11,9 +8,7 @@ export const IngredientDetails: React.FC<IngredientCardWithToggleModal> = ({
   fat,
   carbohydrates,
   isNotModal,
-}) => {
-  console.log(isNotModal);
-
+}): JSX.Element => {
   return (
     <div className={isNotModal ? styles.page_content : styles.modal_content}>
       <header className={isNotModal ? styles.header_page : styles.header_box}>

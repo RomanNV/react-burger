@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { useParams } from "react-router-dom";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { Loader } from "../../components/Loader/Loader";

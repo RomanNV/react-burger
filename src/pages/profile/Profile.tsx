@@ -1,22 +1,15 @@
 import styles from "./Profile.module.css";
 import { useLocation, Link, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { authState, getWs } from "../../services/reducers/stateFuncs";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { authState } from "../../services/reducers/stateFuncs";
 import { logOutAction } from "../../services/actions/auth";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import {
-  disconnectWsAction,
-  startWsAction,
-  startWsProtectedWsAction,
-} from "../../services/actions/wsAction";
-import { useEffect } from "react";
-import { getCookie } from "../../cookie/cookie";
 
 export const Profile: React.FC = () => {
   const location = useLocation();
   const state = useSelector(authState);
   const { error } = state;
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const logOut = (e: React.SyntheticEvent) => {
     e.preventDefault();

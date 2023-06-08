@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { UserOrdersList } from "../../components/UserOrdersList/UserOrdersList";
 import { useDispatch } from "../../hooks/redux-hooks";
 import {

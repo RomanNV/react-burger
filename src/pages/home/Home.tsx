@@ -1,5 +1,5 @@
 import styles from "./Home.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
@@ -9,7 +9,6 @@ import {
 import { BurgerIngredients } from "../../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor/BurgerConstructor";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { setCookie } from "../../cookie/cookie";
 
 export const Home: React.FC = () => {
   const { error } = useSelector(authState);

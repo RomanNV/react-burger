@@ -15,8 +15,6 @@ export const Order: React.FC<any> = ({
   isNotModal,
   orderData,
 }): JSX.Element => {
-  console.log(orderData);
-
   const { ingredients, number, createdAt, status, name } = orderData.orders[0];
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
   //посчитаем сколько всего одинаковых ингредиентов и вернем массив со счетчиками

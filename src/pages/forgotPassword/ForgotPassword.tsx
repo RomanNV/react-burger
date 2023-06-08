@@ -5,7 +5,7 @@ import {
 import React from "react";
 import styles from "./ForgotPassword.module.css";
 import { getCodeToResetPassword } from "../../services/actions/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { authState } from "../../services/reducers/stateFuncs";
 import { useNavigate, Link } from "react-router-dom";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
@@ -17,7 +17,7 @@ export const ForgotPassword = () => {
   const navigate = useNavigate();
   const { error } = useSelector(authState);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const onSuccess = () => {
     navigate("/reset-password", { state: { isForgotPasswordFlag: true } });
   };

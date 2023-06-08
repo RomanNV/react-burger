@@ -16,7 +16,7 @@ import {
   getConstructorData,
   getConstructorModal,
 } from "../../services/reducers/stateFuncs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { closeConstructorModalAction } from "../../services/actions/constructorModal";
 import {
   addBunAction,

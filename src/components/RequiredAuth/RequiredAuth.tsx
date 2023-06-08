@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { useLocation, Navigate } from "react-router-dom";
 import { authState } from "../../services/reducers/stateFuncs";
 import {
@@ -28,8 +28,6 @@ export const RequiredAuth: React.FC<
   }
 
   if (!onlyUnAuth && !user) {
-    console.log("lllll");
-
     // Сервер не ответил
     return <Navigate to={redirectTo} state={{ from: location.pathname }} />;
   }
