@@ -9,6 +9,7 @@ import { getOrderNum } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authState } from "../../services/reducers/stateFuncs";
 import { TotalPriceType } from "../../types/commonTypes";
+import { AppDispatch } from "../../types";
 
 export const TotalPrice: React.FC<TotalPriceType> = ({
   listIdOrder,
@@ -27,7 +28,7 @@ export const TotalPrice: React.FC<TotalPriceType> = ({
   const getOrder = () => {
     if (!user) {
       navigate("/login", { state: { from: location.pathname } });
-    } else dispatch<any>(getOrderNum(listIdOrder));
+    } else dispatch<AppDispatch>(getOrderNum(listIdOrder));
   };
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "../../hooks/redux-hooks";
 import { Error404 } from "../../pages/Error404/Error404";
 import { Feed } from "../../pages/feed/Feed";
 import { ForgotPassword } from "../../pages/forgotPassword/ForgotPassword";
@@ -20,7 +21,7 @@ import { RequiredAuth } from "../RequiredAuth/RequiredAuth";
 import { UserProfileForm } from "../UserProfileForm/UserProfileForm";
 
 function App() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
   const navigate = useNavigate();

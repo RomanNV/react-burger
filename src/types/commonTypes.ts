@@ -200,3 +200,8 @@ export interface ItemImage {
   zIndex: number;
   ingredientCount: number;
 }
+export interface GetOrderDataWithToggleModal extends GetOrderData {
+  orders: OrderItem[];
+  success: boolean;
+  isNotModal: boolean;
+}

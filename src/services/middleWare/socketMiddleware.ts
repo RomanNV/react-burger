@@ -1,4 +1,8 @@
-export const socketMiddleware = (wsUrl: string, wsActions: any) => {
+import { TwsActions } from "../store";
+
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions) => {
+  console.log(wsActions);
+
   return (store: any) => {
     let socket: null | WebSocket = null;
 

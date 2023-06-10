@@ -42,7 +42,7 @@ export function notBunAction(): NotBun {
 }
 
 export const getOrderNum: AppThunk = (arr: string[]) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     if (arr.length === 0) {
       dispatch(notBunAction());
       return;

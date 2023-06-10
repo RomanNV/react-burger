@@ -11,7 +11,15 @@ import {
 } from "./actions/wsAction";
 import { socketMiddleware } from "./middleWare/socketMiddleware";
 import { rootReducer } from "./reducers";
-const wsActions = {
+export type TwsActions = {
+  wsInit: typeof WS_CONNECTION_START;
+  wsClose: typeof WS_CONNECTION_CLOSE;
+  onOpen: typeof WS_CONNECTION_SUCCESS;
+  onClose: typeof WS_CONNECTION_CLOSED;
+  onError: typeof WS_CONNECTION_ERROR;
+  onMessage: typeof WS_GET_MESSAGE;
+};
+const wsActions: TwsActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
   onOpen: WS_CONNECTION_SUCCESS,

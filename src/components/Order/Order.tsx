@@ -2,6 +2,10 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useMemo } from "react";
 import { useSelector } from "../../hooks/redux-hooks";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
+import {
+  GetOrderDataWithToggleModal,
+  OrderItemWithCounter,
+} from "../../types/commonTypes";
 
 import {
   getIngredientsArrayFromOrder,
@@ -11,18 +15,21 @@ import {
 import { OrderItemComp } from "../OrderItemComp/OrderItemComp";
 import styles from "./Order.module.css";
 
-export const Order: React.FC<any> = ({
-  isNotModal,
-  orderData,
+export const Order: React.FC<GetOrderDataWithToggleModal> = ({
+  ...arrOfIngredientsOrderWithToggleModal
 }): JSX.Element => {
-  const { ingredients, number, createdAt, status, name } = orderData.orders[0];
+  const { ingredients, number, createdAt, status, name } =
+    arrOfIngredientsOrderWithToggleModal.orders[0];
+
   const { dataIngredients } = useSelector(getIngredientsDataFromState);
   //посчитаем сколько всего одинаковых ингредиентов и вернем массив со счетчиками
-  const sortedIngredients = useMemo(() => {
+  const sortedIngredients = useMemo((): OrderItemWithCounter[] => {
     let tempIngredients = ingredients;
     let filteredItems: string[] = []; //добавляем те ингредиенты, которых уже посчитали
-    return ingredients.reduce((summ: string[], item: string) => {
+    return ingredients.reduce((summ: OrderItemWithCounter[], item: string) => {
       if (filteredItems.includes(item)) {
+        console.log(summ);
+
         return [...summ];
       }
       if (tempIngredients.length === 1) {
@@ -57,7 +64,13 @@ export const Order: React.FC<any> = ({
 
   return (
     <div className={styles.page_wrap}>
-      <div className={isNotModal ? styles.page_content : styles.modal_content}>
+      <div
+        className={
+          arrOfIngredientsOrderWithToggleModal.isNotModal
+            ? styles.page_content
+            : styles.modal_content
+        }
+      >
         <div className={styles.order_wrap}>
           <div className={styles.order_number}>
             <p className={`text text_type_digits-default`}>#{number}</p>

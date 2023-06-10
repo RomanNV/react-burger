@@ -7,6 +7,7 @@ import { Order } from "../../components/Order/Order";
 import { useDispatch } from "../../hooks/redux-hooks";
 import { getOrderData } from "../../services/actions/getOrderData";
 import { getDataOrders } from "../../services/reducers/stateFuncs";
+import { GetOrderDataWithToggleModal } from "../../types/commonTypes";
 
 export const OrderDetailes: React.FC<any> = ({ isNotModal }): JSX.Element => {
   const { number } = useParams();
@@ -17,9 +18,10 @@ export const OrderDetailes: React.FC<any> = ({ isNotModal }): JSX.Element => {
     dispatch(getOrderData(number));
   }, [dispatch, number]);
 
-  const arrOfIngredientsOrder = useMemo(() => {
-    return orderData;
-  }, [orderData]);
+  const arrOfIngredientsOrderWithToggleModal =
+    useMemo((): GetOrderDataWithToggleModal => {
+      return { ...orderData, isNotModal };
+    }, [orderData]);
 
   if (error) {
     return <ErrorMessage error={error}></ErrorMessage>;
@@ -27,6 +29,6 @@ export const OrderDetailes: React.FC<any> = ({ isNotModal }): JSX.Element => {
   return isLoadingOneData ? (
     <Loader></Loader>
   ) : (
-    <Order orderData={arrOfIngredientsOrder} isNotModal={isNotModal}></Order>
+    <Order {...arrOfIngredientsOrderWithToggleModal}></Order>
   );
 };

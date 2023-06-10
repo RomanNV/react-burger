@@ -46,7 +46,7 @@ export const UserProfileForm: React.FC = (): JSX.Element => {
       password: "",
     });
   };
-  const onCancel = (e: any) => {
+  const onCancel = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     setInputData({
       ...prevInput,

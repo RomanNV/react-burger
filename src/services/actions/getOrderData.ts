@@ -1,4 +1,4 @@
-import { AppThunk } from "../../types";
+import { AppDispatch, AppThunk } from "../../types";
 import { GetOrderData } from "../../types/commonTypes";
 import { getChoosenOrder } from "../../utils/funcs";
 
@@ -42,7 +42,7 @@ export function getIngredientFailedAction(err: Error): getOrderFailed {
   };
 }
 export const getOrderData: AppThunk = (number: number) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     dispatch(getOrderRequestAction());
     getChoosenOrder(number)
       .then((responceData) => {
