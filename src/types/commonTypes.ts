@@ -1,5 +1,4 @@
 import React from "react";
-import { isMainThread } from "worker_threads";
 
 export interface LocationState {
   from?: {
@@ -25,6 +24,9 @@ export interface IngredientCard {
   __v: number;
   _id: string;
 }
+export interface IngredientCardWithToggleModal extends IngredientCard {
+  isNotModal: boolean;
+}
 export interface IngredientCardWithId {
   itemId: number;
   ingredient: IngredientCard;
@@ -46,7 +48,7 @@ export interface ColorRingType {
   colors: Array<string>;
 }
 export interface ErrorType {
-  error: string;
+  error: string | null;
 }
 export interface TotalPriceType {
   listIdOrder: string[];
@@ -108,8 +110,105 @@ export interface InitialLoginPage {
   email: string;
   password: string;
 }
+<<<<<<< HEAD
+export interface User {
+  email: string;
+  name: string;
+}
+export interface UserAuth {
+  getUser: { user: User; success?: boolean };
+  getUserWithToken: {
+    refreshToken: string;
+    accessToken: string;
+    user: User;
+    success?: boolean;
+  };
+  resetPassword: { success?: boolean; message: string };
+  postEmailToReset: { success?: boolean; message: string };
+  logout: { success?: boolean; message: string };
+  authError: { success?: boolean; message: string };
+}
+export interface getOrder {
+  success?: boolean;
+  order: {
+    ingredients: IngredientCard[];
+    _id: number;
+    owner: {
+      name: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+    price: number;
+  };
+}
+export interface getIngredients {
+  data: IngredientCard[];
+  success?: boolean;
+}
+export interface OrderParams {
+  currentStatus: string;
+  dateString: string;
+}
+export interface IsNotModal {
+  isNotModal: boolean;
+}
+export interface OrderItem {
+  createdAt: string;
+  ingredients: string[];
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+  name: string;
+}
+export interface OrderItemWithToggleModal extends OrderItem {
+  isNotModal: boolean;
+}
+export interface OrderItemWithCounter {
+  item: string;
+  count: number;
+}
+export interface IngredientCardWithCounter extends IngredientCard {
+  counter: number;
+}
+export interface TypeFeedItem {
+  orderItem: OrderItem;
+  isUserOrderItem: boolean;
+}
+export interface dataOrders {
+  dataOrders: OrderItem[];
+}
+export interface GetOrderData {
+  orders: OrderItem[];
+  success: boolean;
+}
+export interface OrderData {
+  orders: OrderItem[];
+  total: string;
+  totalToday: string;
+  success: boolean;
+}
+
+export interface ItemImage {
+  ingredient: IngredientCard;
+  index: number;
+  zIndex: number;
+  ingredientCount: number;
+}
+export interface GetOrderDataWithToggleModal extends GetOrderData {
+  orders: OrderItem[];
+  success: boolean;
+  isNotModal: boolean;
+=======
 
 interface ActionA {
   type: "a";
   a: string;
+>>>>>>> master
 }

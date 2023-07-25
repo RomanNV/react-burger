@@ -2,7 +2,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { BurgerGroup } from "../BurgerGroup/BurgerGroup";
 import { useMemo, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { getIngredientsDataFromState } from "../../services/reducers/stateFuncs";
 import { IngredientCard } from "../../types/commonTypes";
 
@@ -35,7 +35,7 @@ export const BurgerIngredients: React.FC = () => {
     }
   };
 
-  const tabDataBun: [IngredientCard] = useMemo(
+  const tabDataBun: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "bun") {
@@ -45,7 +45,7 @@ export const BurgerIngredients: React.FC = () => {
     [dataIngredients]
   );
 
-  const tabDataMain: [IngredientCard] = useMemo(
+  const tabDataMain: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "main") {
@@ -55,7 +55,7 @@ export const BurgerIngredients: React.FC = () => {
     [dataIngredients]
   );
 
-  const tabDataSauce: [IngredientCard] = useMemo(
+  const tabDataSauce: IngredientCard[] = useMemo(
     () =>
       dataIngredients.filter((element: IngredientCard) => {
         if (element.type === "sauce") {

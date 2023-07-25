@@ -1,0 +1,7 @@
+.content_container {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  justify-items: center;
+}

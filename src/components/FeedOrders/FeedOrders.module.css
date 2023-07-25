@@ -1,0 +1,42 @@
+.feed_orders_box {
+  width: 600px;
+  justify-self: start;
+  padding-top: 100px;
+}
+.wrap_content {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+.orders {
+  display: flex;
+  flex: auto;
+  gap: 36px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.orders_done {
+  min-width: 280px;
+  max-width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.orders_prepare {
+  min-width: 280px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.column_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.total_orders_count {
+}

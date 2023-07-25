@@ -3,7 +3,7 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { getRequestToResetPassword } from "../../services/actions/auth";
 import { authState } from "../../services/reducers/stateFuncs";
@@ -17,7 +17,7 @@ export const ResetPassword = () => {
   const { values, handleChange } = useForm(INITIALINPUT);
   const { error } = useSelector(authState);
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const isForgotPasswordFlag = useLocation()?.state?.isForgotPasswordFlag;
 
   const onSuccess = () => {

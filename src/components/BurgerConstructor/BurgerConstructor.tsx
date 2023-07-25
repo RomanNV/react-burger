@@ -16,12 +16,11 @@ import {
   getConstructorData,
   getConstructorModal,
 } from "../../services/reducers/stateFuncs";
-import { useDispatch, useSelector } from "react-redux";
-import { CLOSE_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { closeConstructorModalAction } from "../../services/actions/constructorModal";
 import {
-  ADD_BUN,
-  ADD_INGREDIENT,
-  getIngredientWithId,
+  addBunAction,
+  addIngredientAction,
 } from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
@@ -36,7 +35,7 @@ export const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch({ type: CLOSE_CONSTRUCTOR_MODAL });
+    dispatch(closeConstructorModalAction());
   };
   //рассчитываем стоимость и обнавляем состояние массива id ингредиентов для заказа
 
@@ -56,12 +55,9 @@ export const BurgerConstructor = () => {
     accept: "ingredient",
     drop({ ingredient }: IngredientCardWithId) {
       if (ingredient.type === "bun") {
-        dispatch({ type: ADD_BUN, bun: { ingredient } });
+        dispatch(addBunAction(ingredient));
       } else {
-        dispatch({
-          type: ADD_INGREDIENT,
-          ingredients: getIngredientWithId(ingredient),
-        });
+        dispatch(addIngredientAction(ingredient));
       }
     },
   });

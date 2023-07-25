@@ -1,0 +1,12 @@
+.column_done_wrap {
+  max-width: 272px;
+  width: 272px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.number_done_orders_p {
+  color: #00cccc;
+  display: inline-block;
+}

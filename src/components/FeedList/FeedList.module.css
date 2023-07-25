@@ -1,0 +1,17 @@
+.feed_list_box {
+  width: 600px;
+  justify-self: end;
+  padding-top: 40px;
+}
+
+.feed_list {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+
+  overflow-x: hidden;
+  max-height: 810px;
+  padding-right: 8px;
+}

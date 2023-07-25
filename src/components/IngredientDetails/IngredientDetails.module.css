@@ -6,6 +6,15 @@
   background-color: #1c1c21;
   border: 1px white solid;
 }
+.page_content {
+  width: 720px;
+  height: 540px;
+  background-color: #131316;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .header_box {
   display: flex;
   justify-content: flex-start;
@@ -13,6 +22,11 @@
   padding: 40px;
   padding-bottom: 0;
   height: 64px;
+}
+.header_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .header_box p {
   display: inline-block;
@@ -26,7 +40,7 @@
   flex-direction: column;
   width: 520px;
 }
-img {
+.img_style {
   padding: 0 20px;
   height: max-content;
   width: max-content;

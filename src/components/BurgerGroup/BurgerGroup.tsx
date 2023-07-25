@@ -1,7 +1,7 @@
 import { BurgerIngredientsItem } from "../BurgerIngredientsItem/BurgerIngredientsItem";
 import styles from "./BurgerGroup.module.css";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { Loader } from "../Loader/Loader";
 import { BurgerGroupType } from "../../types/commonTypes";
 import { ingredientsDataState } from "../../services/reducers/stateFuncs";

@@ -4,7 +4,7 @@ import {
   PasswordInput,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
 import styles from "./RegisterPage.module.css";
 import { authState } from "../../services/reducers/stateFuncs";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ export const RegisterPage = () => {
     name: "",
   };
   const { error } = useSelector(authState);
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { values, handleChange, setValues } = useForm(INITIALINPUT);
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

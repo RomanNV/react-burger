@@ -1,18 +1,29 @@
+import { IngredientCard } from "../../types/commonTypes";
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   GET_VIEW_ITEM,
+  BurgerIngredientsActions,
 } from "../actions/burgerIngredients";
 
-const initialState = {
+export interface InitialIngredientsState {
+  dataIngredients: IngredientCard[];
+  viewItem: null | IngredientCard;
+  isDataIngredientsRequest: boolean;
+  error: string;
+}
+const initialState: InitialIngredientsState = {
   dataIngredients: [],
-  viewItem: {},
+  viewItem: null,
   isDataIngredientsRequest: false,
   error: null,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (
+  state = initialState,
+  action: BurgerIngredientsActions
+): InitialIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, isDataIngredientsRequest: true };

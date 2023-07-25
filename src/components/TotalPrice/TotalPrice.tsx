@@ -3,12 +3,13 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { OPEN_CONSTRUCTOR_MODAL } from "../../services/actions/constructorModal";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { openConstructorModalAction } from "../../services/actions/constructorModal";
 import { getOrderNum } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authState } from "../../services/reducers/stateFuncs";
 import { TotalPriceType } from "../../types/commonTypes";
+import { AppDispatch } from "../../types";
 
 export const TotalPrice: React.FC<TotalPriceType> = ({
   listIdOrder,
@@ -20,14 +21,14 @@ export const TotalPrice: React.FC<TotalPriceType> = ({
   const location = useLocation();
   const openModal = () => {
     if (user) {
-      dispatch({ type: OPEN_CONSTRUCTOR_MODAL });
+      dispatch(openConstructorModalAction());
     }
   };
 
   const getOrder = () => {
     if (!user) {
       navigate("/login", { state: { from: location.pathname } });
-    } else dispatch<any>(getOrderNum(listIdOrder));
+    } else dispatch<AppDispatch>(getOrderNum(listIdOrder));
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { useLocation, Navigate } from "react-router-dom";
 import { authState } from "../../services/reducers/stateFuncs";
 import {
@@ -14,6 +14,7 @@ export const RequiredAuth: React.FC<
 
   if (!isAuthChecked) {
     // Запрос еще выполняется
+
     return null;
   }
   if (onlyUnAuth && user) {

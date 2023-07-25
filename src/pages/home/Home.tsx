@@ -1,5 +1,5 @@
 import styles from "./Home.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/redux-hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {

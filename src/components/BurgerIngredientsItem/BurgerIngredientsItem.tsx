@@ -1,8 +1,8 @@
 import styles from "./BurgerIngredientsItem.module.css";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { GET_VIEW_ITEM } from "../../services/actions/burgerIngredients";
+import { useDispatch, useSelector } from "../../hooks/redux-hooks";
+import { getViewItemAction } from "../../services/actions/burgerIngredients";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
 import { getConstructorData } from "../../services/reducers/stateFuncs";
@@ -27,9 +27,10 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const getViewItem = () => {
-    dispatch({ type: GET_VIEW_ITEM, viewItem: ingredient });
+  const getViewIngredient = () => {
+    dispatch(getViewItemAction(ingredient));
   };
+
   //отслеживаем id булки и меняем состояние
   useEffect(() => {
     if (bun.length !== 0 && bunId === _id) {
@@ -68,12 +69,12 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
       style={{ opacity: `${opacityNum}` }}
       onClick={() => {
         navigate(`/ingredients/${_id}`, {
-          state: { background: location.pathname },
+          state: { background: location },
         });
-        getViewItem();
+        getViewIngredient();
       }}
     >
-      <img src={image} alt="фото ингредиента" />
+      <img className={styles.img_style} src={image} alt="фото ингредиента" />
       {counter.bun !== 0 && type === "bun" ? (
         <Counter count={counter.bun} size="default" extraClass="m-1" />
       ) : counter.ingredient !== 0 && type !== "bun" ? (

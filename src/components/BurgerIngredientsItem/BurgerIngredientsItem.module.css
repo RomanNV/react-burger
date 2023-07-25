@@ -5,7 +5,7 @@
   grid-template-rows: 1fr 1fr 1fr;
   position: relative;
 }
-img {
+.img_style {
   width: 240px;
   height: 120px;
   padding-left: 16px;

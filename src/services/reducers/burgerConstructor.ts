@@ -1,22 +1,31 @@
+import { IngredientCard, IngredientCardWithId } from "../../types/commonTypes";
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   ADD_BUN,
   ADD_INGREDIENT,
   REORDER_INGREDIENT_LIST,
   CLEAR_CONSTRUCTOR,
+  burgerConstructorActions,
 } from "../actions/burgerConstructor";
 
-const initialState = {
+export interface InitStateBurgerConstructor {
+  ingredients: Array<IngredientCardWithId>;
+  bun: Array<IngredientCardWithId>;
+}
+export const initialState: InitStateBurgerConstructor = {
   ingredients: [],
   bun: [],
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+  state = initialState,
+  action: burgerConstructorActions
+): InitStateBurgerConstructor => {
   switch (action.type) {
     case ADD_BUN: {
       return {
         ...state,
-        bun: [action.bun],
+        bun: [action.ingredient],
       };
     }
     case ADD_INGREDIENT: {
@@ -29,7 +38,6 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE_CONSTRUCTOR_INGREDIENT: {
       return {
         ...state,
-
         ingredients: action.ingredients,
       };
     }
