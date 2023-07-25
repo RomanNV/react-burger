@@ -110,6 +110,7 @@ export interface InitialLoginPage {
   email: string;
   password: string;
 }
+<<<<<<< HEAD
 export interface User {
   email: string;
   name: string;
@@ -204,4 +205,10 @@ export interface GetOrderDataWithToggleModal extends GetOrderData {
   orders: OrderItem[];
   success: boolean;
   isNotModal: boolean;
+=======
+
+interface ActionA {
+  type: "a";
+  a: string;
+>>>>>>> master
 }
