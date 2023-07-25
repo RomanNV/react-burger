@@ -9,7 +9,7 @@ const initialState = {
   dataIngredients: [],
   viewItem: {},
   isDataIngredientsRequest: false,
-  error: "",
+  error: null,
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -29,7 +29,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         dataIngredients: [],
         isDataIngredientsRequest: false,
-        error: action.error,
+        error: action.error?.message,
       };
     }
     case GET_VIEW_ITEM: {

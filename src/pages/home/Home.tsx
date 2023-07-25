@@ -13,6 +13,7 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 export const Home: React.FC = () => {
   const { error } = useSelector(authState);
   const errorIngredients = useSelector(getIngredientsDataFromState).error;
+
   if (error || errorIngredients) {
     return <ErrorMessage error={error || errorIngredients} />;
   }
