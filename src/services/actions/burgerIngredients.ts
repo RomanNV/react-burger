@@ -15,7 +15,7 @@ export interface GetIngredientRequest {
 }
 export interface GetIngredientFailed {
   type: typeof GET_INGREDIENTS_FAILED;
-  error: string;
+  error: any;
 }
 export interface GetIngredientSuccess {
   type: typeof GET_INGREDIENTS_SUCCESS;

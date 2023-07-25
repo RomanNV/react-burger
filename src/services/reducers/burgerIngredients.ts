@@ -11,7 +11,7 @@ export interface InitialIngredientsState {
   dataIngredients: IngredientCard[];
   viewItem: null | IngredientCard;
   isDataIngredientsRequest: boolean;
-  error: string;
+  error: any;
 }
 const initialState: InitialIngredientsState = {
   dataIngredients: [],
