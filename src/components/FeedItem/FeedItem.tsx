@@ -22,7 +22,6 @@ export const FeedItem: React.FC<TypeFeedItem> = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const reducerArr = getIngredientsArrayFromOrder(ingredients, dataIngredients);
-  console.log(reducerArr);
 
   const totalPrice = useMemo(() => {
     return reducerArr.reduce((summ, item) => {

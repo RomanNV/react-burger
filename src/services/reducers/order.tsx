@@ -2,7 +2,7 @@ import { GET_ORDER_ITEM } from "../actions/order";
 export interface InitStateOrder {
   orderItem: any;
 }
-const initialState = {
+export const initialState = {
   orderItem: null,
 };
 
@@ -12,6 +12,8 @@ export const orderReducer = (
 ): InitStateOrder => {
   switch (action.type) {
     case GET_ORDER_ITEM: {
+      console.log(JSON.stringify(action.payload));
+
       return { ...state, orderItem: action.payload };
     }
     default:
