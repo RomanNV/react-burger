@@ -13,6 +13,11 @@ describe("test of reducer constructalModal", () => {
     );
     expect(received).toEqual(expected);
   });
+  test("action return InitialState", () => {
+    const expected = { ...initialState };
+    const received = constructorModal(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("action CLOSE_CONSTRUCTOR_MODAL", () => {
     const expected = { ...initialState, isOpenConstructorModal: false };
     const received = constructorModal(

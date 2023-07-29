@@ -17,6 +17,13 @@ describe("test of reducer wsReducer", () => {
     const received = wsReducer(initialState, { type: WS_CONNECTION_SUCCESS });
     expect(received).toEqual(expected);
   });
+  test("action return InitialState", () => {
+    const expected = {
+      ...initialState,
+    };
+    const received = wsReducer(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("action WS_CONNECTION_ERROR", () => {
     const expected = {
       ...initialState,

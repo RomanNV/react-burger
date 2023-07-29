@@ -118,6 +118,13 @@ describe("test for reducer of burgerConstructor", () => {
     expect(received.bun[0].ingredient).toEqual(expected.bun[0].ingredient);
     expect(received.bun[0]).toHaveProperty("itemId");
   });
+  test("Action return InitialState", () => {
+    const expected = {
+      ...initialState,
+    };
+    const received = constructorReducer(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("Action ADD_INGREDIENT", () => {
     const expected = {
       ...initialState,

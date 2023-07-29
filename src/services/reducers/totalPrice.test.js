@@ -21,6 +21,13 @@ describe("test of reducer totalPrice", () => {
     const received = totalPriceReducer(initialState, notBunAction());
     expect(received).toEqual(expected);
   });
+  test("action return InitialState", () => {
+    const expected = {
+      ...initialState,
+    };
+    const received = totalPriceReducer(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("action GET_ORDER_REQUEST", () => {
     const expected = {
       ...initialState,

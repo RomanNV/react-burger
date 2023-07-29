@@ -20,6 +20,11 @@ describe("Test of reducer burgerIngredients", () => {
     );
     expect(received).toEqual(expected);
   });
+  test("action return InitialState", () => {
+    const expected = { ...initialState };
+    const received = burgerIngredientsReducer(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("action GET_INGREDIENTS_FAILED", () => {
     const expected = {
       ...initialState,

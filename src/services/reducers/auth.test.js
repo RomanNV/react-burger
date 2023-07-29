@@ -20,6 +20,11 @@ import {
 import { authReducer, initialState } from "./auth";
 
 describe("test for reducer of auth", () => {
+  test("Action return InitialState", () => {
+    const expected = { ...initialState };
+    const received = authReducer(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("Action AUTH_REQUEST", () => {
     const expected = { ...initialState, isAuthRequest: true };
     const received = authReducer(initialState, authRequestAction());

@@ -34,6 +34,11 @@ describe("test for reducer of get OrderData", () => {
     const received = orderDataRed(initialState, getOrderDataRequestAction());
     expect(received).toEqual(expected);
   });
+  test("Action return InitialState", () => {
+    const expected = { ...initialState };
+    const received = orderDataRed(undefined, {});
+    expect(received).toEqual(expected);
+  });
   test("Action GET_ORDER_DATA_FAILED", () => {
     const expected = {
       ...initialState,
