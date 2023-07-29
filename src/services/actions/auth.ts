@@ -99,6 +99,8 @@ export function resetPasswordSuccessAction(): ResetPasswordSuccess {
 export function registrationSuccessAction(
   responce: UserAuth["getUser"]
 ): RegistrationSuccess {
+  console.log(JSON.stringify(responce));
+
   return { type: REGISTRATION_SUCCESS, payload: responce.user };
 }
 export function postCodeToResetPasswordAction(): CodeToResetSuccess {

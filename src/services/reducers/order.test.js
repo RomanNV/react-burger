@@ -10,8 +10,10 @@ const mockOrderItem = {
   updatedAt: "2023-04-17T20:24:55.950Z",
   number: 507,
 };
-it("orderItem should be returned ", () => {
-  const expected = { ...initialState, orderItem: mockOrderItem };
-  const received = orderReducer(initialState, getOrderItem(mockOrderItem));
-  expect(received).toEqual(expected);
+describe("orderreducer test", () => {
+  test("orderItem should be returned ", () => {
+    const expected = { ...initialState, orderItem: mockOrderItem };
+    const received = orderReducer(initialState, getOrderItem(mockOrderItem));
+    expect(received).toEqual(expected);
+  });
 });
