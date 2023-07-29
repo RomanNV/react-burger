@@ -12,7 +12,7 @@ export interface InitStateTotalPrice {
   isEmptyOrder: boolean;
   error: string | null;
 }
-const initialState: InitStateTotalPrice = {
+export const initialState: InitStateTotalPrice = {
   orderData: null,
   isOrderDataRequest: false,
   isEmptyOrder: false,

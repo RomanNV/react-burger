@@ -46,8 +46,6 @@ export const getOrderData: AppThunk = (number: number) => {
     dispatch(getOrderDataRequestAction());
     getChoosenOrder(number)
       .then((responceData) => {
-        console.log(JSON.stringify(responceData));
-
         dispatch(getOrderSuccessAction(responceData));
       })
       .catch((err: Error) => {

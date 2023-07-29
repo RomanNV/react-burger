@@ -7,7 +7,7 @@ import {
 export interface InitStateConstructorModal {
   isOpenConstructorModal: boolean;
 }
-const initialState = {
+export const initialState = {
   isOpenConstructorModal: false,
 };
 

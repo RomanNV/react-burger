@@ -12,8 +12,6 @@ export const orderReducer = (
 ): InitStateOrder => {
   switch (action.type) {
     case GET_ORDER_ITEM: {
-      console.log(JSON.stringify(action.payload));
-
       return { ...state, orderItem: action.payload };
     }
     default:

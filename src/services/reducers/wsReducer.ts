@@ -1,4 +1,3 @@
-import { addSyntheticTrailingComment } from "typescript";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -12,7 +11,7 @@ export interface InitWs {
   totalToday: null | number;
   error: null;
 }
-const initialState = {
+export const initialState = {
   wsConnected: false,
   orders: [],
   total: null,
@@ -44,8 +43,6 @@ export const wsReducer = (state: InitWs = initialState, action: any) => {
       };
 
     case WS_GET_MESSAGE:
-      console.log(action.payload);
-
       return {
         ...state,
         error: null,

@@ -28,8 +28,6 @@ export const Order: React.FC<GetOrderDataWithToggleModal> = ({
     let filteredItems: string[] = []; //добавляем те ингредиенты, которых уже посчитали
     return ingredients.reduce((summ: OrderItemWithCounter[], item: string) => {
       if (filteredItems.includes(item)) {
-        console.log(summ);
-
         return [...summ];
       }
       if (tempIngredients.length === 1) {
