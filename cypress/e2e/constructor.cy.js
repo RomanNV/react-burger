@@ -26,7 +26,6 @@ describe("тест страницы конструктора", () => {
     cy.get("@ingredient").trigger("dragstart");
     cy.get(constructorSelector).trigger("drop");
     cy.get("button").contains("Оформить заказ").click();
-    cy.wait(800);
     cy.get("form [type=email]").type("romanosow@mail.ru");
     cy.get("form [type=password]").type("qwerty");
     cy.get("form [type=submit]").click();
