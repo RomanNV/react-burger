@@ -2,12 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "../src/components/App/App";
-import { compose, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { rootReducer } from "./services/reducers/index";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { configureStore, MiddlewareArray } from "@reduxjs/toolkit";
 import store from "./services/store";
 
 // declare const window: any;
@@ -21,7 +17,7 @@ import store from "./services/store";
 // // export const store = configureStore({
 // //   reducer: rootReducer,
 // // });
-// export const store = createStore(rootReducer, enhancer);
+// export const store = createStore(rootReducer, enhancer);zz
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
