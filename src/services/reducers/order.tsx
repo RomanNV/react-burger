@@ -2,7 +2,7 @@ import { GET_ORDER_ITEM } from "../actions/order";
 export interface InitStateOrder {
   orderItem: any;
 }
-const initialState = {
+export const initialState = {
   orderItem: null,
 };
 

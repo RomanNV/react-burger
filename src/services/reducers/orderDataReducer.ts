@@ -8,7 +8,7 @@ export interface InitStateOrderData {
   isLoadingOneData: boolean;
   error: string;
 }
-const initialState = {
+export const initialState = {
   orderData: {},
   isLoadingOneData: true,
   error: "",

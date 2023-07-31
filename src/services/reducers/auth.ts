@@ -19,7 +19,7 @@ export interface authInitialState {
   user: any;
 }
 
-const initialState: authInitialState = {
+export const initialState: authInitialState = {
   isAuthChecked: false,
   isAuthRequest: false,
   error: null,

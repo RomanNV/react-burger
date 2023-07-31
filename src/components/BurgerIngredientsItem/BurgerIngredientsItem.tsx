@@ -64,6 +64,7 @@ export const BurgerIngredientsItem: React.FC<BurgerIngredientsItemType> = ({
 
   return (
     <div
+      data-cy="ingredient"
       ref={drag}
       className={`${styles.ingredient_box} `}
       style={{ opacity: `${opacityNum}` }}

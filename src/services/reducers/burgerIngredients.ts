@@ -13,7 +13,7 @@ export interface InitialIngredientsState {
   isDataIngredientsRequest: boolean;
   error: any;
 }
-const initialState: InitialIngredientsState = {
+export const initialState: InitialIngredientsState = {
   dataIngredients: [],
   viewItem: null,
   isDataIngredientsRequest: false,
@@ -40,7 +40,7 @@ export const burgerIngredientsReducer = (
         ...state,
         dataIngredients: [],
         isDataIngredientsRequest: false,
-        error: action.error?.message,
+        error: action.error,
       };
     }
     case GET_VIEW_ITEM: {

@@ -67,7 +67,7 @@ export const BurgerIngredients: React.FC = () => {
 
   return (
     <>
-      <section className={styles.content_box}>
+      <section className={styles.content_box} data-cy="ingredient-section">
         <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
         <div className={styles.tab_box}>
           <Tab

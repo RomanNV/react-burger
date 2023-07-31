@@ -68,7 +68,11 @@ export const BurgerConstructor = () => {
         <OrderDetails></OrderDetails>
       </Modal>
 
-      <section className={styles.content_box} ref={drop}>
+      <section
+        className={styles.content_box}
+        ref={drop}
+        data-cy="constructor-section"
+      >
         <div className={styles.burger_box}>
           <div className={styles.div_box_fixed}>
             {bun.length === 0 ? (

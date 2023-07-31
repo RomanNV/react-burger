@@ -4,6 +4,7 @@ import "./index.css";
 import App from "../src/components/App/App";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
+
 import store from "./services/store";
 
 // declare const window: any;
@@ -17,7 +18,7 @@ import store from "./services/store";
 // // export const store = configureStore({
 // //   reducer: rootReducer,
 // // });
-// export const store = createStore(rootReducer, enhancer);
+// export const store = createStore(rootReducer, enhancer);zz
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

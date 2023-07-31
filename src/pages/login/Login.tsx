@@ -21,7 +21,6 @@ export const Login: React.FC = () => {
     e.preventDefault();
     dispatch(loginAction(values));
   };
-  console.log(error);
 
   if (error) {
     return <ErrorMessage error={error}></ErrorMessage>;

@@ -15,13 +15,16 @@ export const Modal = ({
   return isOpenModal
     ? createPortal(
         <>
-          <div className={styles.modal_position}>
+          <div className={styles.modal_position} data-cy="modal">
             <div className={styles.close_icon}>
               <CloseIcon type="primary" onClick={() => closeModal()} />
             </div>
             {children}
           </div>
-          <ModalOverlay closeModal={closeModal}></ModalOverlay>
+          <ModalOverlay
+            data-cy="close-modal"
+            closeModal={closeModal}
+          ></ModalOverlay>
         </>,
         modalRoot as HTMLElement
       )
