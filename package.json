@@ -31,7 +31,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "cypress open",
@@ -46,6 +46,7 @@
       "react-app/jest"
     ]
   },
+  "homepage": "./",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -60,8 +61,13 @@
   },
   "devDependencies": {
     "cypress": "^12.17.2",
-    "eslint-plugin-cypress": "^2.13.3",
+
+    "fetch-mock": "^9.11.0",
     "gh-pages": "^5.0.0",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.2.0",
+    "redux-mock-store": "^1.5.4",
+    "eslint-plugin-cypress": "^2.13.3",
     "source-map-loader": "^4.0.1"
   }
 }
